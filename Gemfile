@@ -62,6 +62,7 @@ group :test do
 end
 
 group :production do
+  # per Udemy tutorial, required to have .11 if using Rails 5
   gem 'pg', '~> 0.11'
 end
 
