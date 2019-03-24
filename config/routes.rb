@@ -20,4 +20,6 @@ Rails.application.routes.draw do
 
   get 'timeseries', to: 'home#timeseries'
 
+  get 'locator', to: 'home#locator'
+
 end
