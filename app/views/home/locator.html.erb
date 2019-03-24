@@ -11,9 +11,7 @@
   </div>
 
 <script>
-
 // This will let you use the .remove() function later on
-
   if (!('remove' in Element.prototype)) {
     Element.prototype.remove = function() {
       if (this.parentNode) {
@@ -21,7 +19,6 @@
       }
     };
   }
-
   mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
   var map = new mapboxgl.Map({
     container: 'map',
@@ -29,7 +26,6 @@
     center: [-77.034084, 38.909671],
     zoom: 14
   });
-
   var stores = {
     "type": "FeatureCollection",
     "features": [
@@ -270,7 +266,6 @@
       }
     ]
   };
-
   map.on('load', function(e) {
     // Add the data to your map as a layer
     map.addLayer({
@@ -288,7 +283,6 @@
     });
     buildLocationList(stores);
   });
-
   // Add an event listener for when a user clicks on the map
 map.on('click', function(e) {
   // Query all the rendered points in the view
@@ -306,7 +300,6 @@ map.on('click', function(e) {
     }
     // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
     var selectedFeature = clickedPoint.properties.address;
-
     for (var i = 0; i < stores.features.length; i++) {
       if (stores.features[i].properties.address === selectedFeature) {
         selectedFeatureIndex = i;
@@ -317,11 +310,6 @@ map.on('click', function(e) {
     listing.classList.add('active');
   }
 });
-
-
-
-
-
   function buildLocationList(data) {
     // Iterate through the list of stores
     for (i = 0; i < data.features.length; i++) {
@@ -335,7 +323,6 @@ map.on('click', function(e) {
       var listing = listings.appendChild(document.createElement('div'));
       listing.className = 'item';
       listing.id = 'listing-' + i;
-
       // Create a new link with the class 'title' for each store
       // and fill it with the store address
       var link = listing.appendChild(document.createElement('a'));
@@ -343,7 +330,6 @@ map.on('click', function(e) {
       link.className = 'title';
       link.dataPosition = i;
       link.innerHTML = prop.address;
-
       // Create a new div with the class 'details' for each store
       // and fill it with the city and phone number
       var details = listing.appendChild(document.createElement('div'));
@@ -351,7 +337,6 @@ map.on('click', function(e) {
       if (prop.phone) {
         details.innerHTML += ' · ' + prop.phoneFormatted;
       }
-
       // Add an event listener for the links in the sidebar listing
       link.addEventListener('click', function(e) {
         // Update the currentFeature to the store associated with the clicked link
@@ -369,27 +354,22 @@ map.on('click', function(e) {
       });
     }
   }
-
-
   function flyToStore(currentFeature) {
     map.flyTo({
       center: currentFeature.geometry.coordinates,
       zoom: 15
     });
   }
-
   function createPopUp(currentFeature) {
     var popUps = document.getElementsByClassName('mapboxgl-popup');
     // Check if there is already a popup on the map and if so, remove it
     if (popUps[0]) popUps[0].remove();
-
     var popup = new mapboxgl.Popup({ closeOnClick: false })
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<h3>Sweetgreen</h3>' +
         '<h4>' + currentFeature.properties.address + '</h4>')
       .addTo(map);
   }
-
 </script>
 
 </body>

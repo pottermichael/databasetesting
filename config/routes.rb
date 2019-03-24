@@ -22,4 +22,6 @@ Rails.application.routes.draw do
 
   get 'locator', to: 'home#locator'
 
+  get 'clock', to: 'home#clock'
+
 end

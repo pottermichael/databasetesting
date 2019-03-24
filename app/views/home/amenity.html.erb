@@ -11,6 +11,7 @@
 </div>
 
 <script>
+
   mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
   const map = new mapboxgl.Map({
     container: 'map',
@@ -63,8 +64,6 @@
           }
       });
 
-      map.addControl(new mapboxgl.NavigationControl());
-
 
       function animateMarker(timestamp) {
           setTimeout(function(){
@@ -88,4 +87,5 @@
       // Start the animation.
       animateMarker(0);
   });
+
 </script>
