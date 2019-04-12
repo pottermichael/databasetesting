@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'history', to: 'home#history'
 
+  get 'layer', to: 'home#layer'
+
   get 'amenity', to: 'home#amenity'
 
   get 'migration', to: 'home#migration'
@@ -17,8 +19,6 @@ Rails.application.routes.draw do
   get 'inventory', to: 'home#inventory'
 
   get 'infrastructure', to: 'home#infrastructure'
-
-  get 'timeseries', to: 'home#timeseries'
 
   get 'locator', to: 'home#locator'
 

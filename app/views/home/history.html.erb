@@ -1,9 +1,131 @@
-<h1>Natural Path of Growth</h1>
-    <p>Dynamic 24/7 submarkets expanding around the site for office and residential</p>
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe src="https://player.vimeo.com/video/322144032?autoplay=1&loop=1" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen allow=autoplay></iframe>
-        </div>
+<h1>Infill Path of Growth</h1>
 
-        <div id='image-caption'>
-            <p>Interactive Guide: To view timelapse in full screen, press arrow icon at bottom right of video player</p>
-        </div>
+  <p>Dynamic 24/7 submarkets expanding around the site for office and residential</p>
+
+<html>
+
+<body>
+  <div id='map'></div>
+
+  <div class='map-overlay top'>
+    <div class='map-overlay-inner'>
+      <h2>Significant new developments since 2000</h2>
+      <label id='month'></label>
+      <input id='slider' type='range' min='0' max='11' step='1' value='0' />
+    </div>
+    <div class='map-overlay-inner'>
+      <div id='legend' class='legend'>
+        <div class='bar'></div>
+        <div>GFA (gfa)</div>
+      </div>
+    </div>
+  </div>
+
+<script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+  var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v10',
+  center: [31.4606, 20.7927],
+  zoom: 0.5
+  });
+
+  var months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+  ];
+
+  function filterBy(month) {
+
+  var filters = ['<=', 'month', month];
+  map.setFilter('earthquake-circles', filters);
+  map.setFilter('earthquake-labels', filters);
+
+  // Set the label to the month
+  document.getElementById('month').textContent = months[month];
+  }
+
+  map.on('load', function() {
+
+
+  d3.json("/data/earthquakes.geojson", function(err, data) {
+  if (err) throw err;
+
+  // Create a month property value based on time
+  // used to filter against.
+  data.features = data.features.map(function(d) {
+  d.properties.month = new Date(d.properties.time).getMonth();
+  return d;
+  });
+
+  map.addSource('earthquakes', {
+  'type': 'geojson',
+  data: data,
+  });
+
+  map.addLayer({
+  'id': 'earthquake-circles',
+  'type': 'circle',
+  'source': 'earthquakes',
+  'paint': {
+  'circle-color': [
+  'interpolate',
+  ['linear'],
+  ['get', 'mag'],
+  6, '#FCA107',
+  8, '#7F3121'
+  ],
+  'circle-opacity': 0.75,
+  'circle-radius': [
+  'interpolate',
+  ['linear'],
+  ['get', 'mag'],
+  6, 20,
+  8, 40
+  ]
+  }
+  });
+
+  map.addLayer({
+  'id': 'earthquake-labels',
+  'type': 'symbol',
+  'source': 'earthquakes',
+  'layout': {
+  'text-field': ['concat', ['to-string', ['get', 'mag']], 'm'],
+  'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+  'text-size': 12
+  },
+  'paint': {
+  'text-color': 'rgba(0,0,0,0.5)'
+  }
+  });
+
+  // Set filter to first month of the year
+  // 0 = January
+  filterBy(0);
+
+    document.getElementById('slider').addEventListener('input', function(e) {
+    var month = parseInt(e.target.value, 10);
+    filterBy(month);
+    });
+    });
+    });
+  </script>
+
+  </body>
+  </html>
+</script>
+
+</body>
