@@ -9,14 +9,14 @@
 
   <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-      <h2>Significant new developments since 2000</h2>
-      <label id='month'></label>
-      <input id='slider' type='range' min='0' max='11' step='1' value='0' />
+      <h2>Some data between 2000-2005</h2>
+      <label id='year'></label>
+      <input id='slider' type='range' min='2000' max='2010' step='1' value='2000'/>
     </div>
     <div class='map-overlay-inner'>
       <div id='legend' class='legend'>
         <div class='bar'></div>
-        <div>GFA (gfa)</div>
+        <div>Units(u)</div>
       </div>
     </div>
   </div>
@@ -27,102 +27,177 @@
   mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
   var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/light-v10',
-  center: [31.4606, 20.7927],
-  zoom: 0.5
+  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+  center: [-87.636127, 41.892699],
+  zoom: 13
   });
 
-  var months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-  ];
+//center: [-87.636127, 41.892699],
 
-  function filterBy(month) {
+var years = [
+  '2001',
+  '2002',
+  '2003',
+  '2004',
+  '2005',
+];
 
-  var filters = ['<=', 'month', month];
-  map.setFilter('earthquake-circles', filters);
-  map.setFilter('earthquake-labels', filters);
+function filterBy(year) {
 
-  // Set the label to the month
-  document.getElementById('month').textContent = months[month];
-  }
+var filter = ['<=', 'year', year];
+map.setFilter('resi-circles', filter);
 
-  map.on('load', function() {
+// Set slider label to the year
+document.getElementById('year').textContent = years[year];
+}
+
+map.on('load', function() {
 
 
-  d3.json("/data/earthquakes.geojson", function(err, data) {
-  if (err) throw err;
+d3.json("/data/resi.geojson", function(err, data) {
+if (err) throw err;
 
-  // Create a month property value based on time
-  // used to filter against.
-  data.features = data.features.map(function(d) {
-  d.properties.month = new Date(d.properties.time).getMonth();
-  return d;
-  });
+// Create a year property value based on time
+// used to filter against.
+data.features = data.features.map(function(d) {
+d.properties.year = new Date(d.properties.time);
+return d;
+});
 
-  map.addSource('earthquakes', {
-  'type': 'geojson',
-  data: data,
-  });
+//some mapbox gl js code to display and style data
 
-  map.addLayer({
+map.addSource('resi', {
+'type': 'geojson',
+data: data,
+});
+
+map.addLayer({
   'id': 'earthquake-circles',
   'type': 'circle',
-  'source': 'earthquakes',
+  'source': 'resi',
   'paint': {
   'circle-color': [
   'interpolate',
-  ['linear'],
-  ['get', 'mag'],
-  6, '#FCA107',
-  8, '#7F3121'
-  ],
-  'circle-opacity': 0.75,
-  'circle-radius': [
+    ['linear'],
+    ['get', 'Units'],
+      0, '#FCA107',
+      600, '#7F3121'
+    ],
+'circle-opacity': 0.75,
+'circle-radius': [
   'interpolate',
   ['linear'],
-  ['get', 'mag'],
-  6, 20,
-  8, 40
-  ]
+    ['get', 'Units'],
+      50, 10,
+      600, 30
+    ]
   }
-  });
+});
 
-  map.addLayer({
-  'id': 'earthquake-labels',
+
+map.addLayer({
+  'id': 'resi-labels',
   'type': 'symbol',
-  'source': 'earthquakes',
+  'source': 'resi',
   'layout': {
-  'text-field': ['concat', ['to-string', ['get', 'mag']], 'm'],
+  'text-field': ['to-string', ['get', 'Project']],
   'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-  'text-size': 12
-  },
+  'text-size': 8
+    },
   'paint': {
-  'text-color': 'rgba(0,0,0,0.5)'
+    'text-color': 'rgba(0,0,0,0.5)'
   }
   });
 
-  // Set filter to first month of the year
-  // 0 = January
-  filterBy(0);
 
-    document.getElementById('slider').addEventListener('input', function(e) {
-    var month = parseInt(e.target.value, 10);
-    filterBy(month);
-    });
-    });
-    });
-  </script>
+
+
+
+
+// Set filter to first year of the range
+// 0 = 2000
+filterBy(0);
+
+  document.getElementById('slider').addEventListener('input', function(e) {
+  var year = parseInt(e.target.value, 10);
+  filterBy(year);
+  });
+  });
+  });
+
+//code for beacon, to be refactored
+
+  var framesPerSecond = 15;
+  var initialOpacity = 1
+  var opacity = initialOpacity;
+  var initialRadius = 10;
+  var radius = initialRadius;
+  var maxRadius = 50;
+
+  map.on('load', function () {
+
+      // Add a source and layer displaying a point which will be animated in a circle.
+      map.addSource('point', {
+          "type": "geojson",
+          "data": {
+              "type": "Point",
+              "coordinates": [
+                  -87.646164, 41.894611
+              ]
+          }
+      });
+
+      map.addLayer({
+          "id": "point",
+          "source": "point",
+          "type": "circle",
+          "paint": {
+              "circle-radius": initialRadius,
+              "circle-radius-transition": {duration: 0},
+              "circle-opacity-transition": {duration: 0},
+              "circle-color": "#ffffff"
+          }
+      });
+
+      map.addLayer({
+          "id": "point1",
+          "source": "point",
+          "type": "circle",
+          "paint": {
+              "circle-radius": initialRadius,
+              "circle-color": "#007cbf"
+          }
+      });
+
+
+      function animateMarker(timestamp) {
+          setTimeout(function(){
+              requestAnimationFrame(animateMarker);
+
+              radius += (maxRadius - radius) / framesPerSecond;
+              opacity -= ( .9 / framesPerSecond );
+
+              map.setPaintProperty('point', 'circle-radius', radius);
+              map.setPaintProperty('point', 'circle-opacity', opacity);
+
+              if (opacity <= 0) {
+                  radius = initialRadius;
+                  opacity = initialOpacity;
+              }
+
+          }, 1000 / framesPerSecond);
+
+      }
+
+      // Start the animation.
+      animateMarker(0);
+  });
+
+
+
+
+
+</script>
 
   </body>
   </html>
