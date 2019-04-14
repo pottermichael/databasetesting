@@ -9,14 +9,14 @@
 
   <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-      <h2>Some data between 2000-2005</h2>
+      <h2>New Developments Since 2000</h2>
       <label id='year'></label>
-      <input id='slider' type='range' min='2000' max='2010' step='1' value='2000'/>
+      <input id='slider' type='range' min='2000' max='2005' step='1' value='2000'/>
     </div>
     <div class='map-overlay-inner'>
       <div id='legend' class='legend'>
         <div class='bar'></div>
-        <div>Units(u)</div>
+        <div>Units</div>
       </div>
     </div>
   </div>
@@ -24,22 +24,24 @@
 <script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
 
 <script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
-  var map = new mapboxgl.Map({
+mapboxgl.accessToken =
+  'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
   center: [-87.636127, 41.892699],
-  zoom: 13
+  zoom: 13,
+  attributionControl:false
   });
 
-//center: [-87.636127, 41.892699],
+map.addControl(new mapboxgl.FullscreenControl());
 
 var years = [
-  '2001',
-  '2002',
-  '2003',
-  '2004',
-  '2005',
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
 ];
 
 function filterBy(year) {
@@ -60,72 +62,66 @@ if (err) throw err;
 // Create a year property value based on time
 // used to filter against.
 data.features = data.features.map(function(d) {
-d.properties.year = new Date(d.properties.time);
-return d;
+  d.properties.year = new Date(d.properties.year);
+  return d;
 });
 
 //some mapbox gl js code to display and style data
 
 map.addSource('resi', {
-'type': 'geojson',
-data: data,
+  'type': 'geojson',
+  data: data,
 });
 
 map.addLayer({
-  'id': 'earthquake-circles',
+  'id': 'residential-circles',
   'type': 'circle',
   'source': 'resi',
   'paint': {
-  'circle-color': [
-  'interpolate',
-    ['linear'],
-    ['get', 'Units'],
-      0, '#FCA107',
-      600, '#7F3121'
-    ],
-'circle-opacity': 0.75,
-'circle-radius': [
-  'interpolate',
-  ['linear'],
-    ['get', 'Units'],
-      50, 10,
-      600, 30
-    ]
-  }
-});
-
+    'circle-color': [
+    'interpolate',
+        ['linear'],
+        ['get', 'Units'],
+          1, '#FCA107',
+          600, '#7F3121'
+        ],
+  'circle-opacity': .75,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+        ['get', 'Units'],
+          50, 5,
+          600, 30
+      ]
+    }
+  });
 
 map.addLayer({
-  'id': 'resi-labels',
+  'id': 'residential-labels',
   'type': 'symbol',
   'source': 'resi',
   'layout': {
-  'text-field': ['to-string', ['get', 'Project']],
-  'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-  'text-size': 8
+    'text-field': ['to-string', ['get', 'Project']],
+    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+    'text-size': 8
     },
   'paint': {
     'text-color': 'rgba(0,0,0,0.5)'
-  }
+    }
   });
-
-
-
-
-
 
 // Set filter to first year of the range
 // 0 = 2000
-filterBy(0);
+filterBy(2000);
 
   document.getElementById('slider').addEventListener('input', function(e) {
-  var year = parseInt(e.target.value, 10);
-  filterBy(year);
+    var year = parseInt(e.target.value, 10);
+    filterBy(year);
+    });
   });
-  });
-  });
+});
 
-//code for beacon, to be refactored
+//code for Mapbox GL Marker Blip, to be refactored
 
   var framesPerSecond = 15;
   var initialOpacity = 1
@@ -192,11 +188,6 @@ filterBy(0);
       // Start the animation.
       animateMarker(0);
   });
-
-
-
-
-
 </script>
 
   </body>

@@ -22,7 +22,6 @@
     center: [-87.636127, 41.892699],
     zoom: 13.6,
     maxZoom: 17.0,
-    minZoom: 13.5,
   });
 
 //center: [-87.636127, 41.892699],
@@ -30,7 +29,7 @@
   map.on('load', function () {
     map.addSource('museums', {
       type: 'vector',
-      url: 'mapbox://mpotter.cju02as241wv32rns9clb3edx-9slxq'
+      url: "mapbox://mpotter.cju4c7hqi3c9a2rqun2vbyfog-0681t"
     });
     map.addLayer({
       'id': 'museums',
@@ -43,31 +42,43 @@
           'circle-radius': 18,
           'circle-color': 'rgba(55,148,179,1)'
         },
-        'source-layer': 'museum-cusco'
+        'source-layer': 'cta_L_stations'
       });
 
-    map.addSource('contours', {
+    map.addSource('downtown', {
       type: 'vector',
-      url: 'mapbox://mapbox.mapbox-terrain-v2'
+      url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
     });
     map.addLayer({
-      'id': 'contours',
-      'type': 'line',
-      'source': 'contours',
-      'source-layer': 'contour',
-      'layout': {
-        'visibility': 'visible',
-        'line-join': 'round',
-        'line-cap': 'round'
-      },
+      'id': 'downtown',
+      'type': 'fill',
+      'source': 'downtown',
+      'source-layer': 'DowntownZoning',
+      'layout': {},
       'paint': {
-        'line-color': '#877b59',
-        'line-width': 1
+        'fill-color': '#C22E00',
+        'fill-opacity': .5
+        }
+    });
+
+    map.addSource('northbranch', {
+      type: 'vector',
+      url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
+    });
+    map.addLayer({
+      'id': 'northbranch',
+      'type': 'fill',
+      'source': 'northbranch',
+      'source-layer': 'NorthBranchZoning',
+      'layout': {},
+      'paint': {
+        'fill-color': '#6DA2A6',
+        'fill-opacity': .75
         }
     });
   });
 
-var toggleableLayerIds = [ 'contours', 'museums' ];
+var toggleableLayerIds = [ 'downtown', 'museums', 'northbranch' ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
