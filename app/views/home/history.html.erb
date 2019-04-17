@@ -3,15 +3,14 @@
   <p>Dynamic 24/7 submarkets expanding around the site for office and residential</p>
 
 <html>
-
 <body>
   <div id='map'></div>
 
   <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-      <h2>New Developments Since 2000</h2>
+      <h2>New Developments Since 2015</h2>
       <label id='year'></label>
-      <input id='slider' type='range' min='2000' max='2005' step='1' value='2000'/>
+      <input id='slider' type='range' min='2012' max='2020' step='1' value='2012'/>
     </div>
     <div class='map-overlay-inner'>
       <div id='legend' class='legend'>
@@ -37,17 +36,22 @@ var map = new mapboxgl.Map({
 map.addControl(new mapboxgl.FullscreenControl());
 
 var years = [
-  2001,
-  2002,
-  2003,
-  2004,
-  2005,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
 ];
 
 function filterBy(year) {
 
-var filter = ['<=', 'year', year];
-map.setFilter('resi-circles', filter);
+var filter = ['<=',['number',['get','Year']], year];
+map.setFilter('residential-circles', filter);
+map.setFilter('residential-labels', filter);
 
 // Set slider label to the year
 document.getElementById('year').textContent = years[year];
@@ -81,7 +85,7 @@ map.addLayer({
     'circle-color': [
     'interpolate',
         ['linear'],
-        ['get', 'Units'],
+        ['number',['get', 'Units']],
           1, '#FCA107',
           600, '#7F3121'
         ],
@@ -89,7 +93,7 @@ map.addLayer({
     'circle-radius': [
       'interpolate',
       ['linear'],
-        ['get', 'Units'],
+        ['number',['get', 'Units']],
           50, 5,
           600, 30
       ]
@@ -111,8 +115,8 @@ map.addLayer({
   });
 
 // Set filter to first year of the range
-// 0 = 2000
-filterBy(2000);
+// 0 = 2015
+filterBy(2015);
 
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value, 10);
