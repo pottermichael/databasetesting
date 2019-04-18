@@ -8,9 +8,9 @@
 
   <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-      <h2>New Developments Since 2015</h2>
+      <h2>New Developments Since 2001</h2>
       <label id='year'></label>
-      <input id='slider' type='range' min='2012' max='2020' step='1' value='2012'/>
+      <input id='slider' type='range' min='2001' max='2020' step='1' value='2001'/>
     </div>
     <div class='map-overlay-inner'>
       <div id='legend' class='legend'>
@@ -36,6 +36,17 @@ var map = new mapboxgl.Map({
 map.addControl(new mapboxgl.FullscreenControl());
 
 var years = [
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008,
+  2009,
+  2010,
+  2011,
   2012,
   2013,
   2014,
@@ -60,7 +71,7 @@ document.getElementById('year').textContent = years[year];
 map.on('load', function() {
 
 
-d3.json("/data/resi.geojson", function(err, data) {
+d3.json("/data/resi_built_buildings.geojson", function(err, data) {
 if (err) throw err;
 
 // Create a year property value based on time
@@ -116,7 +127,7 @@ map.addLayer({
 
 // Set filter to first year of the range
 // 0 = 2015
-filterBy(2015);
+filterBy(2001);
 
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value, 10);
@@ -142,7 +153,7 @@ filterBy(2015);
           "data": {
               "type": "Point",
               "coordinates": [
-                  -87.646164, 41.894611
+                  -87.646196, 41.895594
               ]
           }
       });
