@@ -1,11 +1,8 @@
 <h1>Infill Path of Growth</h1>
-
   <p>Dynamic 24/7 submarkets expanding around the site for office and residential</p>
-
 <html>
 <body>
   <div id='map'></div>
-
   <div class='map-overlay top'>
     <div class='map-overlay-inner'>
       <h2>Deliveries through:
@@ -19,6 +16,18 @@
         <div>Units</div>
       </div>
     </div>
+// added radio button HTML
+      <div class='session'>
+        <h4>Property Type</h4>
+          <div class='row' id='filters'>
+            <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+            <label for='all'>All</label>
+            <input id='condo' type='radio' name='toggle' value='Condo'>
+            <label for='condo'>Condo</label>
+            <input id='multi' type='radio' name='toggle' value='Multi'>
+            <label for='multi'>Multi</label>
+          </div>
+      </div>
   </div>
 
 <script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
@@ -30,7 +39,7 @@ var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
   center: [-87.636127, 41.892699],
-  zoom: 13,
+  zoom: 13.5,
   attributionControl:false
   });
 
@@ -60,10 +69,10 @@ var years = [
 ];
 
 function filterBy(year) {
-
-var filter = ['<=',['number',['get','Year']], year];
-map.setFilter('residential-circles', filter);
-map.setFilter('residential-labels', filter);
+var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+var filterYear = ['<=',['number',['get','Year']], year];
+map.setFilter('residential-circles', filterYear);
+map.setFilter('residential-labels', filterYear);
 
 // Set slider label to the year
 document.getElementById('year').innerText = year;
@@ -81,8 +90,6 @@ data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
 });
-
-//some mapbox gl js code to display and style data
 
 map.addSource('resi', {
   'type': 'geojson',
@@ -127,13 +134,31 @@ map.addLayer({
   });
 
 // Set filter to first year of the range
-// 0 = 2015
+// 0 = 2001
 filterBy(2001);
 
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value, 10);
     filterBy(year);
     });
+
+// adding in radio toggle
+  document.getElementById('filters').addEventListener('change', function(e) {
+    var type = e.target.value;
+    // update the map filter
+    if (type === 'all') {
+      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+    } else if (type === 'Multi') {
+      filterType = ['match', ['get', 'Type'], 'Multi', true, false];
+    } else if (type === 'Condo') {
+      filterType = ['match', ['get', 'Type'], 'Condo', true, false];
+    } else {
+      console.log('error');
+    }
+    map.setFilter('residential-circles', filterType);
+    map.setFilter('residential-labels', filterType);
+  });
+
   });
 });
 
@@ -200,7 +225,6 @@ filterBy(2001);
           }, 1000 / framesPerSecond);
 
       }
-
       // Start the animation.
       animateMarker(0);
   });

@@ -8,6 +8,8 @@
 
 html, body {
   font-family: roboto-medium;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -86,6 +88,7 @@ html, body {
   max-width: 1000px;
   top: 0;
   left: 0;
+  background-color: red;
 
 }
 
@@ -104,6 +107,7 @@ html, body {
 }
 
 .map-overlay .legend .bar {
+  position: right;
   height: 5px;
   width: 100%;
   background: linear-gradient(to right, #FCA107, #7F3121);
@@ -117,6 +121,11 @@ position: relative;
 margin: 0;
 cursor: ew-resize;
 }
+
+//styling for adding radio button toggle
+
+
+
 
 //styling for show and hide layers
 
