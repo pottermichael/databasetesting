@@ -8,8 +8,9 @@
 
   <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-      <h2>New Developments Since 2001</h2>
-      <label id='year'></label>
+      <h2>Deliveries through:
+        <label id='year'></label>
+      </h2>
       <input id='slider' type='range' min='2001' max='2020' step='1' value='2001'/>
     </div>
     <div class='map-overlay-inner'>
@@ -65,7 +66,7 @@ map.setFilter('residential-circles', filter);
 map.setFilter('residential-labels', filter);
 
 // Set slider label to the year
-document.getElementById('year').textContent = years[year];
+document.getElementById('year').innerText = year;
 }
 
 map.on('load', function() {
@@ -77,7 +78,7 @@ if (err) throw err;
 // Create a year property value based on time
 // used to filter against.
 data.features = data.features.map(function(d) {
-  d.properties.year = new Date(d.properties.year);
+  d.properties.year = new Date(d.properties);
   return d;
 });
 
