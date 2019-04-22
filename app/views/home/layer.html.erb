@@ -1,49 +1,32 @@
 <html>
-<body>
-<h1>Zoning Changes</h1>
-  <p>CBD, PMD, Industrial Cooridor, ARO?, </p>
+  <body>
+    <div class="map-header">
+      <h1>Land Supply & Transit</h1>
+        <p>City Expanded "DX" Zoning to Transit Served Locations</p>
+      </div>
 
-<div id="map-container">
-  <div id='map'>
-    <nav id="menu"></nav>
-  </div>
-</div>
-
-<div id='image-caption'>
-  <p>Interactive Guide: To view detailed area amenities, mouse-in to zoom and press control to rotate</p>
-</div>
+      <div id="map-container">
+        <div id='map'>
+          <nav id="menu"></nav>
+        </div>
+      </div>
+      <div id='image-caption'>
+        <p>Interactive Guide: To view detailed area amenities, mouse-in to zoom and press control to rotate</p>
+      </div>
 
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
   const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+    style: 'mapbox://styles/mpotter/cjun4sh9t1dh41fmzib1u329c',
     center: [-87.636127, 41.892699],
-    zoom: 13.6,
+    zoom: 12.5,
     maxZoom: 17.0,
   });
 
 //center: [-87.636127, 41.892699],
 
   map.on('load', function () {
-    map.addSource('museums', {
-      type: 'vector',
-      url: "mapbox://mpotter.cju4c7hqi3c9a2rqun2vbyfog-0681t"
-    });
-    map.addLayer({
-      'id': 'museums',
-      'type': 'circle',
-      'source': 'museums',
-      'layout': {
-        'visibility': 'visible'
-       },
-       'paint': {
-          'circle-radius': 18,
-          'circle-color': 'rgba(55,148,179,1)'
-        },
-        'source-layer': 'cta_L_stations'
-      });
-
     map.addSource('downtown', {
       type: 'vector',
       url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
@@ -56,7 +39,7 @@
       'layout': {},
       'paint': {
         'fill-color': '#C22E00',
-        'fill-opacity': .5
+        'fill-opacity': .25
         }
     });
 
@@ -72,12 +55,28 @@
       'layout': {},
       'paint': {
         'fill-color': '#6DA2A6',
-        'fill-opacity': .75
+        'fill-opacity': .25
+        }
+    });
+
+    map.addSource('transit', {
+      type: 'vector',
+      url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
+    });
+    map.addLayer({
+      'id': 'transit',
+      'type': 'fill',
+      'source': 'transit',
+      'source-layer': 'Transit_-_Blue_Line',
+      'layout': {},
+      'paint': {
+        'fill-color': '#00a5e0',
+        'fill-opacity': .1
         }
     });
   });
 
-var toggleableLayerIds = [ 'downtown', 'museums', 'northbranch' ];
+var toggleableLayerIds = [ 'downtown', 'northbranch', 'transit' ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];

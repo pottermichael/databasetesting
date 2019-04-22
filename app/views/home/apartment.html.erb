@@ -1,22 +1,24 @@
-<h1>Highest Residential Rents</h1>
-  <p>A new riverfront enclave situated among the City's most desirable submarkets</p>
-    <div id="map-container">
-      <div id='map'></div>
-      </div>
+<html>
+<body>
+<div class="map-header">
+  <h1>Scarcity of Prime Sites</h1>
+    <p>A new riverfront enclave situated among the City's most desirable submarkets</p>
+</div>
+<div id="map-container">
+  <div id='map'></div>
+</div>
 
-      <div id='image-caption'>
-        <p>Interactive Guide: Mouse-in to view residential project names and effective rental rates</p>
-      </div>
-
+<div id='image-caption'>
+  <p>Interactive Guide: Mouse-in to view residential project names and effective rental rates</p>
+</div>
 
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
   const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mpotter/cjszdfg6e33t21fo3pxkicd6g',
-  center: [-87.645762, 41.890340],
-  zoom: 12.5,
-  maxZoom: 15.0,
+  style: 'mapbox://styles/mpotter/cjun2t5t3a8yz1fn0k753yn8r',
+  center: [-87.641641, 41.889143],
+  zoom: 13.75,
   minZoom: 12.5,
   });
 
@@ -35,7 +37,7 @@
           "data": {
               "type": "Point",
               "coordinates": [
-                  -87.646164, 41.894611
+                  -87.646196, 41.895594
               ]
           }
       });

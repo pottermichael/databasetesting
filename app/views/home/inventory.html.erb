@@ -1,21 +1,23 @@
-<h1>Office Supply</h1>
+<html>
+<body>
+<div class="map-header">
+  <h1>Office Sites</h1>
     <p>Adjacent to City's Most Active & Rapidly Growing Office Sub-Markets</p>
-  <div id="map-container">
-      <div id='map'></div>
-  </div>
-
-  <div id='image-caption'>
-      <p>Interactive Guide: Mouse-in to view office sites currently under various stages of planning and construction</p>
-  </div>
+</div>
+<div id="map-container">
+    <div id='map'></div>
+</div>
+<div id='image-caption'>
+    <p>Interactive Guide: Mouse-in to view office sites currently under various stages of planning and construction</p>
+</div>
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mpotter/cjt8v9o592r3s1fmggvf30oak',
-  center: [-87.639896, 41.885734],
+  style: 'mapbox://styles/mpotter/cjun5glw72u341fno6cn5visp',
+  center: [-87.641641, 41.889143],
   zoom: 13.75,
-  maxZoom: 15.0,
   minZoom: 12.5,
 });
 
@@ -34,7 +36,7 @@ map.on('load', function () {
         "data": {
             "type": "Point",
             "coordinates": [
-                -87.646164, 41.894611
+                -87.646196, 41.895594
             ]
         }
     });
@@ -86,3 +88,5 @@ map.on('load', function () {
 });
 
 </script>
+</body>
+</html>
