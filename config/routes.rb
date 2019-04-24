@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'history', to: 'home#history'
 
+  get 'office', to: 'home#office'
+
   get 'layer', to: 'home#layer'
 
   get 'amenity', to: 'home#amenity'
