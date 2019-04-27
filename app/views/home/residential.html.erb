@@ -7,6 +7,7 @@
 
 <div id="map-container">
 <div id='map'>
+  <nav id="menu"></nav>
 <div class='map-overlay top'>
   <div class='map-overlay-inner'>
     <h2>Deliveries from 2000 - <label id='year'></label></h2>
@@ -47,8 +48,6 @@ var map = new mapboxgl.Map({
   zoom: 13.5,
   attributionControl:false
   });
-
-map.addControl(new mapboxgl.FullscreenControl());
 
 var years = [
   2001,
@@ -98,6 +97,68 @@ data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
 });
+
+map.addSource('downtown', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
+});
+map.addLayer({
+  'id': 'downtown',
+  'type': 'fill',
+  'source': 'downtown',
+  'source-layer': 'DowntownZoning',
+  'layout': {},
+  'paint': {
+    'fill-color': '#C22E00',
+    'fill-opacity': .25
+    }
+});
+
+map.addSource('northbranch', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
+});
+map.addLayer({
+  'id': 'northbranch',
+  'type': 'fill',
+  'source': 'northbranch',
+  'source-layer': 'NorthBranchZoning',
+  'layout': {},
+  'paint': {
+    'fill-color': '#6DA2A6',
+    'fill-opacity': .25
+    }
+});
+
+var toggleableLayerIds = [ 'downtown', 'northbranch' ];
+
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  var id = toggleableLayerIds[i];
+
+  var link = document.createElement('a');
+  link.href = '#';
+  link.className = 'active';
+  link.textContent = id;
+
+  link.onclick = function (e) {
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+    if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+    } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+    }
 
 map.addSource('resi', {
   'type': 'geojson',
@@ -254,6 +315,7 @@ filterBy(1999);
       // Start the animation.
       animateMarker(0);
   });
+  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
 </html>

@@ -34,8 +34,6 @@ var map = new mapboxgl.Map({
   attributionControl:false
   });
 
-map.addControl(new mapboxgl.FullscreenControl());
-
 var years = [
   2001,
   2002,
@@ -86,28 +84,12 @@ data.features = data.features.map(function(d) {
   return d;
 });
 
-map.addSource('downtown', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
-});
-map.addLayer({
-  'id': 'downtown',
-  'type': 'fill',
-  'source': 'downtown',
-  'source-layer': 'DowntownZoning',
-  'layout': {},
-  'paint': {
-    'fill-color': '#C22E00',
-    'fill-opacity': .25
-    }
-});
-
 map.addSource('northbranch', {
   type: 'vector',
   url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
 });
 map.addLayer({
-  'id': 'northbranch',
+  'id': 'Transitway',
   'type': 'fill',
   'source': 'northbranch',
   'source-layer': 'NorthBranchZoning',
@@ -123,7 +105,7 @@ map.addSource('transit', {
   url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
 });
 map.addLayer({
-  'id': 'transit',
+  'id': 'CTA Transit',
   'type': 'fill',
   'source': 'transit',
   'source-layer': 'Transit_-_Blue_Line',
@@ -134,7 +116,7 @@ map.addLayer({
     }
 });
 
-var toggleableLayerIds = [ 'downtown', 'northbranch', 'transit' ];
+var toggleableLayerIds = [ 'CTA Transit', 'Transitway' ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
@@ -285,6 +267,7 @@ filterBy(2000);
       // Start the animation.
       animateMarker(0);
   });
+  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
 </html>
