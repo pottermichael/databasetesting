@@ -1,12 +1,13 @@
 <html>
 <body>
 <div class="map-header">
-  <h1>+A Office TOD & River</h1>
-    <p>Chicago's Most Desirable Office Properties Move to Transit and the River</p>
+  <h1>Office Market Expansion</h1>
+    <p>Chicago's Leading Companies Locate Around Transit, Amenities and the River</p>
 </div>
 
 <div id="map-container">
 <div id='map'>
+  <nav id="menu"></nav>
 <div class='map-overlay top'>
   <div class='map-overlay-inner'>
     <h2>Deliveries from 2000 - <label id='year'></label></h2>
@@ -27,7 +28,7 @@ mapboxgl.accessToken =
   'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+  style: 'mapbox://styles/mpotter/cjuybazah05a31gpkqc4s6oxv',
   center: [-87.636127, 41.892699],
   zoom: 13.5,
   attributionControl:false
@@ -85,6 +86,86 @@ data.features = data.features.map(function(d) {
   return d;
 });
 
+map.addSource('downtown', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
+});
+map.addLayer({
+  'id': 'downtown',
+  'type': 'fill',
+  'source': 'downtown',
+  'source-layer': 'DowntownZoning',
+  'layout': {},
+  'paint': {
+    'fill-color': '#C22E00',
+    'fill-opacity': .25
+    }
+});
+
+map.addSource('northbranch', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
+});
+map.addLayer({
+  'id': 'northbranch',
+  'type': 'fill',
+  'source': 'northbranch',
+  'source-layer': 'NorthBranchZoning',
+  'layout': {},
+  'paint': {
+    'fill-color': '#6DA2A6',
+    'fill-opacity': .25
+    }
+});
+
+map.addSource('transit', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
+});
+map.addLayer({
+  'id': 'transit',
+  'type': 'fill',
+  'source': 'transit',
+  'source-layer': 'Transit_-_Blue_Line',
+  'layout': {},
+  'paint': {
+    'fill-color': '#00a5e0',
+    'fill-opacity': .1
+    }
+});
+
+var toggleableLayerIds = [ 'downtown', 'northbranch', 'transit' ];
+
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  var id = toggleableLayerIds[i];
+
+  var link = document.createElement('a');
+  link.href = '#';
+  link.className = 'active';
+  link.textContent = id;
+
+  link.onclick = function (e) {
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+    if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+    } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+    }
+
+
+
 map.addSource('office', {
   'type': 'geojson',
   data: data,
@@ -123,7 +204,7 @@ map.addLayer({
     'text-size': 8
     },
   'paint': {
-    'text-color': 'rgba(0,0,0,0.5)'
+    'text-color': 'rgba(255,255,255,1.0)'
     }
   });
 

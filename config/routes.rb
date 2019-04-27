@@ -4,11 +4,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get 'history', to: 'home#history'
+  get 'residential', to: 'home#residential'
 
   get 'office', to: 'home#office'
-
-  get 'layer', to: 'home#layer'
 
   get 'amenity', to: 'home#amenity'
 
