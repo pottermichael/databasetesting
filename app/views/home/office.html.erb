@@ -1,7 +1,7 @@
 <html>
 <body>
 <div class="map-header">
-  <h1>Office Market Expansion</h1>
+  <h1>Office Submarket Evolution</h1>
     <p>Chicago's Leading Companies Locate Around Transit, Amenities and the River</p>
 </div>
 
@@ -86,28 +86,32 @@ data.features = data.features.map(function(d) {
 
 map.addSource('northbranch', {
   type: 'vector',
-  url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
+  url: 'mapbox://mpotter.cjs3qnclg3el72rlhp31cn745-2v5f7'
 });
 map.addLayer({
   'id': 'Transitway',
-  'type': 'fill',
+  'type': 'line',
   'source': 'northbranch',
-  'source-layer': 'NorthBranchZoning',
-  'layout': {},
+  'source-layer': 'transitway',
+  'layout': {
+    'line-join': "round",
+    'line-cap': "round"
+  },
   'paint': {
-    'fill-color': '#6DA2A6',
-    'fill-opacity': .25
+    'line-color': '#888',
+    'line-width': 4,
+    'line-opacity': .5
     }
 });
 
-map.addSource('transit', {
+map.addSource('CTA', {
   type: 'vector',
   url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
 });
 map.addLayer({
   'id': 'CTA Transit',
   'type': 'fill',
-  'source': 'transit',
+  'source': 'CTA',
   'source-layer': 'Transit_-_Blue_Line',
   'layout': {},
   'paint': {
@@ -116,7 +120,23 @@ map.addLayer({
     }
 });
 
-var toggleableLayerIds = [ 'CTA Transit', 'Transitway' ];
+map.addSource('Commuter', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
+});
+map.addLayer({
+  'id': 'Commuter',
+  'type': 'fill',
+  'source': 'Commuter',
+  'source-layer': 'Transit_-_Commuter',
+  'layout': {},
+  'paint': {
+    'fill-color': '#00a5e0',
+    'fill-opacity': .1
+    }
+});
+
+var toggleableLayerIds = [ 'CTA Transit', 'Commuter', 'Transitway' ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
