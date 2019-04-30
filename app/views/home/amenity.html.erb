@@ -1,26 +1,119 @@
-<h1>24/7 Dynamic Amenities</h1>
-  <p>The final piece of the puzzle - tying together River North, Restaurant Row and the Milwaukee Corridor</p>
-
-<div id="map-container">
-
-  <div id='map'></div>
-  </div>
-
-<div id='image-caption'>
-  <p>Interactive Guide: To view detailed area amenities, mouse-in to zoom and press control to rotate</p>
+<html>
+<body>
+<div class="map-header">
+  <h1>24/7 Dynamic Amenities</h1>
+    <p>The final piece of the puzzle - tying together River North, Restaurant Row and the Milwaukee Corridor</p>
 </div>
 
-<script>
+<div id='map-container'>
+<div id='map'>
+<div class='map-overlay top'>
+  <div class='map-overlay-inner'>
+    <h2>Deliveries from 2000 - <label id='year'></label></h2>
+      <input id='slider' type='range' min='2001' max='2019' step='1' value='2001'/>
+    </div>
+  </div>
+</div>
+</div>
 
-  mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
-  const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
-    center: [-87.636127, 41.892699],
-    zoom: 13.6,
-    maxZoom: 17.0,
-    minZoom: 13.5,
+<script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
+
+<script>
+mapboxgl.accessToken =
+  'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+  center: [-87.636127, 41.892699],
+  zoom: 13.0,
+  attributionControl:false
   });
+
+var years = [
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008,
+  2009,
+  2010,
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019
+];
+
+function filterBy(year) {
+var filterYear = ['<=',['number',['get','Year']], year];
+map.setFilter('retail-circles', filterYear);
+map.setFilter('retail-labels', filterYear);
+
+// Set slider label to the year
+document.getElementById('year').innerText = year;
+}
+
+map.on('load', function() {
+
+d3.json("/data/issued.geojson", function(err, data) {
+if (err) throw err;
+
+// Create a year property value based on time
+// used to filter against.
+data.features = data.features.map(function(d) {
+  d.properties.year = new Date(d.properties);
+  return d;
+});
+
+map.addSource('retail', {
+  'type': 'geojson',
+  data: data,
+});
+
+map.addLayer({
+  'id': 'retail-circles',
+  'type': 'circle',
+  'source': 'retail',
+  'paint': {
+    'circle-color': 'blue',
+    'circle-opacity': .45,
+    'circle-radius': 7.5,
+    }
+  });
+
+map.addLayer({
+  'id': 'retail-labels',
+  'type': 'symbol',
+  'source': 'retail',
+  'layout': {
+    'text-field': ['to-string', ['get', 'Name']],
+    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+    'text-size': 8
+    },
+  'paint': {
+    'text-color': 'rgba(0,0,0,0.5)'
+    }
+  });
+
+// Set filter to first year of the range
+// 0 = 2001
+filterBy(2001);
+
+  document.getElementById('slider').addEventListener('input', function(e) {
+    var year = parseInt(e.target.value, 10);
+    filterBy(year);
+    });
+  });
+});
+
+//code for Mapbox GL Marker Blip, to be refactored
 
   var framesPerSecond = 15;
   var initialOpacity = 1
@@ -37,7 +130,7 @@
           "data": {
               "type": "Point",
               "coordinates": [
-                  -87.646164, 41.894611
+                  -87.646196, 41.895594
               ]
           }
       });
@@ -83,9 +176,10 @@
           }, 1000 / framesPerSecond);
 
       }
-
       // Start the animation.
       animateMarker(0);
   });
-
+  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
+</body>
+</html>
