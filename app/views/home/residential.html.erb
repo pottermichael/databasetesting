@@ -75,28 +75,28 @@ var years = [
   2023
 ];
 
-function filterBy(year) {
-var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-var filterYear = ['<=',['number',['get','Year']], year];
-map.setFilter('residential-circles', filterYear);
-map.setFilter('residential-labels', filterYear);
-
-// Set slider label to the year
-document.getElementById('year').innerText = year;
-}
-
 map.on('load', function() {
 
+  function filterBy(year) {
+  var filterYear = ['<=',['number',['get','Year']], year];
+  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+  map.setFilter('residential-circles', filterYear);
+  map.setFilter('residential-labels', filterYear);
 
-d3.json("/data/resi_built_buildings.geojson", function(err, data) {
-if (err) throw err;
+  // Set slider label to the year
+  document.getElementById('year').innerText = year;
+  }
 
-// Create a year property value based on time
-// used to filter against.
+  d3.json("/data/resi_built_buildings.geojson", function(err, data) {
+  if (err) throw err;
+
+// Create a year property value based on time used to filter against.
 data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
 });
+
+// add zoning layers and toggleable buttons
 
 map.addSource('DX Zoning', {
   type: 'vector',
@@ -222,34 +222,18 @@ map.addLayer({
     }
   });
 
-// tooltip do i need to add a listner?
-  map.on('mousemove', 'resi', function(e) {
-  // Change the cursor style as a UI indicator.
-  map.getCanvas().style.cursor = 'pointer';
-
-  // Populate the popup and set its coordinates based on the feature.
-  var feature = e.features[0];
-  popup.setLngLat(feature.geometry.coordinates)
-  .setText(feature.properties.developer + ' (' + feature.properties.abbrev + ')')
-  .addTo(map);
-  });
-
-  map.on('mouseleave', 'resi', function() {
-  map.getCanvas().style.cursor = '';
-  popup.remove();
-  });
-
-
 // Set filter to first year of the range
 // 0 = 2001
 filterBy(1999);
 
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value, 10);
-    filterBy(year);
+    filterYear = ['<=', ['number', ['get', 'Year']], year]
+    map.setFilter('residential-circles', ['all', filterType, filterYear]);
+    map.setFilter('residential-labels', ['all', filterType, filterYear]);
     });
 
-// adding in radio toggle
+// radio buttons for filtering
   document.getElementById('filters').addEventListener('change', function(e) {
     var type = e.target.value;
     // update the map filter
@@ -258,83 +242,80 @@ filterBy(1999);
     } else if (type === 'Multi') {
       filterType = ['match', ['get', 'Type'], 'Multi', true, false];
     } else if (type === 'Condo') {
-      filterType = ['match', ['get', 'Type'], 'Condo', true, false];
+      filterType = ['match', ['get', 'Type'], 'Multi', false, true];
     } else {
       console.log('error');
     }
-    map.setFilter('residential-circles', filterType);
-    map.setFilter('residential-labels', filterType);
+    map.setFilter('residential-circles', ['all', filterType, filterYear]);
+    map.setFilter('residential-labels', ['all', filterType, filterYear]);
   });
-
   });
 });
 
-//code for Mapbox GL Marker Blip, to be refactored
+//code for location Blip, to be refactored to separate file
 
-  var framesPerSecond = 15;
-  var initialOpacity = 1
-  var opacity = initialOpacity;
-  var initialRadius = 10;
-  var radius = initialRadius;
-  var maxRadius = 50;
+var framesPerSecond = 15;
+var initialOpacity = 1
+var opacity = initialOpacity;
+var initialRadius = 10;
+var radius = initialRadius;
+var maxRadius = 50;
 
-  map.on('load', function () {
+map.on('load', function () {
 
-      // Add a source and layer displaying a point which will be animated in a circle.
-      map.addSource('point', {
-          "type": "geojson",
-          "data": {
-              "type": "Point",
-              "coordinates": [
-                  -87.646196, 41.895594
-              ]
-          }
-      });
+// Add a source and layer displaying a point which will be animated in a circle.
+map.addSource('point', {
+    "type": "geojson",
+    "data": {
+        "type": "Point",
+        "coordinates": [
+            -87.646196, 41.895594
+        ]
+    }
+});
 
-      map.addLayer({
-          "id": "point",
-          "source": "point",
-          "type": "circle",
-          "paint": {
-              "circle-radius": initialRadius,
-              "circle-radius-transition": {duration: 0},
-              "circle-opacity-transition": {duration: 0},
-              "circle-color": "#ffffff"
-          }
-      });
+map.addLayer({
+    "id": "point",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-radius-transition": {duration: 0},
+        "circle-opacity-transition": {duration: 0},
+        "circle-color": "#ffffff"
+    }
+});
 
-      map.addLayer({
-          "id": "point1",
-          "source": "point",
-          "type": "circle",
-          "paint": {
-              "circle-radius": initialRadius,
-              "circle-color": "#007cbf"
-          }
-      });
+map.addLayer({
+    "id": "point1",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-color": "#007cbf"
+    }
+});
 
+function animateMarker(timestamp) {
+    setTimeout(function(){
+        requestAnimationFrame(animateMarker);
 
-      function animateMarker(timestamp) {
-          setTimeout(function(){
-              requestAnimationFrame(animateMarker);
+        radius += (maxRadius - radius) / framesPerSecond;
+        opacity -= ( .9 / framesPerSecond );
 
-              radius += (maxRadius - radius) / framesPerSecond;
-              opacity -= ( .9 / framesPerSecond );
+        map.setPaintProperty('point', 'circle-radius', radius);
+        map.setPaintProperty('point', 'circle-opacity', opacity);
 
-              map.setPaintProperty('point', 'circle-radius', radius);
-              map.setPaintProperty('point', 'circle-opacity', opacity);
+        if (opacity <= 0) {
+            radius = initialRadius;
+            opacity = initialOpacity;
+        }
 
-              if (opacity <= 0) {
-                  radius = initialRadius;
-                  opacity = initialOpacity;
-              }
-
-          }, 1000 / framesPerSecond);
-
-      }
-      // Start the animation.
-      animateMarker(0);
-  });
+    }, 1000 / framesPerSecond);
+}
+// Start the animation.
+animateMarker(0);
+});
   map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
