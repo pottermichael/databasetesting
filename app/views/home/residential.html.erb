@@ -48,7 +48,6 @@ var map = new mapboxgl.Map({
   zoom: 13.5,
   attributionControl:false
   });
-
 var years = [
   2001,
   2002,
@@ -74,30 +73,23 @@ var years = [
   2022,
   2023
 ];
-
 map.on('load', function() {
-
   function filterBy(year) {
   var filterYear = ['<=',['number',['get','Year']], year];
   var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
   map.setFilter('residential-circles', filterYear);
   map.setFilter('residential-labels', filterYear);
-
   // Set slider label to the year
   document.getElementById('year').innerText = year;
   }
-
   d3.json("/data/resi_built_buildings.geojson", function(err, data) {
   if (err) throw err;
-
 // Create a year property value based on time used to filter against.
 data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
 });
-
 // add zoning layers and toggleable buttons
-
 map.addSource('DX Zoning', {
   type: 'vector',
   url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
@@ -113,7 +105,6 @@ map.addLayer({
     'fill-opacity': .25
     }
 });
-
 map.addSource('PMD North', {
   type: 'vector',
   url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
@@ -129,7 +120,6 @@ map.addLayer({
     'fill-opacity': .25
     }
 });
-
 map.addSource('Riverwalk', {
   type: 'vector',
   url: 'mapbox://mpotter.cjs9bwbie1kk22rpljpx0qtvk-5rxxf'
@@ -149,24 +139,18 @@ map.addLayer({
     'line-opacity': 1
     }
 });
-
 var toggleableLayerIds = [ 'DX Zoning', 'PMD North', 'Riverwalk' ];
-
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
-
   var link = document.createElement('a');
   link.href = '#';
   link.className = 'active';
   link.textContent = id;
-
   link.onclick = function (e) {
     var clickedLayer = this.textContent;
     e.preventDefault();
     e.stopPropagation();
-
     var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
     if (visibility === 'visible') {
         map.setLayoutProperty(clickedLayer, 'visibility', 'none');
         this.className = '';
@@ -175,16 +159,13 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
         map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
       }
     };
-
     var layers = document.getElementById('menu');
     layers.appendChild(link);
     }
-
 map.addSource('resi', {
   'type': 'geojson',
   data: data,
 });
-
 map.addLayer({
   'id': 'residential-circles',
   'type': 'circle',
@@ -207,7 +188,6 @@ map.addLayer({
       ]
     }
   });
-
 map.addLayer({
   'id': 'residential-labels',
   'type': 'symbol',
@@ -221,18 +201,15 @@ map.addLayer({
     'text-color': 'rgba(0,0,0,0.5)'
     }
   });
-
 // Set filter to first year of the range
 // 0 = 2001
 filterBy(1999);
-
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value, 10);
     filterYear = ['<=', ['number', ['get', 'Year']], year]
     map.setFilter('residential-circles', ['all', filterType, filterYear]);
     map.setFilter('residential-labels', ['all', filterType, filterYear]);
     });
-
 // radio buttons for filtering
   document.getElementById('filters').addEventListener('change', function(e) {
     var type = e.target.value;
@@ -251,18 +228,14 @@ filterBy(1999);
   });
   });
 });
-
 //code for location Blip, to be refactored to separate file
-
 var framesPerSecond = 15;
 var initialOpacity = 1
 var opacity = initialOpacity;
 var initialRadius = 10;
 var radius = initialRadius;
 var maxRadius = 50;
-
 map.on('load', function () {
-
 // Add a source and layer displaying a point which will be animated in a circle.
 map.addSource('point', {
     "type": "geojson",
@@ -273,7 +246,6 @@ map.addSource('point', {
         ]
     }
 });
-
 map.addLayer({
     "id": "point",
     "source": "point",
@@ -285,7 +257,6 @@ map.addLayer({
         "circle-color": "#ffffff"
     }
 });
-
 map.addLayer({
     "id": "point1",
     "source": "point",
@@ -295,22 +266,17 @@ map.addLayer({
         "circle-color": "#007cbf"
     }
 });
-
 function animateMarker(timestamp) {
     setTimeout(function(){
         requestAnimationFrame(animateMarker);
-
         radius += (maxRadius - radius) / framesPerSecond;
         opacity -= ( .9 / framesPerSecond );
-
         map.setPaintProperty('point', 'circle-radius', radius);
         map.setPaintProperty('point', 'circle-opacity', opacity);
-
         if (opacity <= 0) {
             radius = initialRadius;
             opacity = initialOpacity;
         }
-
     }, 1000 / framesPerSecond);
 }
 // Start the animation.
