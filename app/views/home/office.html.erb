@@ -11,7 +11,7 @@
 <div class='map-overlay top'>
   <div class='map-overlay-inner'>
     <h2>Deliveries from 2000 - <label id='year'></label></h2>
-    <input id='slider' type='range' min='2000' max='2024' step='1' value='2000'/>
+    <input id='slider' type='range' min='2000' max='2025' step='1' value='2000'/>
     <div id='legend' class='legend'>
       <div class='bar'></div>
       <div>40,000-1.4m GFA</div>
@@ -74,7 +74,7 @@ document.getElementById('year').innerText = year;
 map.on('load', function() {
 
 
-d3.json("/data/office_built_buildings.geojson", function(err, data) {
+d3.json("/data/office_total.geojson", function(err, data) {
 if (err) throw err;
 
 // Create a year property value based on time
@@ -82,6 +82,38 @@ if (err) throw err;
 data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
+});
+
+map.addSource('Commuter', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
+});
+map.addLayer({
+  'id': 'Commuter',
+  'type': 'fill',
+  'source': 'Commuter',
+  'source-layer': 'Transit_-_Commuter',
+  'layout': {},
+  'paint': {
+    'fill-color': '#FF7002',
+    'fill-opacity': .25
+    }
+});
+
+map.addSource('DX Zoning', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
+});
+map.addLayer({
+  'id': 'DX Zoning',
+  'type': 'fill',
+  'source': 'DX Zoning',
+  'source-layer': 'DowntownZoning',
+  'layout': {},
+  'paint': {
+    'fill-color': '#C22E00',
+    'fill-opacity': .25
+    }
 });
 
 map.addSource('northbranch', {
@@ -104,39 +136,7 @@ map.addLayer({
     }
 });
 
-map.addSource('CTA', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
-});
-map.addLayer({
-  'id': 'CTA Transit',
-  'type': 'fill',
-  'source': 'CTA',
-  'source-layer': 'Transit_-_Blue_Line',
-  'layout': {},
-  'paint': {
-    'fill-color': '#00a5e0',
-    'fill-opacity': .1
-    }
-});
-
-map.addSource('Commuter', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
-});
-map.addLayer({
-  'id': 'Commuter',
-  'type': 'fill',
-  'source': 'Commuter',
-  'source-layer': 'Transit_-_Commuter',
-  'layout': {},
-  'paint': {
-    'fill-color': 'yellow',
-    'fill-opacity': .1
-    }
-});
-
-var toggleableLayerIds = [ 'CTA Transit', 'Commuter', 'Transitway' ];
+var toggleableLayerIds = [ 'DX Zoning', 'Commuter', 'Transitway' ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];

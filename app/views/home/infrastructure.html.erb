@@ -1,7 +1,9 @@
 <h1>New Infrastructure</h1>
     <p>Transformational projects to strengthen accessibility and enable a transit-oriented lifestyle</p>
   <div id="map-container">
-      <div id='map'></div>
+      <div id='map'>
+        <nav id="menu"></nav>
+      </div>
   </div>
 
   <div id='image-caption'>
@@ -27,6 +29,57 @@ var radius = initialRadius;
 var maxRadius = 50;
 
 map.on('load', function () {
+
+
+
+map.addSource('CTA', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
+});
+map.addLayer({
+  'id': 'CTA Transit',
+  'type': 'fill',
+  'source': 'CTA',
+  'source-layer': 'Transit_-_Blue_Line',
+  'layout': {},
+  'paint': {
+    'fill-color': '#00a5e0',
+    'fill-opacity': .1,
+    }
+});
+
+
+  var toggleableLayerIds = [ 'CTA Transit' ];
+
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+
+    link.onclick = function (e) {
+      var clickedLayer = this.textContent;
+      e.preventDefault();
+      e.stopPropagation();
+
+      var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+      if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+          this.className = '';
+      } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+      };
+
+      var layers = document.getElementById('menu');
+      layers.appendChild(link);
+      }
+
+
 
     // Add a source and layer displaying a point which will be animated in a circle.
     map.addSource('point', {
