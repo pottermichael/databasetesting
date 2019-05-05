@@ -106,26 +106,8 @@ map.addLayer({
     'fill-opacity': .25
     }
 });
-map.addSource('Riverwalk', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cjs9bwbie1kk22rpljpx0qtvk-5rxxf'
-});
-map.addLayer({
-  'id': 'Riverwalk',
-  'type': 'line',
-  'source': 'Riverwalk',
-  'source-layer': 'riverwalk_mainbranch',
-  'layout': {
-    'line-join': "round",
-    'line-cap': "round"
-  },
-  'paint': {
-    'line-color': '#C0ECAE',
-    'line-width': 4,
-    'line-opacity': 1
-    }
-});
-var toggleableLayerIds = [ 'PMD North', 'Riverwalk' ];
+
+var toggleableLayerIds = [ 'PMD North'];
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
   var link = document.createElement('a');
