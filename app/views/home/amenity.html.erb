@@ -7,12 +7,6 @@
 
 <div id='map-container'>
 <div id='map'>
-<div class='map-overlay top'>
-  <div class='map-overlay-inner'>
-    <h2>Deliveries from 2000 - <label id='year'></label></h2>
-      <input id='slider' type='range' min='2001' max='2019' step='1' value='2001'/>
-    </div>
-  </div>
 </div>
 </div>
 
@@ -29,87 +23,114 @@ var map = new mapboxgl.Map({
   attributionControl:false
   });
 
-var years = [
-  2001,
-  2002,
-  2003,
-  2004,
-  2005,
-  2006,
-  2007,
-  2008,
-  2009,
-  2010,
-  2011,
-  2012,
-  2013,
-  2014,
-  2015,
-  2016,
-  2017,
-  2018,
-  2019
-];
-
-function filterBy(year) {
-var filterYear = ['<=',['number',['get','Year']], year];
-map.setFilter('retail-circles', filterYear);
-map.setFilter('retail-labels', filterYear);
-
-// Set slider label to the year
-document.getElementById('year').innerText = year;
-}
-
 map.on('load', function() {
 
 d3.json("/data/issued.geojson", function(err, data) {
 if (err) throw err;
 
-// Create a year property value based on time
-// used to filter against.
-data.features = data.features.map(function(d) {
-  d.properties.year = new Date(d.properties);
-  return d;
-});
-
 map.addSource('retail', {
   'type': 'geojson',
   data: data,
+  data: data,
+  cluster: true,
+  clusterMaxZoom: 14, // Max zoom to cluster points on
+  clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
 });
 
-map.addLayer({
-  'id': 'retail-circles',
-  'type': 'circle',
-  'source': 'retail',
-  'paint': {
-    'circle-color': 'blue',
-    'circle-opacity': .45,
-    'circle-radius': 7.5,
-    }
+  map.addLayer({
+  id: "clusters",
+  type: "circle",
+  source: "retail",
+  filter: ["has", "point_count"],
+  paint: {
+  // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+  // with three steps to implement three types of circles:
+  //   * Blue, 20px circles when point count is less than 100
+  //   * Yellow, 30px circles when point count is between 100 and 750
+  //   * Pink, 40px circles when point count is greater than or equal to 750
+  "circle-color": [
+  "step",
+  ["get", "point_count"],
+  "#51bbd6",
+  50,
+  "#f1f075",
+  200,
+  "#f28cb1"
+  ],
+  "circle-radius": [
+  "step",
+  ["get", "point_count"],
+  20,
+  50,
+  30,
+  200,
+  40
+  ]
+  }
   });
 
-map.addLayer({
-  'id': 'retail-labels',
-  'type': 'symbol',
-  'source': 'retail',
-  'layout': {
-    'text-field': ['to-string', ['get', 'Name']],
-    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    'text-size': 8
-    },
-  'paint': {
-    'text-color': 'rgba(0,0,0,0.5)'
-    }
+  map.addLayer({
+  id: "cluster-count",
+  type: "symbol",
+  source: "retail",
+  filter: ["has", "point_count"],
+  layout: {
+  "text-field": "{point_count_abbreviated}",
+  "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+  "text-size": 12
+  }
   });
 
-// Set filter to first year of the range
-// 0 = 2001
-filterBy(2001);
+  map.addLayer({
+  id: "unclustered-point",
+  type: "circle",
+  source: "retail",
+  filter: ["!", ["has", "point_count"]],
+  paint: {
+  "circle-color": "#11b4da",
+  "circle-radius": 4,
+  "circle-stroke-width": 1,
+  "circle-stroke-color": "#fff"
+  }
+  });
 
-  document.getElementById('slider').addEventListener('input', function(e) {
-    var year = parseInt(e.target.value, 10);
-    filterBy(year);
+  map.addLayer({
+    'id': 'retail-labels',
+    'type': 'symbol',
+    'source': 'retail',
+    'layout': {
+      'text-field': ['to-string', ['get', 'Name']],
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': 8
+      },
+    'paint': {
+      'text-color': 'rgba(0,0,0,0.5)',
+      'text-halo-color': '#ccd912',
+      'text-halo-width': 2
+      }
     });
+
+  // inspect a cluster on click
+  map.on('click', 'clusters', function (e) {
+  var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+  var clusterId = features[0].properties.cluster_id;
+  map.getSource('retail').getClusterExpansionZoom(clusterId, function (err, zoom) {
+  if (err)
+  return;
+
+  map.easeTo({
+  center: features[0].geometry.coordinates,
+  zoom: zoom
+  });
+  });
+  });
+
+  map.on('mouseenter', 'clusters', function () {
+  map.getCanvas().style.cursor = 'pointer';
+  });
+  map.on('mouseleave', 'clusters', function () {
+  map.getCanvas().style.cursor = '';
+  });
   });
 });
 
