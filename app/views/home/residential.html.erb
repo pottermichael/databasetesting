@@ -7,7 +7,6 @@
 
 <div id="map-container">
 <div id='map'>
-  <nav id="menu"></nav>
 <div class='map-overlay top'>
   <div class='map-overlay-inner'>
     <h2>Deliveries from 2000 - <label id='year'></label></h2>
@@ -35,8 +34,6 @@
 </div>
 </div>
 </div>
-
-<script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
 
 <script>
 mapboxgl.accessToken =
@@ -73,6 +70,15 @@ var years = [
   2022,
   2023
 ];
+
+//code for location Blip, to be refactored to separate file
+var framesPerSecond = 15;
+var initialOpacity = 1
+var opacity = initialOpacity;
+var initialRadius = 10;
+var radius = initialRadius;
+var maxRadius = 50;
+
 map.on('load', function() {
   function filterBy(year) {
   var filterYear = ['<=',['number',['get','Year']], year];
@@ -89,47 +95,7 @@ data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
 });
-// add zoning layers and toggleable buttons
 
-map.addSource('PMD North', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
-});
-map.addLayer({
-  'id': 'PMD North',
-  'type': 'fill',
-  'source': 'PMD North',
-  'source-layer': 'NorthBranchZoning',
-  'layout': {},
-  'paint': {
-    'fill-color': '#6DA2A6',
-    'fill-opacity': .25
-    }
-});
-
-var toggleableLayerIds = [ 'PMD North'];
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
-  var link = document.createElement('a');
-  link.href = '#';
-  link.className = 'active';
-  link.textContent = id;
-  link.onclick = function (e) {
-    var clickedLayer = this.textContent;
-    e.preventDefault();
-    e.stopPropagation();
-    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-    if (visibility === 'visible') {
-        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-        this.className = '';
-    } else {
-        this.className = 'active';
-        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-      }
-    };
-    var layers = document.getElementById('menu');
-    layers.appendChild(link);
-    }
 map.addSource('resi', {
   'type': 'geojson',
   data: data,
@@ -194,62 +160,65 @@ filterBy(1999);
     map.setFilter('residential-circles', ['all', filterType, filterYear]);
     map.setFilter('residential-labels', ['all', filterType, filterYear]);
   });
+
+  // Add a source and layer displaying a point which will be animated in a circle.
+  map.addSource('point', {
+      "type": "geojson",
+      "data": {
+          "type": "Point",
+          "coordinates": [
+              -87.646196, 41.895594
+          ]
+      }
+  });
+  map.addLayer({
+      "id": "point",
+      "source": "point",
+      "type": "circle",
+      "paint": {
+          "circle-radius": initialRadius,
+          "circle-radius-transition": {duration: 0},
+          "circle-opacity-transition": {duration: 0},
+          "circle-color": "#ffffff"
+      }
+  });
+  map.addLayer({
+      "id": "point1",
+      "source": "point",
+      "type": "circle",
+      "paint": {
+          "circle-radius": initialRadius,
+          "circle-color": "#007cbf"
+      }
+  });
+  function animateMarker(timestamp) {
+      setTimeout(function(){
+          requestAnimationFrame(animateMarker);
+          radius += (maxRadius - radius) / framesPerSecond;
+          opacity -= ( .9 / framesPerSecond );
+          map.setPaintProperty('point', 'circle-radius', radius);
+          map.setPaintProperty('point', 'circle-opacity', opacity);
+          if (opacity <= 0) {
+              radius = initialRadius;
+              opacity = initialOpacity;
+          }
+      }, 1000 / framesPerSecond);
+  }
+  // Start the animation.
+  animateMarker(0);
+
+
+
+
+
+
   });
 });
-//code for location Blip, to be refactored to separate file
-var framesPerSecond = 15;
-var initialOpacity = 1
-var opacity = initialOpacity;
-var initialRadius = 10;
-var radius = initialRadius;
-var maxRadius = 50;
-map.on('load', function () {
-// Add a source and layer displaying a point which will be animated in a circle.
-map.addSource('point', {
-    "type": "geojson",
-    "data": {
-        "type": "Point",
-        "coordinates": [
-            -87.646196, 41.895594
-        ]
-    }
-});
-map.addLayer({
-    "id": "point",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-radius-transition": {duration: 0},
-        "circle-opacity-transition": {duration: 0},
-        "circle-color": "#ffffff"
-    }
-});
-map.addLayer({
-    "id": "point1",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-color": "#007cbf"
-    }
-});
-function animateMarker(timestamp) {
-    setTimeout(function(){
-        requestAnimationFrame(animateMarker);
-        radius += (maxRadius - radius) / framesPerSecond;
-        opacity -= ( .9 / framesPerSecond );
-        map.setPaintProperty('point', 'circle-radius', radius);
-        map.setPaintProperty('point', 'circle-opacity', opacity);
-        if (opacity <= 0) {
-            radius = initialRadius;
-            opacity = initialOpacity;
-        }
-    }, 1000 / framesPerSecond);
-}
-// Start the animation.
-animateMarker(0);
-});
+
+
+
+
+
   map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>

@@ -163,6 +163,26 @@ cursor: ew-resize;
   background: #3074a4;
 }
 
+// styling for satelite remover / addEventListener
+
+#remover {
+  margin: 0 auto;
+  background-color: #fb5b3f;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.5em;
+  border: 2px solid #fff;
+  border-radius: 0.5em;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  position: absolute;
+  left: 0.7em;
+  top: 9em;
+}
+
+#remover:hover {
+    background-color: salmon;
+}
 
 .footer{
   background-color: white;
