@@ -160,66 +160,10 @@ filterBy(1999);
     map.setFilter('residential-circles', ['all', filterType, filterYear]);
     map.setFilter('residential-labels', ['all', filterType, filterYear]);
   });
-
-  // Add a source and layer displaying a point which will be animated in a circle.
-  map.addSource('point', {
-      "type": "geojson",
-      "data": {
-          "type": "Point",
-          "coordinates": [
-              -87.646196, 41.895594
-          ]
-      }
-  });
-  map.addLayer({
-      "id": "point",
-      "source": "point",
-      "type": "circle",
-      "paint": {
-          "circle-radius": initialRadius,
-          "circle-radius-transition": {duration: 0},
-          "circle-opacity-transition": {duration: 0},
-          "circle-color": "#ffffff"
-      }
-  });
-  map.addLayer({
-      "id": "point1",
-      "source": "point",
-      "type": "circle",
-      "paint": {
-          "circle-radius": initialRadius,
-          "circle-color": "#007cbf"
-      }
-  });
-  function animateMarker(timestamp) {
-      setTimeout(function(){
-          requestAnimationFrame(animateMarker);
-          radius += (maxRadius - radius) / framesPerSecond;
-          opacity -= ( .9 / framesPerSecond );
-          map.setPaintProperty('point', 'circle-radius', radius);
-          map.setPaintProperty('point', 'circle-opacity', opacity);
-          if (opacity <= 0) {
-              radius = initialRadius;
-              opacity = initialOpacity;
-          }
-      }, 1000 / framesPerSecond);
-  }
-  // Start the animation.
-  animateMarker(0);
-
-
-
-
-
-
   });
 });
 
-
-
-
-
-  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
 </html>
