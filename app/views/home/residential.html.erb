@@ -1,100 +1,62 @@
 <html>
 <body>
-<div class="map-header">
-  <h1>Infill Residential Growth</h1>
-    <p>37-Acre Development Site Artifically Restrained by Zoning for +20 Years</p>
-</div>
+<div id='map'></div>
+<div id='console'>
+  <h1>Infill Growth Analysis</h1>
+  <div class ='session'>
+    <h2>Class +A Deliveries: 2000 - <label id='year'>TBD</label></h2>
+    <input id='slider' class='row' type='range' min='1999' max='2026' step='1' value='1999'/>
+  </div>
 
-<div id="map-container">
-<div id='map'>
-<div class='map-overlay top'>
-  <div class='map-overlay-inner'>
-    <h2>Deliveries from 2000 - <label id='year'></label></h2>
-    <input id='slider' type='range' min='1999' max='2023' step='1' value='1999'/>
-    <div id='legend' class='legend'>
-      <div class='bar'></div>
-      <div>0-750 units</div>
+  <div class='session'>
+    <h2>Property Type</h2>
+    <div class='row' id='filters'>
+      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+      <label for='all'>All</label>
+      <input id="Office" type="radio" name="toggle" value="Office">
+      <label for='Office'>Office</label>
+      <input id="Resi" type="radio" name="toggle" value="Resi">
+      <label for='Resi'>Resi</label>
     </div>
   </div>
-  <div class='map-overlay-inner'>
-      <div class='session'>
-          <div class='row' id='filters'>
-            <label>
-                <input id="all" type="radio" name="toggle" value="all" checked="checked">All
-            </label>
-            <label>
-                <input id="Multi" type="radio" name="toggle" value="Multi">Multi
-            </label>
-            <label>
-                <input id="Condo" type="radio" name="toggle" value="Condo">Condo
-            </label>
-          </div>
-      </div>
-    </div>
-</div>
-</div>
 </div>
 
 <script>
-mapboxgl.accessToken =
-  'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
   center: [-87.636127, 41.892699],
   zoom: 13.5,
-  attributionControl:false
-  });
-var years = [
-  2001,
-  2002,
-  2003,
-  2004,
-  2005,
-  2006,
-  2007,
-  2008,
-  2009,
-  2010,
-  2011,
-  2012,
-  2013,
-  2014,
-  2015,
-  2016,
-  2017,
-  2018,
-  2019,
-  2020,
-  2021,
-  2022,
-  2023
-];
+  attributionControl: false
+});
 
-//code for location Blip, to be refactored to separate file
 var framesPerSecond = 15;
-var initialOpacity = 1
+var initialOpacity = 1;
 var opacity = initialOpacity;
 var initialRadius = 10;
 var radius = initialRadius;
 var maxRadius = 50;
 
+
 map.on('load', function() {
-  function filterBy(year) {
-  var filterYear = ['<=',['number',['get','Year']], year];
-  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-  map.setFilter('residential-circles', filterYear);
-  map.setFilter('residential-labels', filterYear);
-  // Set slider label to the year
-  document.getElementById('year').innerText = year;
-  }
-  d3.json("/data/resi_built_buildings.geojson", function(err, data) {
-  if (err) throw err;
+
 // Create a year property value based on time used to filter against.
-data.features = data.features.map(function(d) {
-  d.properties.year = new Date(d.properties);
-  return d;
-});
+  d3.json("/data/map.geojson", function(err, data) {
+  if (err) throw err;
+  data.features = data.features.map(function(d) {
+    d.properties.year = new Date(d.properties);
+    return d;
+  });
+
+// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
+function filterBy(year) {
+var filterYear = ['<=',['number',['get','Year']], year];
+var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+map.setFilter('residential-circles', filterYear);
+map.setFilter('residential-labels', filterYear);
+}
 
 map.addSource('resi', {
   'type': 'geojson',
@@ -106,21 +68,21 @@ map.addLayer({
   'source': 'resi',
   'paint': {
     'circle-color': [
-    'interpolate',
-        ['linear'],
-        ['number',['get', 'Units']],
-          1, '#FCA107',
-          600, '#7F3121'
+        'match',
+        ['get', 'Type'],
+        'Resi', '#fbb03b',
+        'Office', '#3bb2d0',
+        /*other*/ '#ccc'
         ],
   'circle-opacity': .75,
     'circle-radius': [
       'interpolate',
       ['linear'],
-        ['number',['get', 'Units']],
-          50, 5,
-          600, 30
+        ['number',['get', 'GFA']],
+          50000, 5,
+          1500000, 30
       ]
-    }
+    },
   });
 map.addLayer({
   'id': 'residential-labels',
@@ -136,29 +98,33 @@ map.addLayer({
     }
   });
 // Set filter to first year of the range
-// 0 = 2001
+// 0 = 2000
 filterBy(1999);
   document.getElementById('slider').addEventListener('input', function(e) {
-    var year = parseInt(e.target.value, 10);
-    filterYear = ['<=', ['number', ['get', 'Year']], year]
-    map.setFilter('residential-circles', ['all', filterType, filterYear]);
-    map.setFilter('residential-labels', ['all', filterType, filterYear]);
-    });
-// radio buttons for filtering
+    var year = parseInt(e.target.value);
+    // update the map
+    filterYear = ['<=', ['number', ['get', 'Year']], year];
+    map.setFilter('residential-circles', ['all', filterYear, filterType]);
+    map.setFilter('residential-labels', ['all', filterYear, filterType]);
+
+  document.getElementById('year').innerText = year;
+
+  });
+  // radio buttons for filtering
   document.getElementById('filters').addEventListener('change', function(e) {
     var type = e.target.value;
     // update the map filter
     if (type === 'all') {
       filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    } else if (type === 'Multi') {
-      filterType = ['match', ['get', 'Type'], 'Multi', true, false];
-    } else if (type === 'Condo') {
-      filterType = ['match', ['get', 'Type'], 'Multi', false, true];
+    } else if (type === 'Office') {
+      filterType = ['match', ['get', 'Type'], 'Office', true, false];
+    } else if (type === 'Resi') {
+      filterType = ['match', ['get', 'Type'], 'Resi', true, false];
     } else {
       console.log('error');
-    }
-    map.setFilter('residential-circles', ['all', filterType, filterYear]);
-    map.setFilter('residential-labels', ['all', filterType, filterYear]);
+    };
+    map.setFilter('residential-circles', ['all', filterYear, filterType]);
+    map.setFilter('residential-labels', ['all', filterYear, filterType]);
   });
   });
 });

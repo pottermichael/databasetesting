@@ -3,24 +3,27 @@
 @import "font-awesome";
 
 html, body {
+  margin: 0;
+  padding: 0;
   font-family: roboto-medium;
 }
+
+//nav bar styling
 
 .navbar{
   border-bottom: 1px solid rgba(0,0,0,.0975);
   background-color: black;
 }
 
-.map-header{
-  margin-top: -10px;
-  font-family: roboto-medium;
-  text-transform: uppercase;
-  p{
-  font-style: italic;
-  text-transform: capitalize;
+.user-section{
+  a{
+    padding-left: 15px;
+  }
+  i.fa{
+    font-size: 22px;
+    color: #000000d4;
   }
 }
-
 
 #logo-left {
   float: left;
@@ -40,84 +43,59 @@ html, body {
   color: #63AF7A;
 }
 
-#image-caption {
-  padding-bottom: 10px;
-  padding-left: 5px;
-  color: #C7C7C7;
-  font-size: 1em;
-  font-weight: thin;
-  font-family: helvetica;
-}
+// mapbox change over time example
 
-.user-section{
-  a{
-    padding-left: 15px;
-  }
-  i.fa{
-    font-size: 22px;
-    color: #000000d4;
-  }
-}
-
-//time series styling
 #map {
-  position: relative;
+  position: absolute;
   top: 0;
   bottom: 0;
   width: 100%;
-  height: 100%;
-  min-height: 700px;
 }
 
-.map-overlay {
-  font: 16px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  position: absolute;
-  z-index: 1;
-  width: 35%;
-  top: 5px;
-  left: 5px;
-  border-left: 20px
+h1 {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: bold;
 }
 
-.map-overlay .map-overlay-inner {
-  background-color: #fff;
-  box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
-  border-radius: 3px;
-  padding: 10px;
+h2 {
+  font-size: 14px;
+  line-height: 20px;
   margin-bottom: 10px;
 }
 
-.map-overlay h2 {
-  line-height: 24px;
-  display: block;
-  margin: 0 0 10px;
+a {
+  text-decoration: none;
+  color: #2DC4B2;
 }
 
-.map-overlay .legend .bar {
-  position: right;
-  height: 5px;
-  width: 100%;
-  background: linear-gradient(to right, #FCA107, #7F3121);
+#console {
+  position: absolute;
+  margin: 10px;
+  width: 240px;
+  background-color: white;
+  outline-style: solid;
+  outline-width: thin;
+  outline-color: #2961FF;
+  padding: 0px 25px;
 }
 
-.map-overlay input {
-background-color: transparent;
-width: 50%;
-position: relative;
-margin: 0px;
-cursor: ew-resize;
+.session {
+ margin-bottom: 20px;
 }
 
-//styling for adding radio button toggle
-.session{
-  margin: 15px;
-}
 .row {
-  display: inline-block;
-  align-items: center;
   height: 12px;
   width: 100%;
+  margin-left: 5px;
 }
+
+.label {
+  width: 40%;
+  display: inline-block;
+  text-align: center;
+}
+
 
 //styling for show and hide layers
 
