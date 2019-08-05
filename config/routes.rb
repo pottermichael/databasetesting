@@ -6,21 +6,13 @@ Rails.application.routes.draw do
 
   get 'residential', to: 'home#residential'
 
-  get 'office', to: 'home#office'
-
   get 'amenity', to: 'home#amenity'
 
   get 'migration', to: 'home#migration'
 
   get 'comps', to: 'home#comps'
 
-  get 'apartment', to: 'home#apartment'
-
-  get 'inventory', to: 'home#inventory'
-
   get 'infrastructure', to: 'home#infrastructure'
-
-  get 'locator', to: 'home#locator'
 
   get 'clock', to: 'home#clock'
 

@@ -1,6 +1,7 @@
 <html>
 <body>
 <div id='map'></div>
+  <nav id="menu"></nav>
 <div id='console'>
   <h1>Infill Growth Analysis</h1>
   <div class ='session'>
@@ -40,6 +41,131 @@ var radius = initialRadius;
 var maxRadius = 50;
 
 map.on('load', function() {
+
+//add layers for toggle buttons
+
+  map.addSource('Commuter', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
+  });
+  map.addLayer({
+    'id': 'Commuter',
+    'type': 'fill',
+    'source': 'Commuter',
+    'source-layer': 'Transit_-_Commuter',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#FF7002',
+      'fill-opacity': .25
+    },
+  });
+
+  map.addSource('DX Zoning', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
+  });
+  map.addLayer({
+    'id': 'DX Zoning',
+    'type': 'fill',
+    'source': 'DX Zoning',
+    'source-layer': 'DowntownZoning',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#C22E00',
+      'fill-opacity': .25
+      }
+  });
+
+  map.addSource('northbranch', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjs3qnclg3el72rlhp31cn745-2v5f7'
+  });
+  map.addLayer({
+    'id': 'Transitway',
+    'type': 'line',
+    'source': 'northbranch',
+    'source-layer': 'transitway',
+    'layout': {
+      'visibility': 'none',
+      'line-join': "round",
+      'line-cap': "round"
+    },
+    'paint': {
+      'line-color': '#888',
+      'line-width': 4,
+      'line-opacity': .5
+      }
+  });
+
+  map.addSource('PMD North', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
+  });
+  map.addLayer({
+    'id': 'PMD North',
+    'type': 'fill',
+    'source': 'PMD North',
+    'source-layer': 'NorthBranchZoning',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#6DA2A6',
+      'fill-opacity': .25
+      }
+  });
+
+  map.addSource('CTA', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
+  });
+  map.addLayer({
+    'id': 'CTA Transit',
+    'type': 'fill',
+    'source': 'CTA',
+    'source-layer': 'Transit_-_Blue_Line',
+    'layout': {},
+    'paint': {
+      'fill-color': '#00a5e0',
+      'fill-opacity': .1,
+      }
+  });
+
+//code for layer button functionality
+
+  var toggleableLayerIds = [ 'DX Zoning', 'Commuter', 'Transitway', 'PMD North', 'CTA Transit'];
+
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+
+  link.onclick = function (e) {
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+    if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+    } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    };
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+  }
+
 
 // Create a year property value based on time used to filter against.
   d3.json("/data/map.geojson", function(err, data) {
