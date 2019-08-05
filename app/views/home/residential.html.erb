@@ -39,7 +39,6 @@ var initialRadius = 10;
 var radius = initialRadius;
 var maxRadius = 50;
 
-
 map.on('load', function() {
 
 // Create a year property value based on time used to filter against.
@@ -97,8 +96,62 @@ map.addLayer({
     'text-color': 'rgba(0,0,0,0.5)'
     }
   });
+
+//add layers for blip
+
+map.addSource('point', {
+    "type": "geojson",
+    "data": {
+        "type": "Point",
+        "coordinates": [
+            -87.646196, 41.895594
+        ]
+    }
+});
+
+map.addLayer({
+    "id": "point",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-radius-transition": {duration: 0},
+        "circle-opacity-transition": {duration: 0},
+        "circle-color": "#ffffff"
+    }
+});
+
+map.addLayer({
+    "id": "point1",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-color": "#007cbf"
+    }
+});
+
+//function to execute blip
+
+function animateMarker(timestamp) {
+    setTimeout(function(){
+        requestAnimationFrame(animateMarker);
+
+        radius += (maxRadius - radius) / framesPerSecond;
+        opacity -= ( .9 / framesPerSecond );
+
+        map.setPaintProperty('point', 'circle-radius', radius);
+        map.setPaintProperty('point', 'circle-opacity', opacity);
+
+        if (opacity <= 0) {
+            radius = initialRadius;
+            opacity = initialOpacity;
+        }
+    }, 1000 / framesPerSecond);
+}
+
 // Set filter to first year of the range
-// 0 = 2000
+// 0 = 1999
 filterBy(1999);
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value);
@@ -126,9 +179,9 @@ filterBy(1999);
     map.setFilter('residential-circles', ['all', filterYear, filterType]);
     map.setFilter('residential-labels', ['all', filterYear, filterType]);
   });
+  animateMarker(0);
   });
 });
-
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
