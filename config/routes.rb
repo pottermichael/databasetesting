@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get 'residential', to: 'home#residential'
+  get 'existing', to: 'home#existing'
+
+  get 'planned', to: 'home#planned'
 
   get 'amenity', to: 'home#amenity'
 

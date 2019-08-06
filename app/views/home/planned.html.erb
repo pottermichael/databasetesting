@@ -1,0 +1,278 @@
+<html>
+<body>
+<div id='map'></div>
+  <nav id="menu"></nav>
+<div id='console'>
+  <h1>Infill Growth - Future/Planned</h1>
+  <div class ='session'>
+    <h2>Class +A Deliveries: Today - <label id='year'>2019</label></h2>
+    <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2019'/>
+  </div>
+
+  <div class='session'>
+    <h2>Property Type</h2>
+    <div class='row' id='filters'>
+      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+      <label for='all'>All</label>
+      <input id="Office" type="radio" name="toggle" value="Office">
+      <label for='Office'>Office</label>
+      <input id="Resi" type="radio" name="toggle" value="Resi">
+      <label for='Resi'>Resi</label>
+    </div>
+  </div>
+</div>
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+  center: [-87.636127, 41.892699],
+  zoom: 13.5,
+  attributionControl: false
+});
+
+var framesPerSecond = 15;
+var initialOpacity = 1;
+var opacity = initialOpacity;
+var initialRadius = 10;
+var radius = initialRadius;
+var maxRadius = 50;
+
+map.on('load', function() {
+
+//add layers for toggle buttons
+
+  map.addSource('Commuter', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
+  });
+  map.addLayer({
+    'id': 'Commuter',
+    'type': 'fill',
+    'source': 'Commuter',
+    'source-layer': 'Transit_-_Commuter',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#FF7002',
+      'fill-opacity': .25
+    },
+  });
+
+  map.addSource('northbranch', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjs3qnclg3el72rlhp31cn745-2v5f7'
+  });
+  map.addLayer({
+    'id': 'Transitway',
+    'type': 'line',
+    'source': 'northbranch',
+    'source-layer': 'transitway',
+    'layout': {
+      'visibility': 'none',
+      'line-join': "round",
+      'line-cap': "round"
+    },
+    'paint': {
+      'line-color': '#888',
+      'line-width': 4,
+      'line-opacity': .5
+      }
+  });
+
+  map.addSource('CTA', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
+  });
+  map.addLayer({
+    'id': 'CTA Transit',
+    'type': 'fill',
+    'source': 'CTA',
+    'source-layer': 'Transit_-_Blue_Line',
+    'layout': {},
+    'paint': {
+      'fill-color': '#00a5e0',
+      'fill-opacity': .1,
+      }
+  });
+
+//code for layer button functionality
+
+  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Transit'];
+
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+
+  link.onclick = function (e) {
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+    if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+    } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    };
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+  }
+
+
+// Create a year property value based on time used to filter against.
+  d3.json("/data/supply_in_planning.geojson", function(err, data) {
+  if (err) throw err;
+  data.features = data.features.map(function(d) {
+    d.properties.year = new Date(d.properties);
+    return d;
+  });
+
+// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
+function filterBy(year) {
+var filterYear = ['<=',['number',['get','Year']], year];
+var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+map.setFilter('residential-circles', filterYear);
+map.setFilter('residential-labels', filterYear);
+}
+
+map.addSource('resi', {
+  'type': 'geojson',
+  data: data,
+});
+map.addLayer({
+  'id': 'residential-circles',
+  'type': 'circle',
+  'source': 'resi',
+  'paint': {
+    'circle-color': [
+        'match',
+        ['get', 'Type'],
+        'Resi', '#fbb03b',
+        'Office', '#3bb2d0',
+        /*other*/ '#ccc'
+        ],
+  'circle-opacity': .75,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+        ['number',['get', 'GFA']],
+          50000, 5,
+          1500000, 30
+      ]
+    },
+  });
+map.addLayer({
+  'id': 'residential-labels',
+  'type': 'symbol',
+  'source': 'resi',
+  'layout': {
+    'text-field': ['to-string', ['get', 'Project']],
+    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+    'text-size': 8
+    },
+  'paint': {
+    'text-color': 'rgba(0,0,0,0.5)'
+    }
+  });
+
+//add layers for blip
+
+map.addSource('point', {
+    "type": "geojson",
+    "data": {
+        "type": "Point",
+        "coordinates": [
+            -87.646196, 41.895594
+        ]
+    }
+});
+
+map.addLayer({
+    "id": "point",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-radius-transition": {duration: 0},
+        "circle-opacity-transition": {duration: 0},
+        "circle-color": "#ffffff"
+    }
+});
+
+map.addLayer({
+    "id": "point1",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-color": "#007cbf"
+    }
+});
+
+//function to execute blip
+
+function animateMarker(timestamp) {
+    setTimeout(function(){
+        requestAnimationFrame(animateMarker);
+
+        radius += (maxRadius - radius) / framesPerSecond;
+        opacity -= ( .9 / framesPerSecond );
+
+        map.setPaintProperty('point', 'circle-radius', radius);
+        map.setPaintProperty('point', 'circle-opacity', opacity);
+
+        if (opacity <= 0) {
+            radius = initialRadius;
+            opacity = initialOpacity;
+        }
+    }, 1000 / framesPerSecond);
+}
+
+// Set filter to first year of the range
+// 0 = 2019 to represent data from today into the future
+filterBy(2019);
+  document.getElementById('slider').addEventListener('input', function(e) {
+    var year = parseInt(e.target.value);
+    // update the map
+    filterYear = ['<=', ['number', ['get', 'Year']], year];
+    map.setFilter('residential-circles', ['all', filterYear, filterType]);
+    map.setFilter('residential-labels', ['all', filterYear, filterType]);
+
+  document.getElementById('year').innerText = year;
+
+  });
+  // radio buttons for filtering
+  document.getElementById('filters').addEventListener('change', function(e) {
+    var type = e.target.value;
+    // update the map filter
+    if (type === 'all') {
+      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+    } else if (type === 'Office') {
+      filterType = ['match', ['get', 'Type'], 'Office', true, false];
+    } else if (type === 'Resi') {
+      filterType = ['match', ['get', 'Type'], 'Resi', true, false];
+    } else {
+      console.log('error');
+    };
+    map.setFilter('residential-circles', ['all', filterYear, filterType]);
+    map.setFilter('residential-labels', ['all', filterYear, filterType]);
+  });
+  animateMarker(0);
+  });
+});
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+</script>
+</body>
+</html>
