@@ -115,9 +115,25 @@ map.on('load', function() {
       }
   });
 
+  map.addSource('Large Parcels', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1cozgzq00652wpm6xgtszcm-6okjx'
+  });
+  map.addLayer({
+    'id': 'Large Parcels',
+    'type': 'fill',
+    'source': 'Large Parcels',
+    'source-layer': 'greyhound',
+    'layout': {},
+    'paint': {
+      'fill-color': '#ebac97',
+      'fill-opacity': 1,
+      }
+  });
+
 //code for layer button functionality
 
-  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Blue', 'CTA Brown'];
+  var toggleableLayerIds = ['Commuter', 'CTA Blue', 'CTA Brown', 'Transitway', 'Large Parcels'];
 
   for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
