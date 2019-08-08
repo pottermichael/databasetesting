@@ -83,14 +83,14 @@ map.on('load', function() {
       }
   });
 
-  map.addSource('CTA', {
+  map.addSource('CTA Blue', {
     type: 'vector',
     url: 'mapbox://mpotter.cj1p1jjgm016w2qpi0zsdqylr-3eycz'
   });
   map.addLayer({
-    'id': 'CTA Transit',
+    'id': 'CTA Blue',
     'type': 'fill',
-    'source': 'CTA',
+    'source': 'CTA Blue',
     'source-layer': 'Transit_-_Blue_Line',
     'layout': {},
     'paint': {
@@ -99,9 +99,25 @@ map.on('load', function() {
       }
   });
 
+  map.addSource('CTA Brown', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6orem012e2qmhe8wsjmad-621pz'
+  });
+  map.addLayer({
+    'id': 'CTA Brown',
+    'type': 'fill',
+    'source': 'CTA Brown',
+    'source-layer': 'Transit_-_Brown_Line',
+    'layout': {},
+    'paint': {
+      'fill-color': '#64371b',
+      'fill-opacity': .1,
+      }
+  });
+
 //code for layer button functionality
 
-  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Transit'];
+  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Blue', 'CTA Brown'];
 
   for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
