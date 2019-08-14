@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'planned', to: 'home#planned'
 
+  get 'transit', to: 'home#transit'
+
   get 'amenity', to: 'home#amenity'
 
   get 'migration', to: 'home#migration'
