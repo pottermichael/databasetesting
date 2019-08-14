@@ -3,21 +3,21 @@
 <div id='map'></div>
   <nav id="menu"></nav>
 <div id='console'>
-  <h1>Infill Growth - Future/Planned</h1>
+  <h1>OFFICE SUPPLY & REMAINING SITES</h1>
   <div class ='session'>
-    <h2>Class +A Deliveries: Today - <label id='year'>2019</label></h2>
-    <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2019'/>
+    <h2>Class +A Deliveries: Today - <label id='year'>2000</label></h2>
+    <input id='slider' class='row' type='range' min='2000' max='2025' step='1' value='2000'/>
   </div>
 
   <div class='session'>
-    <h2>Property Type</h2>
+    <h2>Status</h2>
     <div class='row' id='filters'>
       <input id='all' type='radio' name='toggle' value='all' checked='checked'>
       <label for='all'>All</label>
-      <input id="Office" type="radio" name="toggle" value="Office">
-      <label for='Office'>Office</label>
-      <input id="Resi" type="radio" name="toggle" value="Resi">
-      <label for='Resi'>Resi</label>
+      <input id="Existing" type="radio" name="toggle" value="Existing">
+      <label for='Existing'>Exist</label>
+      <input id="Planned" type="radio" name="toggle" value="Planned">
+      <label for='Planned'>Plan</label>
     </div>
   </div>
 </div>
@@ -188,7 +188,7 @@ map.on('load', function() {
 
 
 // Create a year property value based on time used to filter against.
-  d3.json("/data/supply_in_planning.geojson", function(err, data) {
+  d3.json("/data/office_only.geojson", function(err, data) {
   if (err) throw err;
   data.features = data.features.map(function(d) {
     d.properties.year = new Date(d.properties);
@@ -214,9 +214,9 @@ map.addLayer({
   'paint': {
     'circle-color': [
         'match',
-        ['get', 'Type'],
-        'Resi', '#fbb03b',
-        'Office', '#3bb2d0',
+        ['get', 'Status'],
+        'Planned', '#fbb03b',
+        'Existing', '#3bb2d0',
         /*other*/ '#ccc'
         ],
   'circle-opacity': .75,
@@ -297,8 +297,8 @@ function animateMarker(timestamp) {
 }
 
 // Set filter to first year of the range
-// 0 = 2019 to represent data from today into the future
-filterBy(2019);
+// 0 = 2000 to represent data from today into the future
+filterBy(2000);
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value);
     // update the map
@@ -314,11 +314,11 @@ filterBy(2019);
     var type = e.target.value;
     // update the map filter
     if (type === 'all') {
-      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    } else if (type === 'Office') {
-      filterType = ['match', ['get', 'Type'], 'Office', true, false];
-    } else if (type === 'Resi') {
-      filterType = ['match', ['get', 'Type'], 'Resi', true, false];
+      filterType = ['!=', ['string', ['get', 'Status']], 'placeholder'];
+    } else if (type === 'Existing') {
+      filterType = ['match', ['get', 'Status'], 'Existing', true, false];
+    } else if (type === 'Planned') {
+      filterType = ['match', ['get', 'Status'], 'Planned', true, false];
     } else {
       console.log('error');
     };
