@@ -1,100 +1,67 @@
-<h1>Comps in Perspective</h1>
-  <p>A natural extension of the City's new office and residential epicenter - the confluence of the River</p>
-<div id="map-container">
-    <div id='map'></div>
-</div>
 
-    <div id='image-caption'>
-        <p>Interactive Guide: Mouse-in to view 3D site massing in perspective with notable office buildings</p>
-    </div>
-
+<html>
+<head>
+<div id='map'></div>
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mpotter/cjst6uv4wb7ii1fs8z4gbrnaw',
-      center: [-87.638309, 41.886469],
-      zoom: 13.5,
-      pitch: 45,
-      maxZoom: 16.5,
-      minZoom: 12.5,
-    });
-      function rotateCamera(timestamp) {
-        // clamp the rotation between 0 -360 degrees
-        // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
-        map.rotateTo((timestamp / 150) % 360, {duration: 0});
-        // Request the next frame of the animation.
-        requestAnimationFrame(rotateCamera);
-      }
+mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mpotter/cjzbm9u951d6m1cp9dxfh7o2g',
+  center: [-87.638309, 41.886469],
+  zoom: 13.0,
+  pitch: 45,
+  //maxZoom: 16.5,
+  //minZoom: 12.5,
+});
 
-        map.on('load', function () {
-          // Start the animation.
-          rotateCamera(0);
+function rotateCamera(timestamp) {
+  // clamp the rotation between 0 -360 degrees
+  // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
+  map.rotateTo((timestamp / 200) % 360, {duration: 0});
+  // Request the next frame of the animation.
+  requestAnimationFrame(rotateCamera);
+}
 
-          // Add 3d buildings and remove label layers to enhance the map
-          var layers = map.getStyle().layers;
-          for (var i = 0; i < layers.length; i++) {
-          if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-          // remove text labels
-          map.removeLayer(layers[i].id);
-        }
-        }
-
-        map.addLayer({
-            'id': '3d-buildings',
-            'source': 'composite',
-            'source-layer': 'building',
-            'filter': ['==', 'extrude', 'true'],
-            'type': 'fill-extrusion',
-            'minzoom': 15,
-            'paint': {
-                'fill-extrusion-color': '#aaa',
-                // use an 'interpolate' expression to add a smooth transition effect to the
-                // buildings as the user zooms in
-                'fill-extrusion-height': [
-                "interpolate", ["linear"], ["zoom"],
-                15, 0,
-                15.05, ["get", "height"]
-                ],
-                'fill-extrusion-base': [
-                "interpolate", ["linear"], ["zoom"],
-                15, 0,
-                15.05, ["get", "min_height"]
-                ],
-                'fill-extrusion-opacity': .6
-                }
-            });
-        });
-
-        map.addControl(new mapboxgl.NavigationControl());
-
-
-        map.addSource("source_circle_500", {
-    "type": "geojson",
-    "data": {
-        "type": "FeatureCollection",
-        "features": [{
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-85.1392, 41.0804]
-            }
-        }]
+map.on('load', function () {
+  // Start the animation.
+  rotateCamera(0);
+  // Add 3d buildings and remove label layers to enhance the map
+  var layers = map.getStyle().layers;
+  for (var i = 0; i < layers.length; i++) {
+  if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+  // remove text labels
+  map.removeLayer(layers[i].id);
     }
-  });
+  }
 
   map.addLayer({
-    "id": "circle500",
-    "type": "circle",
-    "source": "source_circle_500",
-    "layout": {
-        "visibility": "none"
-    },
-    "paint": {
-        "circle-radius": 804672,
-        "circle-color": "#5b94c6",
-        "circle-opacity": 0.6
-    }
+      'id': '3d-buildings',
+      'source': 'composite',
+      'source-layer': 'building',
+      'filter': ['==', 'extrude', 'true'],
+      'type': 'fill-extrusion',
+      'minzoom': 15,
+      'paint': {
+          'fill-extrusion-color': '#aaa',
+          // use an 'interpolate' expression to add a smooth transition effect to the
+          // buildings as the user zooms in
+          'fill-extrusion-height': [
+          "interpolate", ["linear"], ["zoom"],
+          6, 0,
+          6.05, ["get", "height"]
+          ],
+          'fill-extrusion-base': [
+          "interpolate", ["linear"], ["zoom"],
+          6, 0,
+          6.05, ["get", "min_height"]
+          ],
+          'fill-extrusion-opacity': .6
+          }
+      });
   });
 
+map.addControl(new mapboxgl.NavigationControl());
+
 </script>
+</head>
+</html>

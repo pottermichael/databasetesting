@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get 'transit', to: 'home#transit'
 
+  get 'demographic', to: 'home#demographic'
+
   get 'amenity', to: 'home#amenity'
 
   get 'migration', to: 'home#migration'
