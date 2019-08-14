@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'planned', to: 'home#planned'
 
+  get 'banksites', to: 'home#banksites'
+
   get 'transit', to: 'home#transit'
 
   get 'demographic', to: 'home#demographic'

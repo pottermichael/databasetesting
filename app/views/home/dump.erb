@@ -1,0 +1,37 @@
+// saving zoning layers
+
+map.addSource('DX Zoning', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj0ww4w5f004j32qdo85d6t1j-41f0i'
+});
+map.addLayer({
+  'id': 'DX Zoning',
+  'type': 'fill',
+  'source': 'DX Zoning',
+  'source-layer': 'DowntownZoning',
+  'layout': {
+    'visibility': 'none'
+  },
+  'paint': {
+    'fill-color': '#C22E00',
+    'fill-opacity': .25
+    }
+});
+
+map.addSource('PMD North', {
+  type: 'vector',
+  url: 'mapbox://mpotter.cj1qw66ut00ek2rve2ylsxi7r-41snd'
+});
+map.addLayer({
+  'id': 'PMD North',
+  'type': 'fill',
+  'source': 'PMD North',
+  'source-layer': 'NorthBranchZoning',
+  'layout': {
+    'visibility': 'none'
+  },
+  'paint': {
+    'fill-color': '#6DA2A6',
+    'fill-opacity': .25
+    }
+});

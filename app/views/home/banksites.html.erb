@@ -3,10 +3,10 @@
 <div id='map'></div>
   <nav id="menu"></nav>
 <div id='console'>
-  <h1>Infill Growth - To Date</h1>
+  <h1>Infill Growth - Future/Planned</h1>
   <div class ='session'>
-    <h2>Class +A Deliveries: 2000 - <label id='year'>TBD</label></h2>
-    <input id='slider' class='row' type='range' min='1999' max='2024' step='1' value='1999'/>
+    <h2>Class +A Deliveries: Today - <label id='year'>2019</label></h2>
+    <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2019'/>
   </div>
 
   <div class='session'>
@@ -27,9 +27,9 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
-  center: [-87.636127, 41.892699],
-  zoom: 13.5,
+  style: 'mapbox://styles/mpotter/cjzbo5zbg1f2n1doce85e6838',
+  center: [-87.765357, 41.897054],
+  zoom: 7.9,
   attributionControl: false
 });
 
@@ -43,81 +43,121 @@ var maxRadius = 50;
 map.on('load', function() {
 
 //add layers for toggle buttons
-map.addSource('Commuter', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
-});
-map.addLayer({
-  'id': 'Commuter',
-  'type': 'fill',
-  'source': 'Commuter',
-  'source-layer': 'Transit_-_Commuter',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#FF7002',
-    'fill-opacity': .25
-  },
-});
 
-map.addSource('CTA Blue', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cjzbbjtkj00f12up81nwjme4f-9i2j6'
-});
-map.addLayer({
-  'id': 'CTA Blue',
-  'type': 'fill',
-  'source': 'CTA Blue',
-  'source-layer': 'Transit_-_Blue_Line',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#00a5e0',
-    'fill-opacity': .1,
-    }
-});
+  map.addSource('Commuter', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
+  });
+  map.addLayer({
+    'id': 'Commuter',
+    'type': 'fill',
+    'source': 'Commuter',
+    'source-layer': 'Transit_-_Commuter',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#FF7002',
+      'fill-opacity': .25
+    },
+  });
 
-map.addSource('CTA Brown', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1p6orem012e2qmhe8wsjmad-621pz'
-});
-map.addLayer({
-  'id': 'CTA Brown',
-  'type': 'fill',
-  'source': 'CTA Brown',
-  'source-layer': 'Transit_-_Brown_Line',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#64371b',
-    'fill-opacity': .1,
-    }
-});
+  map.addSource('Transitway', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjs3qnclg3el72rlhp31cn745-2v5f7'
+  });
+  map.addLayer({
+    'id': 'Transitway',
+    'type': 'line',
+    'source': 'Transitway',
+    'source-layer': 'transitway',
+    'layout': {
+      'visibility': 'none',
+      'line-join': "round",
+      'line-cap': "round"
+    },
+    'paint': {
+      'line-color': '#888',
+      'line-width': 4,
+      'line-opacity': .5
+      }
+  });
 
-map.addSource('CTA Green', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cjzbbwhl405po2ipt1o5yjnxv-8pf1v'
-});
-map.addLayer({
-  'id': 'CTA Green',
-  'type': 'fill',
-  'source': 'CTA Green',
-  'source-layer': 'Transit_-_Green_Line',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#009b3a',
-    'fill-opacity': .1,
-    }
-});
+  map.addSource('CTA Blue', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjzbbjtkj00f12up81nwjme4f-9i2j6'
+  });
+  map.addLayer({
+    'id': 'CTA Blue',
+    'type': 'fill',
+    'source': 'CTA Blue',
+    'source-layer': 'Transit_-_Blue_Line',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#00a5e0',
+      'fill-opacity': .1,
+      }
+  });
+
+  map.addSource('CTA Brown', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6orem012e2qmhe8wsjmad-621pz'
+  });
+  map.addLayer({
+    'id': 'CTA Brown',
+    'type': 'fill',
+    'source': 'CTA Brown',
+    'source-layer': 'Transit_-_Brown_Line',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#64371b',
+      'fill-opacity': .1,
+      }
+  });
+
+  map.addSource('CTA Green', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjzbbwhl405po2ipt1o5yjnxv-8pf1v'
+  });
+  map.addLayer({
+    'id': 'CTA Green',
+    'type': 'fill',
+    'source': 'CTA Green',
+    'source-layer': 'Transit_-_Green_Line',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#009b3a',
+      'fill-opacity': .1,
+      }
+  });
+
+  map.addSource('Large Parcels', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1cozgzq00652wpm6xgtszcm-6okjx'
+  });
+  map.addLayer({
+    'id': 'Large Parcels',
+    'type': 'fill',
+    'source': 'Large Parcels',
+    'source-layer': 'greyhound',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#ebac97',
+      'fill-opacity': 1,
+      }
+  });
 
 //code for layer button functionality
 
-  var toggleableLayerIds = [ 'Commuter', 'CTA Blue', 'CTA Brown', 'CTA Green'];
+  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Blue', 'CTA Brown', 'CTA Green', 'Large Parcels'];
 
   for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
@@ -148,7 +188,7 @@ map.addLayer({
 
 
 // Create a year property value based on time used to filter against.
-  d3.json("/data/supply_to_date.geojson", function(err, data) {
+  d3.json("/data/supply_in_planning.geojson", function(err, data) {
   if (err) throw err;
   data.features = data.features.map(function(d) {
     d.properties.year = new Date(d.properties);
@@ -210,7 +250,7 @@ map.addSource('point', {
     "data": {
         "type": "Point",
         "coordinates": [
-            -87.646196, 41.895594
+            -87.630119, 41.881607
         ]
     }
 });
@@ -233,7 +273,7 @@ map.addLayer({
     "type": "circle",
     "paint": {
         "circle-radius": initialRadius,
-        "circle-color": "#007cbf"
+        "circle-color": "#266DFD"
     }
 });
 
@@ -257,8 +297,8 @@ function animateMarker(timestamp) {
 }
 
 // Set filter to first year of the range
-// 0 = 1999
-filterBy(1999);
+// 0 = 2019 to represent data from today into the future
+filterBy(2019);
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value);
     // update the map
