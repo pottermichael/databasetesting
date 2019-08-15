@@ -5,8 +5,8 @@
 <div id='console'>
   <h1>OFFICE SUPPLY & REMAINING SITES</h1>
   <div class ='session'>
-    <h1>Class +A Deliveries: Today - <label id='year'>2000</label></h1>
-    <input id='slider' class='row' type='range' min='2000' max='2025' step='1' value='2000'/>
+    <h1>Deliveries: 2001 - <label id='year'>2001</label></h1>
+    <input id='slider' class='row' type='range' min='2001' max='2025' step='1' value='2001'/>
   </div>
 
   <div class='session'>
@@ -157,7 +157,7 @@ map.on('load', function() {
 
 //code for layer button functionality
 
-  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Blue', 'CTA Brown', 'CTA Green', 'Large Parcels'];
+  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Brown', 'CTA Blue', 'CTA Green', 'Large Parcels'];
 
   for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
@@ -298,7 +298,7 @@ function animateMarker(timestamp) {
 
 // Set filter to first year of the range
 // 0 = 2000 to represent data from today into the future
-filterBy(2000);
+filterBy(2001);
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value);
     // update the map
