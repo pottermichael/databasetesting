@@ -5,7 +5,7 @@
 <div id='console'>
   <h1>OFFICE SUPPLY & REMAINING SITES</h1>
   <div class ='session'>
-    <h2>Class +A Deliveries: Today - <label id='year'>2000</label></h2>
+    <h1>Class +A Deliveries: Today - <label id='year'>2000</label></h1>
     <input id='slider' class='row' type='range' min='2000' max='2025' step='1' value='2000'/>
   </div>
 
@@ -188,7 +188,7 @@ map.on('load', function() {
 
 
 // Create a year property value based on time used to filter against.
-  d3.json("/data/office_only.geojson", function(err, data) {
+  d3.json("/data/office_only2.geojson", function(err, data) {
   if (err) throw err;
   data.features = data.features.map(function(d) {
     d.properties.year = new Date(d.properties);
