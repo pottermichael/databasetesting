@@ -3,7 +3,7 @@
 <div id='map'></div>
   <nav id="menu"></nav>
 <div id='console'>
-  <h1>OFFICE SUPPLY & REMAINING SITES</h1>
+  <h1>RESI SUPPLY & REMAINING SITES</h1>
   <div class ='session'>
     <h1>Deliveries: 2001 - <label id='year'>2000</label></h1>
     <input id='slider' class='row' type='range' min='2000' max='2025' step='1' value='2000'/>
@@ -188,7 +188,7 @@ map.on('load', function() {
 
 
 // Create a year property value based on time used to filter against.
-  d3.json("/data/office_only3.geojson", function(err, data) {
+  d3.json("/data/resi_only3.geojson", function(err, data) {
   if (err) throw err;
   data.features = data.features.map(function(d) {
     d.properties.year = new Date(d.properties);
@@ -224,8 +224,8 @@ map.addLayer({
       'interpolate',
       ['linear'],
         ['number',['get', 'GFA']],
-          50000, 5,
-          1500000, 30
+          50000, 10,
+          1500000, 50
       ]
     },
   });

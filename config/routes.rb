@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get 'banksites', to: 'home#banksites'
 
+  get 'resiall', to: 'home#resiall'
+
   get 'satellite', to: 'home#satellite'
 
   get 'transit', to: 'home#transit'
