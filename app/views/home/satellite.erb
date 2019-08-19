@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.0.0/mapbox-gl-directions.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.0.0/mapbox-gl-directions.css' type='text/css' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        #remover {
+            margin: 0 auto;
+            background-color: #fb5b3f;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.5em;
+            border: 2px solid #fff;
+            border-radius: 0.5em;
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+            position: absolute;
+            left: 0.7em;
+            top: 9em;
+        }
+        #remover:hover {
+            background-color: salmon;
+        }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<div id='remover'>Add satellite</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuc3dpY2siLCJhIjoiY2l1dTUzcmgxMDJ0djJ0b2VhY2sxNXBiMyJ9.25Qs4HNEkHubd4_Awbd8Og';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/danswick/cilnegnzr00439gkf7urxz0xk', //stylesheet location
+    center: [-87.636127, 41.892699], // starting position
+    zoom: 12.5 // starting zoom
+});
+
+map.on('load', function(){
+    var switchy = document.getElementById('remover');
+    switchy.addEventListener("click", function(){
+        switchy = document.getElementById('remover');
+        if (switchy.className === 'on') {
+            switchy.setAttribute('class', 'off');
+            map.setLayoutProperty('mapbox-mapbox-satellite', 'visibility', 'none');
+            switchy.innerHTML = 'Add satellite';
+        } else {
+            switchy.setAttribute('class', 'on');
+            map.setLayoutProperty('mapbox-mapbox-satellite', 'visibility', 'visible');
+            switchy.innerHTML = 'Remove satellite';
+        }
+    });
+});
+map.addControl(new mapboxgl.Directions());
+</script>
+
+</body>
+</html>
