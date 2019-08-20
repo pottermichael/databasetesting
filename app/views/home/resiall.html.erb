@@ -5,8 +5,8 @@
 <div id='console'>
   <h1>RESI SUPPLY & REMAINING SITES</h1>
   <div class ='session'>
-    <h1>Deliveries: 2001 - <label id='year'>2000</label></h1>
-    <input id='slider' class='row' type='range' min='2000' max='2025' step='1' value='2000'/>
+    <h1>Deliveries: 2000 - <label id='year'>2000</label></h1>
+    <input id='slider' class='row' type='range' min='1999' max='2025' step='1' value='1999'/>
   </div>
 
   <div class='session'>
@@ -297,8 +297,8 @@ function animateMarker(timestamp) {
 }
 
 // Set filter to first year of the range
-// 0 = 2000 to represent data from today into the future
-filterBy(2000);
+// 0 = 1999 to represent data from today into the future
+filterBy(1999);
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value);
     // update the map
