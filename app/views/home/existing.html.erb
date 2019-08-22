@@ -3,7 +3,7 @@
 <div id='map'></div>
   <nav id="menu"></nav>
 <div id='console'>
-  <h1>Infill Growth - To Date</h1>
+  <h1>New Construction Projects</h1>
   <div class ='session'>
     <h2>Class +A Deliveries: 2000 - <label id='year'>TBD</label></h2>
     <input id='slider' class='row' type='range' min='1999' max='2024' step='1' value='1999'/>
@@ -287,7 +287,7 @@ filterBy(1999);
     map.setFilter('residential-labels', ['all', filterYear, filterType]);
   });
   animateMarker(0);
-  });
+
 });
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
