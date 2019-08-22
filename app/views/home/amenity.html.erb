@@ -1,16 +1,29 @@
 <html>
 <body>
-<div class="map-header">
-  <h1>24/7 Dynamic Amenities</h1>
-    <p>Tying together River North, Restaurant Row and the Milwaukee Corridor</p>
-</div>
 
-<div id='map-container'>
-<div id='map'>
-</div>
-</div>
+<div id='map'></div>
+  <nav id="menu"></nav>
+<div id='console'>
+  <h1>Retail/Food Permits</h1>
+  <h3>City of Chicago</h3>
+  <h5>Department of Business Affairs</h5>
+  <div class ='session'>
+    <h1>Issued: 2010 - <label id='year'>2019</label></h1>
+    <input id='slider' class='row' type='range' min='2010' max='2019' step='1' value='2019'/>
+  </div>
 
-<script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script>
+  <div class='session'>
+    <h2>Permit Type</h2>
+    <div class='row' id='filters'>
+      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+      <label for='all'>All</label>
+      <input id="Issue" type="radio" name="toggle" value="Issue">
+      <label for='Issue'>Issue</label>
+      <input id="Renew" type="radio" name="toggle" value="Renew">
+      <label for='Renew'>Renew</label>
+    </div>
+  </div>
+</div>
 
 <script>
 mapboxgl.accessToken =
@@ -19,13 +32,13 @@ var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mpotter/cjz1cb1us653x1dmafmwpkcsa',
   center: [-87.636127, 41.892699],
-  zoom: 13.0,
+  zoom: 12.25,
   attributionControl:false
   });
 
 map.on('load', function() {
 
-d3.json("/data/issued.geojson", function(err, data) {
+d3.json("/data/issued3.geojson", function(err, data) {
 if (err) throw err;
 
 map.addSource('retail', {
@@ -135,71 +148,71 @@ map.addSource('retail', {
 
 //code for Mapbox GL Marker Blip, to be refactored
 
-  var framesPerSecond = 15;
-  var initialOpacity = 1
-  var opacity = initialOpacity;
-  var initialRadius = 10;
-  var radius = initialRadius;
-  var maxRadius = 50;
+var framesPerSecond = 15;
+var initialOpacity = 1
+var opacity = initialOpacity;
+var initialRadius = 10;
+var radius = initialRadius;
+var maxRadius = 50;
 
-  map.on('load', function () {
+map.on('load', function () {
 
-      // Add a source and layer displaying a point which will be animated in a circle.
-      map.addSource('point', {
-          "type": "geojson",
-          "data": {
-              "type": "Point",
-              "coordinates": [
-                  -87.646196, 41.895594
-              ]
-          }
-      });
+// Add a source and layer displaying a point which will be animated in a circle.
+map.addSource('point', {
+    "type": "geojson",
+    "data": {
+        "type": "Point",
+        "coordinates": [
+            -87.646196, 41.895594
+        ]
+    }
+});
 
-      map.addLayer({
-          "id": "point",
-          "source": "point",
-          "type": "circle",
-          "paint": {
-              "circle-radius": initialRadius,
-              "circle-radius-transition": {duration: 0},
-              "circle-opacity-transition": {duration: 0},
-              "circle-color": "#ffffff"
-          }
-      });
+map.addLayer({
+    "id": "point",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-radius-transition": {duration: 0},
+        "circle-opacity-transition": {duration: 0},
+        "circle-color": "#ffffff"
+    }
+});
 
-      map.addLayer({
-          "id": "point1",
-          "source": "point",
-          "type": "circle",
-          "paint": {
-              "circle-radius": initialRadius,
-              "circle-color": "#007cbf"
-          }
-      });
+map.addLayer({
+    "id": "point1",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-color": "#007cbf"
+    }
+});
 
 
-      function animateMarker(timestamp) {
-          setTimeout(function(){
-              requestAnimationFrame(animateMarker);
+function animateMarker(timestamp) {
+    setTimeout(function(){
+        requestAnimationFrame(animateMarker);
 
-              radius += (maxRadius - radius) / framesPerSecond;
-              opacity -= ( .9 / framesPerSecond );
+        radius += (maxRadius - radius) / framesPerSecond;
+        opacity -= ( .9 / framesPerSecond );
 
-              map.setPaintProperty('point', 'circle-radius', radius);
-              map.setPaintProperty('point', 'circle-opacity', opacity);
+        map.setPaintProperty('point', 'circle-radius', radius);
+        map.setPaintProperty('point', 'circle-opacity', opacity);
 
-              if (opacity <= 0) {
-                  radius = initialRadius;
-                  opacity = initialOpacity;
-              }
+        if (opacity <= 0) {
+            radius = initialRadius;
+            opacity = initialOpacity;
+        }
+    }, 1000 / framesPerSecond);
+}
 
-          }, 1000 / framesPerSecond);
 
-      }
-      // Start the animation.
-      animateMarker(0);
-  });
-  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+// Start the animation
+animateMarker(0);
+});
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
 </html>
