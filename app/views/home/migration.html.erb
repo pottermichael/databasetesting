@@ -27,7 +27,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN
 var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mpotter/cjzbo5zbg1f2n1doce85e6838',
-  center: [-87.636127, 41.892699],
+  center: [-87.640793, 41.889533],
   zoom: 13.5,
   attributionControl: false
 });
@@ -90,7 +90,8 @@ map.addLayer({
   'layout': {
     'text-field': ['to-string', ['get', 'Company']],
     'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    'text-size': 12
+    'text-size': 12,
+    'text-max-width': 5
     },
   'paint': {
     'text-color': 'rgba(0,0,0,0.5)'
