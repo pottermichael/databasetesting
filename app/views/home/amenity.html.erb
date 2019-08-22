@@ -40,13 +40,18 @@ map.on('load', function() {
 
 d3.json("/data/issued3.geojson", function(err, data) {
 if (err) throw err;
+data.features = data.features.map(function(d) {
+  d.properties.year = new Date(d.properties);
+  return d;
+});
+
 
 map.addSource('retail', {
   'type': 'geojson',
   data: data,
   cluster: true,
   clusterMaxZoom: 14, // Max zoom to cluster points on
-  clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+  clusterRadius: 65 // Radius of each cluster when clustering points (defaults to 50)
 });
 
   map.addLayer({
@@ -63,22 +68,22 @@ map.addSource('retail', {
   "circle-color": [
   "step",
   ["get", "point_count"],
-  "#51bbd6",
-  100,
-  "#f1f075",
-  300,
-  "#f28cb1"
-  ],
-  "circle-radius": [
-  "step",
-  ["get", "point_count"],
-  20,
-  100,
-  30,
-  300,
-  40
-  ]
-  }
+    "#51bbd6",
+    100,
+    "#f1f075",
+    300,
+    "#f28cb1"
+    ],
+    "circle-radius": [
+    "step",
+      ["get", "point_count"],
+      20,
+      100,
+      30,
+      300,
+      40
+      ]
+    }
   });
 
   map.addLayer({
@@ -87,10 +92,10 @@ map.addSource('retail', {
   source: "retail",
   filter: ["has", "point_count"],
   layout: {
-  "text-field": "{point_count_abbreviated}",
-  "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-  "text-size": 12
-  }
+    "text-field": "{point_count_abbreviated}",
+    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    "text-size": 12
+    }
   });
 
   map.addLayer({
@@ -99,11 +104,11 @@ map.addSource('retail', {
   source: "retail",
   filter: ["!", ["has", "point_count"]],
   paint: {
-  "circle-color": "#11b4da",
-  "circle-radius": 4,
-  "circle-stroke-width": 1,
-  "circle-stroke-color": "#fff"
-  }
+    "circle-color": "#11b4da",
+    "circle-radius": 4,
+    "circle-stroke-width": 1,
+    "circle-stroke-color": "#fff"
+    }
   });
 
   map.addLayer({
@@ -125,71 +130,66 @@ map.addSource('retail', {
 
   // inspect a cluster on click
   map.on('click', 'clusters', function (e) {
-  var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-  var clusterId = features[0].properties.cluster_id;
-  map.getSource('retail').getClusterExpansionZoom(clusterId, function (err, zoom) {
-  if (err)
-  return;
+      var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+      var clusterId = features[0].properties.cluster_id;
+      map.getSource('retail').getClusterExpansionZoom(clusterId, function (err, zoom)
+      {
+        if (err)
+          return;
 
-  map.easeTo({
-  center: features[0].geometry.coordinates,
-  zoom: zoom
+      map.easeTo({
+      center: features[0].geometry.coordinates,
+      zoom: zoom
+      });
+    });
   });
+
+    map.on('mouseenter', 'clusters', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'clusters', function () {
+        map.getCanvas().style.cursor = '';
+    });
   });
+
+  //code for Mapbox GL Marker Blip
+  var framesPerSecond = 15;
+  var initialOpacity = 1
+  var opacity = initialOpacity;
+  var initialRadius = 10;
+  var radius = initialRadius;
+  var maxRadius = 50;
+
+  // Add a source and layer displaying a point which will be animated in a circle.
+  map.addSource('point', {
+      "type": "geojson",
+      "data": {
+          "type": "Point",
+          "coordinates": [
+              -87.646196, 41.895594
+          ]
+      }
   });
-
-  map.on('mouseenter', 'clusters', function () {
-  map.getCanvas().style.cursor = 'pointer';
+  map.addLayer({
+      "id": "point",
+      "source": "point",
+      "type": "circle",
+      "paint": {
+          "circle-radius": initialRadius,
+          "circle-radius-transition": {duration: 0},
+          "circle-opacity-transition": {duration: 0},
+          "circle-color": "#ffffff"
+      }
   });
-  map.on('mouseleave', 'clusters', function () {
-  map.getCanvas().style.cursor = '';
+  map.addLayer({
+      "id": "point1",
+      "source": "point",
+      "type": "circle",
+      "paint": {
+          "circle-radius": initialRadius,
+          "circle-color": "#007cbf"
+      }
   });
-  });
-});
-
-//code for Mapbox GL Marker Blip, to be refactored
-
-var framesPerSecond = 15;
-var initialOpacity = 1
-var opacity = initialOpacity;
-var initialRadius = 10;
-var radius = initialRadius;
-var maxRadius = 50;
-
-map.on('load', function () {
-
-// Add a source and layer displaying a point which will be animated in a circle.
-map.addSource('point', {
-    "type": "geojson",
-    "data": {
-        "type": "Point",
-        "coordinates": [
-            -87.646196, 41.895594
-        ]
-    }
-});
-
-map.addLayer({
-    "id": "point",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-radius-transition": {duration: 0},
-        "circle-opacity-transition": {duration: 0},
-        "circle-color": "#ffffff"
-    }
-});
-
-map.addLayer({
-    "id": "point1",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-color": "#007cbf"
-    }
-});
 
 
 function animateMarker(timestamp) {
@@ -208,11 +208,45 @@ function animateMarker(timestamp) {
         }
     }, 1000 / framesPerSecond);
 }
+// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
+function filterBy(year) {
+var filterYear = ['<=',['number',['get','Year']], year];
+var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+map.setFilter('unclustered-point', filterYear);
+map.setFilter('retail-labels', filterYear);
+}
+// Set filter to first year of the range
+// 0 = 2010
+filterBy(2010);
+  document.getElementById('slider').addEventListener('input', function(e) {
+    var year = parseInt(e.target.value);
+    // update the map
+    filterYear = ['<=', ['number', ['get', 'Year']], year];
+    map.setFilter('unclustered-point', ['all', filterYear, filterType]);
+    map.setFilter('retail-labels', ['all', filterYear, filterType]);
 
+  document.getElementById('year').innerText = year;
+
+  });
+  // radio buttons for filtering
+  document.getElementById('filters').addEventListener('change', function(e) {
+    var type = e.target.value;
+    // update the map filter
+    if (type === 'all') {
+      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+    } else if (type === 'Issue') {
+      filterType = ['match', ['get', 'Type'], 'Issue', true, false];
+    } else if (type === 'Renew') {
+      filterType = ['match', ['get', 'Type'], 'Renew', true, false];
+    } else {
+      console.log('error');
+    };
+  });
 
 // Start the animation
 animateMarker(0);
 });
+
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>

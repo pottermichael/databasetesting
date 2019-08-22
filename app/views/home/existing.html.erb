@@ -42,6 +42,14 @@ var maxRadius = 50;
 
 map.on('load', function() {
 
+// Create a year property value based on time used to filter against.
+d3.json("/data/supply_to_date.geojson", function(err, data) {
+if (err) throw err;
+data.features = data.features.map(function(d) {
+  d.properties.year = new Date(d.properties);
+  return d;
+});
+
 //add layers for toggle buttons
 map.addSource('Commuter', {
   type: 'vector',
@@ -117,43 +125,34 @@ map.addLayer({
 
 //code for layer button functionality
 
-  var toggleableLayerIds = [ 'Commuter', 'CTA Blue', 'CTA Brown', 'CTA Green'];
+var toggleableLayerIds = [ 'Commuter', 'CTA Blue', 'CTA Brown', 'CTA Green'];
 
-  for (var i = 0; i < toggleableLayerIds.length; i++) {
-    var id = toggleableLayerIds[i];
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  var id = toggleableLayerIds[i];
 
-    var link = document.createElement('a');
-    link.href = '#';
-    link.className = 'active';
-    link.textContent = id;
+  var link = document.createElement('a');
+  link.href = '#';
+  link.className = 'active';
+  link.textContent = id;
 
-  link.onclick = function (e) {
-    var clickedLayer = this.textContent;
-    e.preventDefault();
-    e.stopPropagation();
+link.onclick = function (e) {
+  var clickedLayer = this.textContent;
+  e.preventDefault();
+  e.stopPropagation();
 
-    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+  var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
 
-    if (visibility === 'visible') {
-        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-        this.className = '';
-    } else {
-        this.className = 'active';
-        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-      }
-    };
-    var layers = document.getElementById('menu');
-    layers.appendChild(link);
-  }
-
-
-// Create a year property value based on time used to filter against.
-  d3.json("/data/supply_to_date.geojson", function(err, data) {
-  if (err) throw err;
-  data.features = data.features.map(function(d) {
-    d.properties.year = new Date(d.properties);
-    return d;
-  });
+  if (visibility === 'visible') {
+      map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+      this.className = '';
+  } else {
+      this.className = 'active';
+      map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+    }
+  };
+  var layers = document.getElementById('menu');
+  layers.appendChild(link);
+}
 
 // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
 function filterBy(year) {
@@ -283,11 +282,9 @@ filterBy(1999);
     } else {
       console.log('error');
     };
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
   });
   animateMarker(0);
-
+});
 });
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
