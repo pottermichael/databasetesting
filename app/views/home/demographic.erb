@@ -67,6 +67,7 @@
 
         //data source: http://opendata.dc.gov/datasets/e87a760828844422afe864a6754049c2_20?geometry=-77.297%2C38.854%2C-76.732%2C38.934
         map.on('load', function () {
+
             map.addSource('dc', {
                 type: 'geojson',
                 data: 'https://gist.githubusercontent.com/hrecht/82b6440ed3b982a6f594/raw/48832482382f81d1f6943896626e21b80da6b45c/data.geojson'
