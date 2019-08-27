@@ -33,13 +33,6 @@ var map = new mapboxgl.Map({
   attributionControl: false
 });
 
-var framesPerSecond = 15;
-var initialOpacity = 1;
-var opacity = initialOpacity;
-var initialRadius = 10;
-var radius = initialRadius;
-var maxRadius = 50;
-
 map.on('load', function() {
 var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
@@ -50,14 +43,6 @@ data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
   return d;
 });
-
-// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
-function filterBy(year) {
-var filterYear = ['<=',['number',['get','Year']], year];
-var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-map.setFilter('residential-circles', filterYear);
-map.setFilter('residential-labels', filterYear);
-}
 
 map.addSource('resi', {
   'type': 'geojson',
@@ -84,7 +69,6 @@ map.addLayer({
             1500000, 30
         ]
     },
-    // to modify code to match 'filter': ['all', filterHour, filterDay]
   });
 map.addLayer({
   'id': 'residential-labels',
@@ -105,10 +89,18 @@ map.addLayer({
   'paint': {
     'text-color': 'rgba(0,0,0,0.5)'
   },
-    // to modify code to match 'filter': ['all', filterHour, filterDay]
   });
   // Set filter to first year of the range
   // 0 = 1999
+
+  // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
+  function filterBy(year) {
+  var filterYear = ['<=',['number',['get','Year']], year];
+  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+  map.setFilter('residential-circles', filterYear);
+  map.setFilter('residential-labels', filterYear);
+  }
+
   filterBy(1999);
     document.getElementById('slider').addEventListener('input', function(e) {
       var year = parseInt(e.target.value);
@@ -117,8 +109,8 @@ map.addLayer({
       map.setFilter('residential-circles', ['all', filterYear, filterType]);
       map.setFilter('residential-labels', ['all', filterYear, filterType]);
 
+    // update text in the UI
     document.getElementById('year').innerText = year;
-
     });
     // radio buttons for filtering
     document.getElementById('filters').addEventListener('change', function(e) {
@@ -269,24 +261,6 @@ map.addLayer({
         "circle-color": "#007cbf"
     }
 });
-
-//function to execute blip
-function animateMarker(timestamp) {
-    setTimeout(function(){
-        requestAnimationFrame(animateMarker);
-
-        radius += (maxRadius - radius) / framesPerSecond;
-        opacity -= ( .9 / framesPerSecond );
-
-        map.setPaintProperty('point', 'circle-radius', radius);
-        map.setPaintProperty('point', 'circle-opacity', opacity);
-
-        if (opacity <= 0) {
-            radius = initialRadius;
-            opacity = initialOpacity;
-        }
-    }, 1000 / framesPerSecond);
-}
   animateMarker(0);
 });
 });
