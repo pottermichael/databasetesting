@@ -51,110 +51,6 @@ data.features = data.features.map(function(d) {
   return d;
 });
 
-//add layers for toggle buttons
-map.addSource('Commuter', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
-});
-map.addLayer({
-  'id': 'Commuter',
-  'type': 'fill',
-  'source': 'Commuter',
-  'source-layer': 'Transit_-_Commuter',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#FF7002',
-    'fill-opacity': .25
-  },
-});
-
-map.addSource('CTA Blue', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cjzbbjtkj00f12up81nwjme4f-9i2j6'
-});
-map.addLayer({
-  'id': 'CTA Blue',
-  'type': 'fill',
-  'source': 'CTA Blue',
-  'source-layer': 'Transit_-_Blue_Line',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#00a5e0',
-    'fill-opacity': .1,
-    }
-});
-
-map.addSource('CTA Brown', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cj1p6orem012e2qmhe8wsjmad-621pz'
-});
-map.addLayer({
-  'id': 'CTA Brown',
-  'type': 'fill',
-  'source': 'CTA Brown',
-  'source-layer': 'Transit_-_Brown_Line',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#64371b',
-    'fill-opacity': .1,
-    }
-});
-
-map.addSource('CTA Green', {
-  type: 'vector',
-  url: 'mapbox://mpotter.cjzbbwhl405po2ipt1o5yjnxv-8pf1v'
-});
-map.addLayer({
-  'id': 'CTA Green',
-  'type': 'fill',
-  'source': 'CTA Green',
-  'source-layer': 'Transit_-_Green_Line',
-  'layout': {
-    'visibility': 'none'
-  },
-  'paint': {
-    'fill-color': '#009b3a',
-    'fill-opacity': .1,
-    }
-});
-
-//code for layer button functionality
-
-var toggleableLayerIds = [ 'Commuter', 'CTA Blue', 'CTA Brown', 'CTA Green'];
-
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
-
-  var link = document.createElement('a');
-  link.href = '#';
-  link.className = 'active';
-  link.textContent = id;
-
-link.onclick = function (e) {
-  var clickedLayer = this.textContent;
-  e.preventDefault();
-  e.stopPropagation();
-
-  var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-  if (visibility === 'visible') {
-      map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-      this.className = '';
-  } else {
-      this.className = 'active';
-      map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-    }
-  };
-  var layers = document.getElementById('menu');
-  layers.appendChild(link);
-}
-
 // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
 function filterBy(year) {
 var filterYear = ['<=',['number',['get','Year']], year];
@@ -179,15 +75,16 @@ map.addLayer({
         'Office', '#3bb2d0',
         /*other*/ '#ccc'
         ],
-  'circle-opacity': .75,
-    'circle-radius': [
-      'interpolate',
-      ['linear'],
-        ['number',['get', 'GFA']],
-          50000, 5,
-          1500000, 30
-      ]
+    'circle-opacity': .75,
+      'circle-radius': [
+        'interpolate',
+        ['linear'],
+          ['number',['get', 'GFA']],
+            50000, 5,
+            1500000, 30
+        ]
     },
+    // to modify code to match 'filter': ['all', filterHour, filterDay]
   });
 map.addLayer({
   'id': 'residential-labels',
@@ -207,11 +104,142 @@ map.addLayer({
     },
   'paint': {
     'text-color': 'rgba(0,0,0,0.5)'
-    }
+  },
+    // to modify code to match 'filter': ['all', filterHour, filterDay]
+  });
+  // Set filter to first year of the range
+  // 0 = 1999
+  filterBy(1999);
+    document.getElementById('slider').addEventListener('input', function(e) {
+      var year = parseInt(e.target.value);
+      // update the map
+      filterYear = ['<=', ['number', ['get', 'Year']], year];
+      map.setFilter('residential-circles', ['all', filterYear, filterType]);
+      map.setFilter('residential-labels', ['all', filterYear, filterType]);
+
+    document.getElementById('year').innerText = year;
+
+    });
+    // radio buttons for filtering
+    document.getElementById('filters').addEventListener('change', function(e) {
+      var type = e.target.value;
+      // update the map filter
+      if (type === 'all') {
+        filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+      } else if (type === 'Office') {
+        filterType = ['match', ['get', 'Type'], 'Office', true, false];
+      } else if (type === 'Resi') {
+        filterType = ['match', ['get', 'Type'], 'Resi', true, false];
+      } else {
+        console.log('error');
+      };
+      map.setFilter('residential-circles', ['all', filterYear, filterType]);
+      map.setFilter('residential-labels', ['all', filterYear, filterType]);
+    });
+  //add layers for toggle buttons
+  map.addSource('Commuter', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
+  });
+  map.addLayer({
+    'id': 'Commuter',
+    'type': 'fill',
+    'source': 'Commuter',
+    'source-layer': 'Transit_-_Commuter',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#FF7002',
+      'fill-opacity': .25
+    },
   });
 
-//add layers for blip
+  map.addSource('CTA Blue', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjzbbjtkj00f12up81nwjme4f-9i2j6'
+  });
+  map.addLayer({
+    'id': 'CTA Blue',
+    'type': 'fill',
+    'source': 'CTA Blue',
+    'source-layer': 'Transit_-_Blue_Line',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#00a5e0',
+      'fill-opacity': .1,
+      }
+  });
 
+  map.addSource('CTA Brown', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cj1p6orem012e2qmhe8wsjmad-621pz'
+  });
+  map.addLayer({
+    'id': 'CTA Brown',
+    'type': 'fill',
+    'source': 'CTA Brown',
+    'source-layer': 'Transit_-_Brown_Line',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#64371b',
+      'fill-opacity': .1,
+      }
+  });
+
+  map.addSource('CTA Green', {
+    type: 'vector',
+    url: 'mapbox://mpotter.cjzbbwhl405po2ipt1o5yjnxv-8pf1v'
+  });
+  map.addLayer({
+    'id': 'CTA Green',
+    'type': 'fill',
+    'source': 'CTA Green',
+    'source-layer': 'Transit_-_Green_Line',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-color': '#009b3a',
+      'fill-opacity': .1,
+      }
+  });
+
+  //code for layer button functionality
+  var toggleableLayerIds = [ 'Commuter', 'CTA Blue', 'CTA Brown', 'CTA Green'];
+
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+
+  link.onclick = function (e) {
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+    if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+    } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    };
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+  }
+
+//add layers for blip
 map.addSource('point', {
     "type": "geojson",
     "data": {
@@ -243,7 +271,6 @@ map.addLayer({
 });
 
 //function to execute blip
-
 function animateMarker(timestamp) {
     setTimeout(function(){
         requestAnimationFrame(animateMarker);
@@ -260,36 +287,6 @@ function animateMarker(timestamp) {
         }
     }, 1000 / framesPerSecond);
 }
-
-// Set filter to first year of the range
-// 0 = 1999
-filterBy(1999);
-  document.getElementById('slider').addEventListener('input', function(e) {
-    var year = parseInt(e.target.value);
-    // update the map
-    filterYear = ['<=', ['number', ['get', 'Year']], year];
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
-
-  document.getElementById('year').innerText = year;
-
-  });
-  // radio buttons for filtering
-  document.getElementById('filters').addEventListener('change', function(e) {
-    var type = e.target.value;
-    // update the map filter
-    if (type === 'all') {
-      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    } else if (type === 'Office') {
-      filterType = ['match', ['get', 'Type'], 'Office', true, false];
-    } else if (type === 'Resi') {
-      filterType = ['match', ['get', 'Type'], 'Resi', true, false];
-    } else {
-      console.log('error');
-    };
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
-  });
   animateMarker(0);
 });
 });
