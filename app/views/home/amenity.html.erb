@@ -152,14 +152,6 @@ map.addSource('retail', {
     });
   });
 
-  //code for Mapbox GL Marker Blip
-  var framesPerSecond = 15;
-  var initialOpacity = 1
-  var opacity = initialOpacity;
-  var initialRadius = 10;
-  var radius = initialRadius;
-  var maxRadius = 50;
-
   // Add a source and layer displaying a point which will be animated in a circle.
   map.addSource('point', {
       "type": "geojson",
@@ -191,23 +183,6 @@ map.addSource('retail', {
       }
   });
 
-
-function animateMarker(timestamp) {
-    setTimeout(function(){
-        requestAnimationFrame(animateMarker);
-
-        radius += (maxRadius - radius) / framesPerSecond;
-        opacity -= ( .9 / framesPerSecond );
-
-        map.setPaintProperty('point', 'circle-radius', radius);
-        map.setPaintProperty('point', 'circle-opacity', opacity);
-
-        if (opacity <= 0) {
-            radius = initialRadius;
-            opacity = initialOpacity;
-        }
-    }, 1000 / framesPerSecond);
-}
 // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
 function filterBy(year) {
 var filterYear = ['<=',['number',['get','Year']], year];
@@ -243,7 +218,7 @@ filterBy(2010);
     };
   });
 
-// Start the animation
+// Start the animation from javascript
 animateMarker(0);
 });
 

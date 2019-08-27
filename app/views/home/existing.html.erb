@@ -36,6 +36,7 @@ var map = new mapboxgl.Map({
 map.on('load', function() {
 var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+
 // Create a year property value based on time used to filter against.
 d3.json("/data/supply_to_date.geojson", function(err, data) {
 if (err) throw err;
@@ -90,17 +91,17 @@ map.addLayer({
     'text-color': 'rgba(0,0,0,0.5)'
   },
   });
-  // Set filter to first year of the range
-  // 0 = 1999
 
-  // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
-  function filterBy(year) {
+// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
+function filterBy(year) {
   var filterYear = ['<=',['number',['get','Year']], year];
   var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-  map.setFilter('residential-circles', filterYear);
-  map.setFilter('residential-labels', filterYear);
-  }
+    map.setFilter('residential-circles', filterYear);
+    map.setFilter('residential-labels', filterYear);
+}
 
+// Set filter to first year of the range
+// 0 = 1999
   filterBy(1999);
     document.getElementById('slider').addEventListener('input', function(e) {
       var year = parseInt(e.target.value);
@@ -261,7 +262,7 @@ map.addLayer({
         "circle-color": "#007cbf"
     }
 });
-  animateMarker(0);
+animateMarker(0);
 });
 });
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');

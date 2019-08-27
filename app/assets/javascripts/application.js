@@ -16,4 +16,4 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-//= blipper
+//= require blipper
