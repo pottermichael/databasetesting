@@ -42,6 +42,9 @@ var maxRadius = 50;
 
 map.on('load', function() {
 
+var filterYear = ['<=',['number',['get','Year']], year];
+var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+
 //add layers for toggle buttons
 
   map.addSource('Commuter', {

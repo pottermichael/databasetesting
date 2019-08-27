@@ -40,7 +40,8 @@ var radius = initialRadius;
 var maxRadius = 50;
 
 map.on('load', function() {
-
+  var filterYear = ['<=',['number',['get','Year']], year];
+  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 // Create a year property value based on time used to filter against.
   d3.json("/data/suburban_migration.geojson", function(err, data) {
   if (err) throw err;

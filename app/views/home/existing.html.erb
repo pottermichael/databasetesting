@@ -41,7 +41,8 @@ var radius = initialRadius;
 var maxRadius = 50;
 
 map.on('load', function() {
-
+var filterYear = ['<=',['number',['get','Year']], year];
+var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 // Create a year property value based on time used to filter against.
 d3.json("/data/supply_to_date.geojson", function(err, data) {
 if (err) throw err;
@@ -195,7 +196,13 @@ map.addLayer({
   'layout': {
     'text-field': ['to-string', ['get', 'Project']],
     'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    'text-size': 12,
+    'text-size': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        4,9,
+        6,12
+    ],
     'text-max-width': 5
     },
   'paint': {
@@ -214,7 +221,6 @@ map.addSource('point', {
         ]
     }
 });
-
 map.addLayer({
     "id": "point",
     "source": "point",
@@ -226,7 +232,6 @@ map.addLayer({
         "circle-color": "#ffffff"
     }
 });
-
 map.addLayer({
     "id": "point1",
     "source": "point",
