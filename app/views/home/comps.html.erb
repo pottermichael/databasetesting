@@ -26,6 +26,10 @@ map.on('load', function () {
   // Start the animation.
   rotateCamera(0);
   // Add 3d buildings and remove label layers to enhance the map
+
+//commented out below
+
+<%#=
   var layers = map.getStyle().layers;
   for (var i = 0; i < layers.length; i++) {
   if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
@@ -33,6 +37,7 @@ map.on('load', function () {
   map.removeLayer(layers[i].id);
     }
   }
+  %>
 
   map.addLayer({
       'id': '3d-buildings',
