@@ -51,7 +51,7 @@ data.features = data.features.map(function(d) {
 map.addSource('retail', {
   'type': 'geojson',
   data: data,
-  cluster: false,
+  cluster: true,
   clusterMaxZoom: 14, // Max zoom to cluster points on
   clusterRadius: 65 // Radius of each cluster when clustering points (defaults to 50)
 });
@@ -76,15 +76,15 @@ map.addSource('retail', {
         300,
         "#f28cb1"
         ],
-      "circle-radius": [
-        "step",
-          ["get", "point_count"],
-          20,
-          100,
-          30,
-          300,
-          40
-          ]
+    "circle-radius": [
+      "step",
+      ["get", "point_count"],
+        20,
+        100,
+        30,
+        300,
+        40
+        ]
       }
     });
 
@@ -125,9 +125,9 @@ map.addSource('retail', {
           ['linear'],
           ['zoom'],
           13, 0,
-          14, 4,
-          15, 6,
-          15.5, 8,
+          14, 6,
+          15, 8,
+          15.5, 10,
           16, 14,
           17, 10,
       ],
@@ -162,7 +162,7 @@ map.addSource('retail', {
     map.on('mouseleave', 'clusters', function () {
         map.getCanvas().style.cursor = '';
     });
-  // Add a source and layer displaying a point which will be animated in a circle.
+  // blipper
   map.addSource('point', {
       "type": "geojson",
       "data": {
@@ -199,6 +199,7 @@ function filterBy(year) {
   var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
     map.setFilter('unclustered-point', filterYear);
     map.setFilter('retail-labels', filterYear);
+
 }
 // Set filter to lastt year of the range to show all amenities
 // 0 = 2019
@@ -209,6 +210,7 @@ filterBy(2019);
     filterYear = ['<=', ['number', ['get', 'Year']], year];
     map.setFilter('unclustered-point', ['all', filterYear, filterType]);
     map.setFilter('retail-labels', ['all', filterYear, filterType]);
+
 
   document.getElementById('year').innerText = year;
 
@@ -226,8 +228,8 @@ filterBy(2019);
     } else {
       console.log('error');
     };
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
+    map.setFilter('unclustered-point', ['all', filterYear, filterType]);
+    map.setFilter('retail-labels', ['all', filterYear, filterType]);
   });
 
 // Start the animation from javascript

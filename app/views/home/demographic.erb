@@ -59,7 +59,7 @@
             container: 'map',
             style: 'mapbox://styles/mapbox/light-v8',
             zoom: 11,
-            center: [-77.014576, 38.899396]
+            center: [-87.646278, 41.897072]
         });
 
         // Add zoom and rotation controls to the map.
@@ -70,7 +70,7 @@
 
             map.addSource('dc', {
                 type: 'geojson',
-                data: 'https://gist.githubusercontent.com/hrecht/82b6440ed3b982a6f594/raw/48832482382f81d1f6943896626e21b80da6b45c/data.geojson'
+                data: '/data/census.geojson'
             });
 
             map.addLayer({
