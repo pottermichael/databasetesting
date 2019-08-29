@@ -51,7 +51,7 @@ data.features = data.features.map(function(d) {
 map.addSource('retail', {
   'type': 'geojson',
   data: data,
-  cluster: true,
+  cluster: false,
   clusterMaxZoom: 14, // Max zoom to cluster points on
   clusterRadius: 65 // Radius of each cluster when clustering points (defaults to 50)
 });
