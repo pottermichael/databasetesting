@@ -5,24 +5,11 @@
     <meta charset='utf-8' />
     <title>GL JS Choropleth</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.css' rel='stylesheet' />
+// reference for view at link: https://bl.ocks.org/hrecht/82b6440ed3b982a6f594
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-        }
-
         #sidebar {
             position: absolute;
-            top: 15px;
+            top: 60px;
             left: 15px;
             bottom: 15px;
             width: 250px;
@@ -31,6 +18,37 @@
             font-family: "Arial";
             padding-left: 10px;
         }
+//styling for legend from NYC casualties
+
+        #console {
+          position: absolute;
+          width: 240px;
+          margin: 10px;
+          padding: 10px 20px;
+          background-color: white;
+        }
+
+        .session {
+          margin-bottom: 20px;
+        }
+
+        .row {
+          height: 12px;
+          width: 100%;
+        }
+
+        .colors {
+          background: linear-gradient(to right, '#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e');
+          margin-bottom: 5px;
+        }
+
+        .label {
+          width: 15%;
+          color: black;
+          display: inline-block;
+          text-align: center;
+        }
+
     </style>
 
 </head>
@@ -38,12 +56,27 @@
 <body>
 
     <div id='map'></div>
-    <div id='sidebar'>
-        <h1>Downtown Chicago</h1>
-        <h2>Educational Attainment, 2018</h2>
-        <div id="tooltip-name"></div>
-        <div id='tooltip'></div>
+//    <%= render 'layouts/navigation' %>
+    <div id='console'>
+    <h1>Incomes by Zip</h1>
+    <p>Data: <a href='https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr' target="_blank">IRS</a> 1040 Personal Income Tax Filings, Jan 2018</p>
+    <div class='sidebar'>
+      <h2>% over $100k</h2>
+      <div id="tooltip-name"></div>
+      <div id='tooltip'></div>
+      <div class='row colors'>
+      </div>
+      <div class='row labels'>
+        <div class='label'>0</div>
+        <div class='label'>1</div>
+        <div class='label'>2</div>
+        <div class='label'>3</div>
+        <div class='label'>4</div>
+        <div class='label'>5+</div>
+      </div>
     </div>
+
+  </div>
 
     <script>
         //replace with YOUR access token
@@ -62,11 +95,11 @@
             center: [-87.646278, 41.897072]
         });
 
-        map.addControl(new mapboxgl.Navigation());
+
 
         map.on('load', function () {
 
-            map.addSource('dc', {
+            map.addSource('chicago', {
                 type: 'geojson',
                 data: '/data/zips.geojson'
             });
@@ -74,7 +107,7 @@
             map.addLayer({
                 "id": "tracts",
                 "type": "fill",
-                "source": "dc",
+                "source": "chicago",
                 "paint": {
                     "fill-color": {
                         property: '1040_sixfigures',
@@ -99,8 +132,8 @@
 
             if (features.length) {
                 //show name and value in sidebar
-                document.getElementById('tooltip-name').innerHTML = "Tract " + features[0].properties.objectid;
-                document.getElementById('tooltip').innerHTML = Math.round(features[0].properties.shape_area);
+                document.getElementById('tooltip-name').innerHTML = "Zip Code: " + features[0].properties.zip;
+                document.getElementById('tooltip').innerHTML = "Land Area: " + Math.round(features[0].properties.shape_area);
                 //for troubleshooting - show complete features info
                 //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
             } else {

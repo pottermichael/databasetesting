@@ -1,6 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+@import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 html, body {
   margin: 0;
@@ -12,7 +13,8 @@ html, body {
 
 .navbar{
   border-bottom: 1px solid rgba(0,0,0,.0975);
-  background-color: black;
+  background-color: #0E2136;
+  color: white
 }
 
 .user-section{
@@ -21,7 +23,7 @@ html, body {
   }
   i.fa{
     font-size: 22px;
-    color: #000000d4;
+    color: white;
   }
 }
 
@@ -34,7 +36,7 @@ html, body {
 #logo-right {
   float: right;
   font-size: 1.25em;
-  color: #00A1DF;
+  color: white;
   letter-spacing: .50px;
   font-weight: medium;
 }
