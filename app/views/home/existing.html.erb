@@ -17,7 +17,7 @@
       <input id="Office" type="radio" name="toggle" value="Office">
       <label for='Office'>Office</label>
       <input id="Resi" type="radio" name="toggle" value="Resi">
-      <label for='Resi'>Resi</label>
+      <label for='Resi'>Multifamily</label>
     </div>
   </div>
   <div id="vis">
@@ -94,14 +94,9 @@ map.addLayer({
   },
   });
 
-// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
-function filterBy(year) {
-  var filterYear = ['<=',['number',['get','Year']], year];
-  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    map.setFilter('residential-circles', filterYear);
-    map.setFilter('residential-labels', filterYear);
-}
+//NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
 
+// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
 // Set filter to first year of the range
 // 0 = 1999
   filterBy(1999);

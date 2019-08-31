@@ -6,7 +6,7 @@
   <h1>Infill Growth - Future/Planned</h1>
   <div class ='session'>
     <h2>Class +A Deliveries: Today - <label id='year'>2019</label></h2>
-    <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2019'/>
+    <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2030'/>
   </div>
 
   <div class='session'>
@@ -17,7 +17,7 @@
       <input id="Office" type="radio" name="toggle" value="Office">
       <label for='Office'>Office</label>
       <input id="Resi" type="radio" name="toggle" value="Resi">
-      <label for='Resi'>Resi</label>
+      <label for='Resi'>Mutlifamily</label>
     </div>
   </div>
 </div>
@@ -95,8 +95,8 @@ var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 //NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
 
 // Set filter to first year of the range
-// 0 = 2019 to represent data from today into the future
-filterBy(2019);
+// 0 = 2030 to show all, timing of delivery is somewhat arbitrary for this set
+filterBy(2030);
   document.getElementById('slider').addEventListener('input', function(e) {
     var year = parseInt(e.target.value);
     // update the map
