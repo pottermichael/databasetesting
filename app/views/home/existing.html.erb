@@ -20,11 +20,11 @@
       <label for='Resi'>Multifamily</label>
     </div>
   </div>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
   <div id="vis">
     <button id="play-button">Play</button>
   </div>
 </div>
-
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
@@ -96,36 +96,36 @@ map.addLayer({
 
 //NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
 
-// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
 // Set filter to first year of the range
 // 0 = 1999
-  filterBy(1999);
-    document.getElementById('slider').addEventListener('input', function(e) {
-      var year = parseInt(e.target.value);
-      // update the map
-      filterYear = ['<=', ['number', ['get', 'Year']], year];
-      map.setFilter('residential-circles', ['all', filterYear, filterType]);
-      map.setFilter('residential-labels', ['all', filterYear, filterType]);
+filterBy(1999);
+document.getElementById('slider').addEventListener('input', function(e) {
+  var year = parseInt(e.target.value);
+  
+  // update the map
+  filterYear = ['<=', ['number', ['get', 'Year']], year];
+  map.setFilter('residential-circles', ['all', filterYear, filterType]);
+  map.setFilter('residential-labels', ['all', filterYear, filterType]);
 
-    // update text in the UI
-    document.getElementById('year').innerText = year;
-    });
-    // radio buttons for filtering
-    document.getElementById('filters').addEventListener('change', function(e) {
-      var type = e.target.value;
-      // update the map filter
-      if (type === 'all') {
-        filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-      } else if (type === 'Office') {
-        filterType = ['match', ['get', 'Type'], 'Office', true, false];
-      } else if (type === 'Resi') {
-        filterType = ['match', ['get', 'Type'], 'Resi', true, false];
-      } else {
-        console.log('error');
-      };
-      map.setFilter('residential-circles', ['all', filterYear, filterType]);
-      map.setFilter('residential-labels', ['all', filterYear, filterType]);
-    });
+// update text in the UI
+document.getElementById('year').innerText = year;
+});
+// radio buttons for filtering
+document.getElementById('filters').addEventListener('change', function(e) {
+  var type = e.target.value;
+  // update the map filter
+  if (type === 'all') {
+    filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+  } else if (type === 'Office') {
+    filterType = ['match', ['get', 'Type'], 'Office', true, false];
+  } else if (type === 'Resi') {
+    filterType = ['match', ['get', 'Type'], 'Resi', true, false];
+  } else {
+    console.log('error');
+  };
+  map.setFilter('residential-circles', ['all', filterYear, filterType]);
+  map.setFilter('residential-labels', ['all', filterYear, filterType]);
+});
   //add layers for toggle buttons
   map.addSource('Commuter', {
     type: 'vector',
@@ -260,9 +260,11 @@ map.addLayer({
     }
 });
 animateMarker(0);
+console.log(filterYear);
 });
 });
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
+
 </body>
 </html>
