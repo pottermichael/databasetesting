@@ -1,0 +1,35 @@
+<h1>Testing</h1>
+
+<script>
+d3.csv("/data/test_data_formatted.csv", function(data) {
+
+var properties = data;
+
+console.log(properties);
+
+//roll up by key value of year delivered
+var propertiesByType = d3.nest()
+  .key(function(d) { return d.Year; })
+  .entries(properties);
+
+console.log(propertiesByType);
+
+//group by total GFA
+
+var propertiesCount = d3.nest()
+  .key(function(d) { return d.Year; })
+  .rollup(function(v) { return v.length; })
+  .entries(properties);
+console.log(JSON.stringify(propertiesCount));
+
+
+var propertiesAvgAmount = d3.nest()
+  .key(function(d) { return d.Year; })
+  .rollup(function(v) { return d3.mean(v, function(d) { return d.GFA; }); })
+  .entries(properties);
+console.log(JSON.stringify(propertiesAvgAmount));
+
+
+
+});
+</script>

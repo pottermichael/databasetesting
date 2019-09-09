@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get 'banksites', to: 'home#banksites'
 
+  get 'group', to: 'home#group'
+
   get 'play', to: 'home#play'
 
   get 'layer', to: 'home#layer'

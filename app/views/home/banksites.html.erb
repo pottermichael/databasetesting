@@ -267,40 +267,6 @@ filterBy(2000);
     layers.appendChild(link);
   }
 
-//add layers for blip
-map.addSource('point', {
-    "type": "geojson",
-    "data": {
-        "type": "Point",
-        "coordinates": [
-            -87.633062, 41.879962
-        ]
-    }
-});
-
-map.addLayer({
-    "id": "point",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-radius-transition": {duration: 0},
-        "circle-opacity-transition": {duration: 0},
-        "circle-color": "#ffffff"
-    }
-});
-
-map.addLayer({
-    "id": "point1",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-color": "#115640"
-    }
-});
-// Start the animation from javascript
-animateMarker(0);
   });
 });
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
