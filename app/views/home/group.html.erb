@@ -1,5 +1,29 @@
 <h1>Testing</h1>
 
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Slider - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#slider" ).slider();
+  } );
+  </script>
+</head>
+<body>
+
+<div id="slider"></div>
+
+
+</body>
+</html>
+
+
+
 <script>
 d3.csv("/data/test_data_formatted.csv", function(data) {
 
@@ -11,11 +35,9 @@ console.log(properties);
 var propertiesByType = d3.nest()
   .key(function(d) { return d.Year; })
   .entries(properties);
-
 console.log(propertiesByType);
 
 //group by total GFA
-
 var propertiesCount = d3.nest()
   .key(function(d) { return d.Year; })
   .rollup(function(v) { return v.length; })
@@ -29,7 +51,15 @@ var propertiesAvgAmount = d3.nest()
   .entries(properties);
 console.log(JSON.stringify(propertiesAvgAmount));
 
-
+var propertiesMetrics = d3.nest()
+  .key(function(d) { return d.Year; })
+  .rollup(function(v) {return {
+    count: v.length,
+    total: d3.sum(v, function(d) { return d.GFA; }),
+    avg: d3.mean(v, function(d) { return d.GFA; })
+  };})
+  .entries(properties);
+console.log(JSON.stringify(propertiesMetrics));
 
 });
 </script>
