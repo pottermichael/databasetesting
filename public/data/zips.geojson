@@ -7,7 +7,7 @@
         "shape_area": "141235867.545",
         "shape_len": "47847.080382",
         "zip": "60618",
-        "1040_sixfigures": 0.185
+        "sixfigures": 0.185
       },
       "geometry": {
         "coordinates": [
@@ -2493,7 +2493,7 @@
         "shape_area": "36301276.3485",
         "shape_len": "37973.3461051",
         "zip": "60605",
-        "1040_sixfigures": 0.401
+        "sixfigures": 0.401
       },
       "geometry": {
         "coordinates": [
@@ -5635,7 +5635,7 @@
         "shape_area": "53990894.8848",
         "shape_len": "31196.3206564",
         "zip": "60613",
-        "1040_sixfigures": 0.236
+        "sixfigures": 0.236
       },
       "geometry": {
         "coordinates": [
@@ -7577,7 +7577,7 @@
         "shape_area": "31598157.0867",
         "shape_len": "24208.6988788",
         "zip": "60610",
-        "1040_sixfigures": 0.328
+        "sixfigures": 0.328
       },
       "geometry": {
         "coordinates": [
@@ -8939,7 +8939,7 @@
         "shape_area": "15869961.3469",
         "shape_len": "17119.6988775",
         "zip": "60654",
-        "1040_sixfigures": 0.47
+        "sixfigures": 0.47
       },
       "geometry": {
         "coordinates": [
@@ -10189,7 +10189,7 @@
         "shape_area": "47961494.4",
         "shape_len": "31296.2271441",
         "zip": "60642",
-        "1040_sixfigures": 0.47
+        "sixfigures": 0.47
       },
       "geometry": {
         "coordinates": [
@@ -12059,7 +12059,7 @@
         "shape_area": "4847124.8171",
         "shape_len": "14448.1749926",
         "zip": "60602",
-        "1040_sixfigures": 0.323
+        "sixfigures": 0.323
       },
       "geometry": {
         "coordinates": [
@@ -12953,7 +12953,7 @@
         "shape_area": "9357755.68017",
         "shape_len": "13132.5654896",
         "zip": "60661",
-        "1040_sixfigures": 0.403
+        "sixfigures": 0.403
       },
       "geometry": {
         "coordinates": [
@@ -13911,7 +13911,7 @@
         "shape_area": "106052287.488",
         "shape_len": "42720.0444058",
         "zip": "60647",
-        "1040_sixfigures": 0.17
+        "sixfigures": 0.17
       },
       "geometry": {
         "coordinates": [
@@ -15933,7 +15933,7 @@
         "shape_area": "109667069.368",
         "shape_len": "45823.5398375",
         "zip": "60616",
-        "1040_sixfigures": 0.152
+        "sixfigures": 0.152
       },
       "geometry": {
         "coordinates": [
@@ -19003,7 +19003,7 @@
         "shape_area": "64664293.9426",
         "shape_len": "39143.6395171",
         "zip": "60607",
-        "1040_sixfigures": 0.396
+        "sixfigures": 0.396
       },
       "geometry": {
         "coordinates": [
@@ -20921,7 +20921,7 @@
         "shape_area": "4294901.99439",
         "shape_len": "12245.8084015",
         "zip": "60604",
-        "1040_sixfigures": 0.417
+        "sixfigures": 0.417
       },
       "geometry": {
         "coordinates": [
@@ -21471,7 +21471,7 @@
         "shape_area": "23506055.7304",
         "shape_len": "34689.3506306",
         "zip": "60611",
-        "1040_sixfigures": 0.449
+        "sixfigures": 0.449
       },
       "geometry": {
         "coordinates": [
@@ -24169,7 +24169,7 @@
         "shape_area": "6766410.89809",
         "shape_len": "12040.4402354",
         "zip": "60606",
-        "1040_sixfigures": 0.452
+        "sixfigures": 0.452
       },
       "geometry": {
         "coordinates": [
@@ -25195,7 +25195,7 @@
         "shape_area": "176505462.522",
         "shape_len": "53169.2177202",
         "zip": "60608",
-        "1040_sixfigures": 0.07
+        "sixfigures": 0.07
       },
       "geometry": {
         "coordinates": [
@@ -28133,7 +28133,7 @@
         "shape_area": "4560228.98203",
         "shape_len": "13672.6822885",
         "zip": "60603",
-        "1040_sixfigures": 0.489
+        "sixfigures": 0.489
       },
       "geometry": {
         "coordinates": [
@@ -28787,7 +28787,7 @@
         "shape_area": "106718949.386",
         "shape_len": "42663.1966757",
         "zip": "60612",
-        "1040_sixfigures": 0.104
+        "sixfigures": 0.104
       },
       "geometry": {
         "coordinates": [
@@ -31093,7 +31093,7 @@
         "shape_area": "70853834.3797",
         "shape_len": "42527.9896789",
         "zip": "60622",
-        "1040_sixfigures": 0.243
+        "sixfigures": 0.243
       },
       "geometry": {
         "coordinates": [
@@ -33335,7 +33335,7 @@
         "shape_area": "63547755.9216",
         "shape_len": "45646.4880277",
         "zip": "60657",
-        "1040_sixfigures": 0.288
+        "sixfigures": 0.288
       },
       "geometry": {
         "coordinates": [
@@ -36297,7 +36297,7 @@
         "shape_area": "9166245.79985",
         "shape_len": "19804.5821088",
         "zip": "60601",
-        "1040_sixfigures": 0.426
+        "sixfigures": 0.426
       },
       "geometry": {
         "coordinates": [
@@ -37511,7 +37511,7 @@
         "shape_area": "94460631.8068",
         "shape_len": "50587.3473804",
         "zip": "60614",
-        "1040_sixfigures": 0.361
+        "sixfigures": 0.361
       },
       "geometry": {
         "coordinates": [
