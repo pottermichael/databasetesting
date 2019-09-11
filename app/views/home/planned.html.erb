@@ -237,7 +237,7 @@ filterBy(2030);
   });
 
 //code for layer button functionality
-  var toggleableLayerIds = ['Commuter', 'Transitway', 'CTA Blue', 'CTA Brown', 'CTA Green', 'Large Parcels'];
+  var toggleableLayerIds = ['CTA Brown','CTA Green','CTA Blue','Commuter','Transitway','Large Parcels'];
 
   for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
@@ -301,7 +301,6 @@ map.addLayer({
 animateMarker(0);
   });
 });
-map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
 </html>
