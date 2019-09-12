@@ -5,7 +5,7 @@
 <div id='console'>
   <h1>Infill Growth - Future/Planned</h1>
   <div class ='session'>
-    <h2>Class +A Deliveries: Today - <label id='year'>2019</label></h2>
+    <h2>Class +A Deliveries: Today - <label id='year'>2030</label></h2>
     <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2030'/>
   </div>
 
@@ -38,7 +38,7 @@ var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 
 // Create a year property value based on time used to filter against.
-  d3.json("/data/supply_in_planning.geojson", function(err, data) {
+  d3.json("/data/supply_in_planning3.geojson", function(err, data) {
   if (err) throw err;
   data.features = data.features.map(function(d) {
     d.properties.year = new Date(d.properties);
