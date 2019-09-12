@@ -40,7 +40,7 @@ var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 
 // Create a year property value based on time used to filter against.
-d3.json("/data/issued3.geojson", function(err, data) {
+d3.json("/data/issued6.geojson", function(err, data) {
 if (err) throw err;
 data.features = data.features.map(function(d) {
   d.properties.year = new Date(d.properties);
@@ -236,8 +236,6 @@ filterBy(2019);
 animateMarker(0);
 });
 });
-
-map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
 </html>
