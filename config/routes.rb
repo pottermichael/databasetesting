@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   get 'group', to: 'home#group'
 
+  get 'slider', to: 'home#slider'
+
   get 'play', to: 'home#play'
 
   get 'layer', to: 'home#layer'

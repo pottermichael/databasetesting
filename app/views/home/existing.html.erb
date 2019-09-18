@@ -45,6 +45,19 @@ data.features = data.features.map(function(d) {
   return d;
 });
 
+
+var thing = [4, 2, 3, 5];
+thing.forEach(function(i,v){
+  console.log(i,v);
+});
+//below is an array. add javascript filters here to create geojson objects to display values???
+
+var endDate = data.features
+
+console.log(endDate);
+console.log(endDate.length);
+console.log(typeof startDate);
+
 map.addSource('resi', {
   'type': 'geojson',
   data: data,
@@ -156,7 +169,7 @@ map.addLayer({
     }
 });
 animateMarker(0);
-console.log(filterYear);
+console.log(data);
 });
 });
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
