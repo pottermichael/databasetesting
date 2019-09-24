@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset='utf-8' />
     <title>GL JS Choropleth</title>
@@ -32,87 +31,81 @@
             padding-left: 10px;
         }
     </style>
-
 </head>
 
 <body>
+<div id='map'></div>
+<div id='sidebar'>
+    <h1>Downtown Chicago</h1>
+    <h2>Educational Attainment, 2018</h2>
+    <div id="tooltip-name"></div>
+    <div id='tooltip'></div>
+</div>
 
-    <div id='map'></div>
-    <div id='sidebar'>
-        <h1>Downtown Chicago</h1>
-        <h2>Educational Attainment, 2018</h2>
-        <div id="tooltip-name"></div>
-        <div id='tooltip'></div>
-    </div>
+<script>
+  //replace with YOUR access token
+  mapboxgl.accessToken = 'pk.eyJ1IjoiaHJlY2h0IiwiYSI6IlFwV2hZMlUifQ.dwfwZ5jzPU1xv2mYYVzXlQ';
 
-    <script>
-        //replace with YOUR access token
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaHJlY2h0IiwiYSI6IlFwV2hZMlUifQ.dwfwZ5jzPU1xv2mYYVzXlQ';
+  //globals for the choropleth
+  var COLORS = ['#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e'],
+      BREAKS = [-1000, -500, 0, 500, 1000, 1500],
+      FILTERUSE;
 
-        //globals for the choropleth
-        var COLORS = ['#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e'],
-            BREAKS = [-1000, -500, 0, 500, 1000, 1500],
-            FILTERUSE;
+  //create a map using the Mapbox Light theme, zoomed in to DC
+  var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v8',
+      zoom: 11,
+      center: [-87.646278, 41.897072]
+  });
 
-        //create a map using the Mapbox Light theme, zoomed in to DC
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/light-v8',
-            zoom: 11,
-            center: [-87.646278, 41.897072]
-        });
+  //data source: http://opendata.dc.gov/datasets/e87a760828844422afe864a6754049c2_20?geometry=-77.297%2C38.854%2C-76.732%2C38.934
+  map.on('load', function () {
 
-        // Add zoom and rotation controls to the map.
-        map.addControl(new mapboxgl.Navigation());
+      map.addSource('dc', {
+          type: 'geojson',
+          data: '/data/census.geojson'
+      });
 
-        //data source: http://opendata.dc.gov/datasets/e87a760828844422afe864a6754049c2_20?geometry=-77.297%2C38.854%2C-76.732%2C38.934
-        map.on('load', function () {
+      map.addLayer({
+          "id": "tracts",
+          "type": "fill",
+          "source": "dc",
+          "paint": {
+              "fill-color": {
+                  property: 'TOTPOPCHG',
+                  stops: [
+              [BREAKS[0], COLORS[0]],
+              [BREAKS[1], COLORS[1]],
+              [BREAKS[2], COLORS[2]],
+              [BREAKS[3], COLORS[3]],
+              [BREAKS[4], COLORS[4]],
+              [BREAKS[5], COLORS[5]]]
+              },
+              "fill-opacity": 0.7,
+              "fill-outline-color": "#ffffff"
+          }
+      });
+  });
 
-            map.addSource('dc', {
-                type: 'geojson',
-                data: '/data/census.geojson'
-            });
+  map.on("mousemove", function (e) {
+      var features = map.queryRenderedFeatures(e.point, {
+          layers: ["tracts"]
+      });
 
-            map.addLayer({
-                "id": "tracts",
-                "type": "fill",
-                "source": "dc",
-                "paint": {
-                    "fill-color": {
-                        property: 'TOTPOPCHG',
-                        stops: [
-                    [BREAKS[0], COLORS[0]],
-                    [BREAKS[1], COLORS[1]],
-                    [BREAKS[2], COLORS[2]],
-                    [BREAKS[3], COLORS[3]],
-                    [BREAKS[4], COLORS[4]],
-                    [BREAKS[5], COLORS[5]]]
-                    },
-                    "fill-opacity": 0.7,
-                    "fill-outline-color": "#ffffff"
-                }
-            });
-        });
-
-        map.on("mousemove", function (e) {
-            var features = map.queryRenderedFeatures(e.point, {
-                layers: ["tracts"]
-            });
-
-            if (features.length) {
-                //show name and value in sidebar
-                document.getElementById('tooltip-name').innerHTML = "Tract " + features[0].properties.FEDTRACTNO;
-                document.getElementById('tooltip').innerHTML = Math.round(features[0].properties.TOTPOPCHG);
-                //for troubleshooting - show complete features info
-                //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
-            } else {
-                //if not hovering over a feature set tooltip to empty
-                document.getElementById('tooltip-name').innerHTML = "";
-                document.getElementById('tooltip').innerHTML = "";
-            }
-        });
-    </script>
+      if (features.length) {
+          //show name and value in sidebar
+          document.getElementById('tooltip-name').innerHTML = "Tract " + features[0].properties.FEDTRACTNO;
+          document.getElementById('tooltip').innerHTML = Math.round(features[0].properties.TOTPOPCHG);
+          //for troubleshooting - show complete features info
+          //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
+      } else {
+          //if not hovering over a feature set tooltip to empty
+          document.getElementById('tooltip-name').innerHTML = "";
+          document.getElementById('tooltip').innerHTML = "";
+      }
+  });
+</script>
 
 </body>
-
 </html>

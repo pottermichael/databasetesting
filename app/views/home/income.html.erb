@@ -1,148 +1,174 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset='utf-8' />
     <title>GL JS Choropleth</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 // reference for view at link: https://bl.ocks.org/hrecht/82b6440ed3b982a6f594
-    <style>
-        #sidebar {
-            position: absolute;
-            top: 60px;
-            left: 15px;
-            bottom: 15px;
-            width: 250px;
-            overflow: auto;
-            background: rgba(255, 255, 255, 0.8);
-            font-family: "Arial";
-            padding-left: 10px;
-        }
-//styling for legend from NYC casualties
+<style>
 
-        #console {
-          position: absolute;
-          width: 240px;
-          margin: 10px;
-          padding: 10px 20px;
-          background-color: white;
-        }
 
-        .session {
-          margin-bottom: 20px;
-        }
+#sidebar {
+    position: absolute;
+    top: 60px;
+    left: 15px;
+    bottom: 15px;
+    width: 250px;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: "Arial";
+    padding-left: 10px;
+}
 
-        .row {
-          height: 12px;
-          width: 100%;
-        }
+#console {
+  position: absolute;
+  width: 240px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
 
-        .colors {
-          background: linear-gradient(to right, '#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e');
-          margin-bottom: 5px;
-        }
+.session {
+  margin-bottom: 20px;
+}
 
-        .label {
-          width: 15%;
-          color: black;
-          display: inline-block;
-          text-align: center;
-        }
+.row {
+  height: 12px;
+  width: 100%;
+}
 
-    </style>
+.colors {
+  background: linear-gradient(to right, '#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e');
+  margin-bottom: 5px;
+}
 
+.label {
+  width: 15%;
+  color: black;
+  display: inline-block;
+  text-align: center;
+}
+</style>
 </head>
 
 <body>
-
-    <div id='map'></div>
-    <div id='console'>
-    <h1>Incomes by Zip</h1>
-    <p>Data: <a href='https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr' target="_blank">IRS</a> 1040 Personal Income Tax Filings, Jan 2018</p>
-    <div class='sidebar'>
-        <div id="tooltip-name"></div>
-      <label id='year'>
-        <div id='tooltip'></div>
-      </label>
-      <div class='row colors'></div>
-      <div class='row labels'>
-        <div class='label'>0</div>
-        <div class='label'>1</div>
-        <div class='label'>2</div>
-        <div class='label'>3</div>
-        <div class='label'>4</div>
-        <div class='label'>5+</div>
-      </div>
+  <div id='map'></div>
+  <div id='console'>
+  <h1>Incomes by Zip</h1>
+  <p>Data: <a href='https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr' target="_blank">IRS</a> 1040 Personal Income Tax Filings, Jan 2018</p>
+  <div class='sidebar'>
+    <label id='year'>
+      <div id="tooltip-name"></div>
+      <div id='tooltip'></div>
+    </label>
+    <div class='row colors'></div>
+    <div class='row labels'>
+      <div class='label'>0</div>
+      <div class='label'>1</div>
+      <div class='label'>2</div>
+      <div class='label'>3</div>
+      <div class='label'>4</div>
+      <div class='label'>5+</div>
     </div>
-    </div>
+  </div>
+  </div>
 
-    <script>
-        //replace with YOUR access token
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaHJlY2h0IiwiYSI6IlFwV2hZMlUifQ.dwfwZ5jzPU1xv2mYYVzXlQ';
+<script>
+//replace with YOUR access token
+mapboxgl.accessToken = 'pk.eyJ1IjoiaHJlY2h0IiwiYSI6IlFwV2hZMlUifQ.dwfwZ5jzPU1xv2mYYVzXlQ';
 
-        //globals for the choropleth
-        var COLORS = ['#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e'],
-            BREAKS = [0, .25, .35, .45, .55, .75],
-            FILTERUSE;
+//globals for the choropleth
+var COLORS = ['#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e'],
+    BREAKS = [0, .25, .35, .45, .55, .75],
+    FILTERUSE;
 
-        //create a map using the Mapbox Light theme, zoomed in to chicago
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/light-v8',
-            zoom: 11,
-            center: [-87.646278, 41.897072]
-        });
+//create a map using the Mapbox Light theme, zoomed in to chicago
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v8',
+    zoom: 11,
+    center: [-87.646278, 41.897072]
+});
 
+map.on('load', function () {
 
+    map.addSource('chicago', {
+        type: 'geojson',
+        data: '/data/zips.geojson'
+    });
 
-        map.on('load', function () {
+    map.addLayer({
+        "id": "tracts",
+        "type": "fill",
+        "source": "chicago",
+        "paint": {
+            "fill-color": {
+                property: 'sixfigures',
+                stops: [
+            [BREAKS[0], COLORS[0]],
+            [BREAKS[1], COLORS[1]],
+            [BREAKS[2], COLORS[2]],
+            [BREAKS[3], COLORS[3]],
+            [BREAKS[4], COLORS[4]],
+            [BREAKS[5], COLORS[5]]]
+            },
+            "fill-opacity": 0.7,
+            "fill-outline-color": "#ffffff"
+        }
+    });
 
-            map.addSource('chicago', {
-                type: 'geojson',
-                data: '/data/zips.geojson'
-            });
+    //add layers for blip
+    map.addSource('point', {
+        "type": "geojson",
+        "data": {
+            "type": "Point",
+            "coordinates": [
+                -87.646196, 41.895594
+            ]
+        }
+    });
+    map.addLayer({
+        "id": "point",
+        "source": "point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": initialRadius,
+            "circle-radius-transition": {duration: 0},
+            "circle-opacity-transition": {duration: 0},
+            "circle-color": "#ffffff"
+        }
+    });
+    map.addLayer({
+        "id": "point1",
+        "source": "point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": initialRadius,
+            "circle-color": "#007cbf"
+        }
+    });
+    animateMarker(0);
+});
 
-            map.addLayer({
-                "id": "tracts",
-                "type": "fill",
-                "source": "chicago",
-                "paint": {
-                    "fill-color": {
-                        property: 'sixfigures',
-                        stops: [
-                    [BREAKS[0], COLORS[0]],
-                    [BREAKS[1], COLORS[1]],
-                    [BREAKS[2], COLORS[2]],
-                    [BREAKS[3], COLORS[3]],
-                    [BREAKS[4], COLORS[4]],
-                    [BREAKS[5], COLORS[5]]]
-                    },
-                    "fill-opacity": 0.7,
-                    "fill-outline-color": "#ffffff"
-                }
-            });
-        });
+map.on("mousemove", function (e) {
+    var features = map.queryRenderedFeatures(e.point, {
+        layers: ["tracts"]
+    });
 
-        map.on("mousemove", function (e) {
-            var features = map.queryRenderedFeatures(e.point, {
-                layers: ["tracts"]
-            });
-
-            if (features.length) {
-                //show name and value in sidebar
-                document.getElementById('tooltip-name').innerHTML = "Zip Code: " + features[0].properties.zip;
-                //note added *100 then divide by 100 convention to achieve a 2 decimal place rounding
-                document.getElementById('tooltip').innerHTML = "% Over $100k: " + Math.round(features[0].properties.sixfigures*100);
-                //for troubleshooting - show complete features info
-                //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
-            } else {
-                //if not hovering over a feature set tooltip to empty
-                document.getElementById('tooltip-name').innerHTML = "";
-                document.getElementById('tooltip').innerHTML = "";
-            }
-        });
-    </script>
+    if (features.length) {
+        //show name and value in sidebar
+        document.getElementById('tooltip-name').innerHTML = "Zip: " + features[0].properties.zip;
+        //note added *100 then divide by 100 convention to achieve a 2 decimal place rounding
+        document.getElementById('tooltip').innerHTML = ">$100k: " + Math.round(features[0].properties.sixfigures*100) + '%';
+        //for troubleshooting - show complete features info
+        //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
+    } else {
+        //if not hovering over a feature set tooltip to empty
+        document.getElementById('tooltip-name').innerHTML = "";
+        document.getElementById('tooltip').innerHTML = "";
+    }
+});
+</script>
 
 </body>
-
 </html>

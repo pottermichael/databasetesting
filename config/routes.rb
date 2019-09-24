@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get 'home/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
   root 'home#index'
 
   get 'existing', to: 'home#existing'
@@ -9,14 +8,6 @@ Rails.application.routes.draw do
   get 'planned', to: 'home#planned'
 
   get 'banksites', to: 'home#banksites'
-
-  get 'group', to: 'home#group'
-
-  get 'slider', to: 'home#slider'
-
-  get 'play', to: 'home#play'
-
-  get 'layer', to: 'home#layer'
 
   get 'resiall', to: 'home#resiall'
 
@@ -34,7 +25,13 @@ Rails.application.routes.draw do
 
   get 'comps', to: 'home#comps'
 
-  get 'infrastructure', to: 'home#infrastructure'
+#routes for misc folder
+
+  get 'group', to: 'home#group'
+
+  get 'slider', to: 'home#slider'
+
+  get 'play', to: 'misc#play'
 
   get 'clock', to: 'home#clock'
 
