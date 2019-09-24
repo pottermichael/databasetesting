@@ -37,7 +37,7 @@ map.on('load', function() {
 var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 
-// Create a year property value based on time used to filter against.
+// Create a year Property value based on time used to filter against.
 d3.json("/data/supply_to_date.geojson", function(err, data) {
 if (err) throw err;
 data.features = data.features.map(function(d) {
@@ -45,11 +45,14 @@ data.features = data.features.map(function(d) {
   return d;
 });
 
+//playground for .filter
+group = [2007,2010,1999,2015,2001,2020]
+function isBigEnough(value) {
+  return value >= 2007;
+}
+var filtered = group.filter(isBigEnough);
+console.log(filtered)
 
-var thing = [4, 2, 3, 5];
-thing.forEach(function(i,v){
-  console.log(i,v);
-});
 //below is an array. add javascript filters here to create geojson objects to display values???
 
 var endDate = data.features

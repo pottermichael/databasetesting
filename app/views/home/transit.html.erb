@@ -1,33 +1,13 @@
 <html>
 <body>
 <div id='map'></div>
-  <nav id="menu"></nav>
-<div id='console'>
-  <h1>Infill Growth - To Date</h1>
-  <div class ='session'>
-    <h2>Class +A Deliveries: 2000 - <label id='year'>TBD</label></h2>
-    <input id='slider' class='row' type='range' min='1999' max='2024' step='1' value='1999'/>
-  </div>
-
-  <div class='session'>
-    <h2>Property Type</h2>
-    <div class='row' id='filters'>
-      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
-      <label for='all'>All</label>
-      <input id="Office" type="radio" name="toggle" value="Office">
-      <label for='Office'>Office</label>
-      <input id="Resi" type="radio" name="toggle" value="Resi">
-      <label for='Resi'>Resi</label>
-    </div>
-  </div>
-</div>
-
+<nav id="menu"></nav>
 <script>
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+  style: 'mapbox://styles/mpotter/cjz4e6tlt07rp1cmwg0fjxpel',
   center: [-87.636127, 41.892699],
   zoom: 13.5,
   attributionControl: false
@@ -41,64 +21,7 @@ var radius = initialRadius;
 var maxRadius = 50;
 
 map.on('load', function() {
-// Create a year property value based on time used to filter against.
-  d3.json("/data/supply_to_date.geojson", function(err, data) {
-  if (err) throw err;
-  data.features = data.features.map(function(d) {
-    d.properties.year = new Date(d.properties);
-    return d;
-  }d);
-
-// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
-function filterBy(year) {
-var filterYear = ['<=',['number',['get','Year']], year];
-var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-map.setFilter('residential-circles', filterYear);
-map.setFilter('residential-labels', filterYear);
-}
-
-map.addSource('resi', {
-  'type': 'geojson',
-  data: data,
-});
-map.addLayer({
-  'id': 'residential-circles',
-  'type': 'circle',
-  'source': 'resi',
-  'paint': {
-    'circle-color': [
-        'match',
-        ['get', 'Type'],
-        'Resi', '#fbb03b',
-        'Office', '#3bb2d0',
-        /*other*/ '#ccc'
-        ],
-  'circle-opacity': .75,
-    'circle-radius': [
-      'interpolate',
-      ['linear'],
-        ['number',['get', 'GFA']],
-          50000, 5,
-          1500000, 30
-      ]
-    },
-  });
-map.addLayer({
-  'id': 'residential-labels',
-  'type': 'symbol',
-  'source': 'resi',
-  'layout': {
-    'text-field': ['to-string', ['get', 'Project']],
-    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    'text-size': 8
-    },
-  'paint': {
-    'text-color': 'rgba(0,0,0,0.5)'
-    }
-  });
-
 //add layers for blip
-
 map.addSource('point', {
     "type": "geojson",
     "data": {
@@ -149,39 +72,8 @@ function animateMarker(timestamp) {
         }
     }, 1000 / framesPerSecond);
 }
-
-// Set filter to first year of the range
-// 0 = 1999
-filterBy(1999);
-  document.getElementById('slider').addEventListener('input', function(e) {
-    var year = parseInt(e.target.value);
-    // update the map
-    filterYear = ['<=', ['number', ['get', 'Year']], year];
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
-
-  document.getElementById('year').innerText = year;
-
+animateMarker(0);
   });
-  // radio buttons for filtering
-  document.getElementById('filters').addEventListener('change', function(e) {
-    var type = e.target.value;
-    // update the map filter
-    if (type === 'all') {
-      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    } else if (type === 'Office') {
-      filterType = ['match', ['get', 'Type'], 'Office', true, false];
-    } else if (type === 'Resi') {
-      filterType = ['match', ['get', 'Type'], 'Resi', true, false];
-    } else {
-      console.log('error');
-    };
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
-  });
-  animateMarker(0);
-  });
-});
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 </body>
