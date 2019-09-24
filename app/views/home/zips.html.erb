@@ -60,11 +60,9 @@
     <h1>Incomes by Zip</h1>
     <p>Data: <a href='https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr' target="_blank">IRS</a> 1040 Personal Income Tax Filings, Jan 2018</p>
     <div class='sidebar'>
-      <h2>% over $100k</h2>
       <div id="tooltip-name"></div>
-      <div id='tooltip'></div>
-      <div class='row colors'>
-      </div>
+        <div id='tooltip'></div>
+      <div class='row colors'></div>
       <div class='row labels'>
         <div class='label'>0</div>
         <div class='label'>1</div>
@@ -108,7 +106,7 @@
                 "source": "chicago",
                 "paint": {
                     "fill-color": {
-                        property: '1040_sixfigures',
+                        property: 'sixfigures',
                         stops: [
                     [BREAKS[0], COLORS[0]],
                     [BREAKS[1], COLORS[1]],
@@ -131,7 +129,8 @@
             if (features.length) {
                 //show name and value in sidebar
                 document.getElementById('tooltip-name').innerHTML = "Zip Code: " + features[0].properties.zip;
-                document.getElementById('tooltip').innerHTML = "Land Area: " + Math.round(features[0].properties.shape_area);
+                //note added *100 then divide by 100 convention to achieve a 2 decimal place rounding
+                document.getElementById('tooltip').innerHTML = "% Over $100k: " + Math.round(features[0].properties.sixfigures*100)/100;
                 //for troubleshooting - show complete features info
                 //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
             } else {
