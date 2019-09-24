@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   get 'migration', to: 'home#migration'
 
-  get 'comps', to: 'home#comps'
+  get 'citymodel', to: 'home#citymodel'
 
 #routes for misc folder
 
