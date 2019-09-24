@@ -132,7 +132,7 @@
                 //show name and value in sidebar
                 document.getElementById('tooltip-name').innerHTML = "Zip Code: " + features[0].properties.zip;
                 //note added *100 then divide by 100 convention to achieve a 2 decimal place rounding
-                document.getElementById('tooltip').innerHTML = "% Over $100k: " + Math.round(features[0].properties.sixfigures*100)/100;
+                document.getElementById('tooltip').innerHTML = "% Over $100k: " + Math.round(features[0].properties.sixfigures*100);
                 //for troubleshooting - show complete features info
                 //document.getElementById('tooltip').innerHTML = JSON.stringify(features, null, 2);
             } else {
