@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   get 'demographic', to: 'home#demographic'
 
-  get 'zips', to: 'home#zips'
+  get 'income', to: 'home#income'
 
   get 'amenity', to: 'home#amenity'
 
