@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   get 'amenity', to: 'home#amenity'
 
+  get 'bib', to: 'home#bib'
+
   get 'migration', to: 'home#migration'
 
   get 'citymodel', to: 'home#citymodel'

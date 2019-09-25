@@ -1,0 +1,161 @@
+<html>
+<body>
+<div id='map'>
+</div>
+  <nav id="menu"></nav>
+<div id='console'>
+  <h1>City of Chicago</h1>
+  <h4>Downtown Dining</h4>
+  <h5>Data: Retail/Food Permits, Dept of Business Affairs</h5>
+  <div class ='session'>
+    <h2>Deliveries Year 2000 thru:
+      <label id='year'></label></h2>
+      <input id='slider' class='row' type='range' min='2010' max='2020' step='1' value='2019'/>
+  </div>
+  <div class='session'>
+    <h2>Property Type</h2>
+    <div class='row' id='filters'>
+      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+      <label for='all'>All</label>
+      <input id="Issued" type="radio" name="toggle" value="Issued">
+      <label for='Issued'>Issued</label>
+      <input id="Awarded" type="radio" name="toggle" value="Awarded">
+      <label for='Awarded'>Yes</label>
+    </div>
+  </div>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mpotter/cjz1cb1us653x1dmafmwpkcsa',
+  center: [-87.636127, 41.892699],
+  zoom: 13.5,
+  attributionControl: false
+});
+
+map.on('load', function() {
+var filterYear = ['<=',['number',['get','Year']], year];
+var filterType = ['!=', ['string', ['get', 'Awarded']], 'placeholder'];
+
+// Create a year Property value based on time used to filter against.
+d3.json("/data/issued7.geojson", function(err, data) {
+if (err) throw err;
+data.features = data.features.map(function(d) {
+  d.properties.year = new Date(d.properties);
+  return d;
+});
+
+map.addSource('retail', {
+  'type': 'geojson',
+  data: data,
+});
+map.addLayer({
+  'id': 'residential-circles',
+  'type': 'circle',
+  'source': 'retail',
+  'paint': {
+    'circle-color': [
+        'match',
+        ['get', 'Category'],
+        'Bib Gourmond', '#fbb03b',
+        'Michelin', '#0E9447',
+        /*other*/ '#ccc'
+        ],
+    'circle-opacity': .75,
+     'circle-radius': 5,
+    },
+  });
+map.addLayer({
+  'id': 'residential-labels',
+  'type': 'symbol',
+  'source': 'retail',
+  'layout': {
+    'text-field': ['to-string', ['get', 'Project']],
+    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+    'text-size': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        4,9,
+        6,12
+    ],
+    'text-max-width': 5
+    },
+  'paint': {
+    'text-color': 'rgba(0,0,0,0.5)'
+  },
+  });
+
+//NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
+
+// Set filter to first year of the range
+// 0 = 1999
+filterBy(1999);
+document.getElementById('slider').addEventListener('input', function(e) {
+  var year = parseInt(e.target.value);
+
+  // update the map
+  filterYear = ['<=', ['number', ['get', 'Year']], year];
+  map.setFilter('residential-circles', ['all', filterYear, filterType]);
+  map.setFilter('residential-labels', ['all', filterYear, filterType]);
+
+// update text in the UI
+document.getElementById('year').innerText = year;
+});
+// radio buttons for filtering
+document.getElementById('filters').addEventListener('change', function(e) {
+  var type = e.target.value;
+  // update the map filter
+  if (type === 'all') {
+    filterType = ['!=', ['string', ['get', 'Awarded']], 'placeholder'];
+  } else if (type === 'Issued') {
+    filterType = ['match', ['get', 'Awarded'], 'Issued', true, false];
+  } else if (type === 'Yes') {
+    filterType = ['match', ['get', 'Awarded'], 'Yes', true, false];
+  } else {
+    console.log('error');
+  };
+  map.setFilter('residential-circles', ['all', filterYear, filterType]);
+  map.setFilter('residential-labels', ['all', filterYear, filterType]);
+});
+
+//add layers for blip
+map.addSource('point', {
+    "type": "geojson",
+    "data": {
+        "type": "Point",
+        "coordinates": [
+            -87.646196, 41.895594
+        ]
+    }
+});
+map.addLayer({
+    "id": "point",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-radius-transition": {duration: 0},
+        "circle-opacity-transition": {duration: 0},
+        "circle-color": "#ffffff"
+    }
+});
+map.addLayer({
+    "id": "point1",
+    "source": "point",
+    "type": "circle",
+    "paint": {
+        "circle-radius": initialRadius,
+        "circle-color": "#007cbf"
+    }
+});
+animateMarker(0);
+console.log(data);
+});
+});
+</script>
+
+</body>
+</html>
