@@ -90,9 +90,16 @@ map.addLayer({
 
 //NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
 
+function filterBye(year) {
+  var filterYear = ['<=',['number',['get','Year']], year];
+  var filterType = ['!=', ['string', ['get', 'Awarded']], 'placeholder'];
+    map.setFilter('residential-circles', filterYear);
+    map.setFilter('residential-labels', filterYear);
+}
+
 // Set filter to first year of the range
 // 0 = 1999
-filterBy(1999);
+filterBye(1999);
 document.getElementById('slider').addEventListener('input', function(e) {
   var year = parseInt(e.target.value);
 
