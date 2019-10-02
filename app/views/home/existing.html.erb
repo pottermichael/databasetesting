@@ -1,14 +1,18 @@
 <html>
 <body>
-<div id='map'>
-</div>
-  <nav id="menu"></nav>
+
+<div id='map'></div>
+<nav id="menu"></nav>
 <div id='console'>
   <h1>New Construction Projects</h1>
   <div class ='session'>
     <h2>Deliveries Year 2000 thru:
       <label id='year'></label></h2>
       <input id='slider' class='row' type='range' min='1999' max='2024' step='1' value='1999'/>
+      <div id="slider-div">
+        <label>Year: <span id="year-label"></span></label>
+        <div id="date-slider"></div>
+      </div>
   </div>
   <div class='session'>
     <h2>Property Type</h2>
@@ -21,8 +25,9 @@
       <label for='Resi'>Multifamily</label>
     </div>
   </div>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
 </div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
@@ -38,28 +43,12 @@ var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 
 // Create a year Property value based on time used to filter against.
-d3.json("/data/supply_to_date.geojson", function(err, data) {
-if (err) throw err;
-data.features = data.features.map(function(d) {
-  d.properties.year = new Date(d.properties);
-  return d;
+d3.json("/data/supply_to_date.geojson").then(function(data) {
+  data.features = data.features.map(function(d) {
+    d.properties.year = new Date(d.properties);
+    return d;
 });
 
-//playground for .filter
-group = [2007,2010,1999,2015,2001,2020]
-function isBigEnough(value) {
-  return value >= 2007;
-}
-var filtered = group.filter(isBigEnough);
-console.log(filtered)
-
-//below is an array. add javascript filters here to create geojson objects to display values???
-
-var endDate = data.features
-
-console.log(endDate);
-console.log(endDate.length);
-console.log(typeof startDate);
 
 map.addSource('resi', {
   'type': 'geojson',
@@ -141,6 +130,30 @@ document.getElementById('filters').addEventListener('change', function(e) {
   map.setFilter('residential-labels', ['all', filterYear, filterType]);
 });
 
+let time = 1999;
+let interval;
+
+function step() {
+  update(data[time]);
+  time = (time == 2023) ? 0 : time + 1;
+}
+$("#date-slider").slider({
+  max: 2023,
+  min: 1999,
+  step: 1,
+  slide: (event, ui) => {
+    time = ui.value;
+    update(data[time]);
+  }
+});
+
+function updateHTML(data) {
+  // Update slider label
+  $("#year-label").text(data.name);
+  // Update table values
+}
+
+
 //add layers for blip
 map.addSource('point', {
     "type": "geojson",
@@ -175,7 +188,6 @@ animateMarker(0);
 console.log(data);
 });
 });
-map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 </script>
 
 </body>

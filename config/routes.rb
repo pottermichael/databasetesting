@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'planned', to: 'home#planned'
 
+  get 'finished', to: 'home#finished'
+
   get 'banksites', to: 'home#banksites'
 
   get 'resiall', to: 'home#resiall'

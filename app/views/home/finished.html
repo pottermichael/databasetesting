@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+
+    <!-- Custom styling -->
+    <style>
+    .money-cell { text-align: right; }
+    h2 { text-align: center; }
+
+    @media screen and (min-width: 768px) {
+      table { margin-top: 100px; }
+    }
+
+    @media screen and (min-width: 768px) {
+      table { margin-top: 100px; }
+    }
+
+    #page-main { margin-top: 10px; }
+
+    #controls { margin-bottom: 200px; }
+
+    #play-button {
+      margin-top: 10px;
+      width: 100px;
+    }
+
+    #slider-div {
+      width:300px;
+      float:right;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="page-main">
+      <div id="controls" class="row">
+        <div class="col-md-12">
+          <button id="play-button" class="btn btn-primary">Play</button>
+          <div id="slider-div">
+            <label>Year: <span id="year-label"></span></label>
+            <div id="date-slider"></div>
+          </div>
+        </div>
+      </div>
+
+        <div class="col-md-5">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Submarket</th>
+                <th># Multi-family Units</th>
+              </tr>
+              <tr>
+                <td>River North</td>
+                <td class="money-cell"><span id="fig10"></span></td>
+              </tr>
+              <tr>
+                <td>Streeterville</td>
+                <td class="money-cell"><span id="fig9"></span></td>
+              </tr>
+              <tr>
+                <td>River West</td>
+                <td class="money-cell"><span id="fig8"></span></td>
+              </tr>
+              <tr>
+                <td>Fulton Market/Greektown</td>
+                <td class="money-cell"><span id="fig7"></span></td>
+              </tr>
+              <tr>
+                <td>Loop</td>
+                <td class="money-cell"><span id="fig6"></span></td>
+              </tr>
+              <tr>
+                <td>South Loop</td>
+                <td class="money-cell"><span id="fig5"></span></td>
+              </tr>
+              <tr>
+                <td>Gold Coast</td>
+                <td class="money-cell"><span id="fig4"></span></td>
+              </tr>
+              <tr>
+                <td>Near North</td>
+                <td class="money-cell"><span id="fig3"></span></td>
+              </tr>
+              <tr>
+                <td>West Loop</td>
+                <td class="money-cell"><span id="fig2"></span></td>
+              </tr>
+              <tr>
+                <td>Lincoln Park</td>
+                <td class="money-cell"><span id="fig1"></span></td>
+              </tr>
+              <tr>
+                <td>Total Other</td>
+                <td class="money-cell"><span id="fig0"></span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Total City</th>
+                <th class="money-cell"><span id="totalFig"></span></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- External JS libraries -->
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+    <!-- JS code -->
+    <script>
+      function prepareData(d){
+        return {
+          name: d.year,
+          values: [
+            {
+              name: "River North",
+              value: parseInt(d["riverNorth"])
+            },
+            {
+              name: "Streeterville",
+              value: parseInt(d["streeterville"])
+            },
+            {
+              name: "River West",
+              value: parseInt(d["riverWest"])
+            },
+            {
+              name: "Fulton Market/Greektown",
+              value: parseInt(d["fultonMarketGreektown"])
+            },
+            {
+              name: "Loop",
+              value: parseInt(d["loop"])
+            },
+            {
+              name: "South Loop",
+              value: parseInt(d["southLoop"])
+            },
+            {
+              name: "Gold Coast",
+              value: parseInt(d["goldCoast"])
+            },
+            {
+              name: "Near North",
+              value: parseInt(d["nearNorth"])
+            },
+            {
+              name: "West Loop",
+              value: parseInt(d["westLoop"])
+            },
+            {
+              name: "Lincoln Park",
+              value: parseInt(d["lincolnPark"])
+            },
+            {
+              name: "Total Other",
+              value: parseInt(d["totalOther"])
+            },
+            {
+              name: "Total Chicago",
+              value: parseInt(d["totalcity"])
+            }
+          ]
+        }
+      }
+
+
+      d3.csv("data/submarket_pie.csv", prepareData).then(data => {
+        function update(data) {
+          updateHTML(data);
+          // Update slider position when play button is looping
+          $("#date-slider").slider("value", time);
+        }
+
+//time is index value for data lookup
+
+        let time = 0;
+        let interval;
+
+        function step() {
+          update(data[time]);
+          time = (time == 24) ? 0 : time + 1;
+        }
+        console.log("text");
+        console.log(time);
+        console.log(data[time]);
+        console.log("text");
+
+        $("#play-button").on("click", function() {
+          const button = $(this);
+          if (button.text() === "Play"){
+            button.text("Pause");
+            interval = setInterval(step, 750);
+          } else {
+            button.text("Play");
+            clearInterval(interval);
+          }
+        });
+
+
+        $("#date-slider").slider({
+          max: 24,
+          min: 0,
+          step: 1,
+          slide: (event, ui) => {
+            time = ui.value;
+            update(data[time]);
+          }
+        });
+
+        console.log(data[time]);
+        console.log("slider checks");
+      });
+
+      function updateHTML(data) {
+        // Update slider label
+        $("#year-label").text(data.name);
+        // Update table values
+        $("#fig10").html(data.values[0].value.toLocaleString());
+        $("#fig9").html(data.values[1].value.toLocaleString());
+        $("#fig8").html(data.values[2].value.toLocaleString());
+        $("#fig7").html(data.values[3].value.toLocaleString());
+        $("#fig6").html(data.values[4].value.toLocaleString());
+        $("#fig5").html(data.values[5].value.toLocaleString());
+        $("#fig4").html(data.values[6].value.toLocaleString());
+        $("#fig3").html(data.values[7].value.toLocaleString());
+        $("#fig2").html(data.values[8].value.toLocaleString());
+        $("#fig1").html(data.values[9].value.toLocaleString());
+        $("#fig0").html(data.values[10].value.toLocaleString());
+        $("#totalFig").html(data.values[11].value.toLocaleString());
+      }
+    </script>
+  </body>
+</html>
