@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'finished', to: 'home#finished'
 
+  get 'bank', to: 'home#bank'
+
   get 'banksites', to: 'home#banksites'
 
   get 'resiall', to: 'home#resiall'

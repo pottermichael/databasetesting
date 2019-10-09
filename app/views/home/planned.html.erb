@@ -38,11 +38,11 @@ var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 
 // Create a year property value based on time used to filter against.
-  d3.json("/data/supply_in_planning3.geojson", function(err, data) {
-  if (err) throw err;
-  data.features = data.features.map(function(d) {
-    d.properties.year = new Date(d.properties);
-    return d;
+
+  d3.json("/data/supply_in_planning3.geojson").then(function(data) {
+    data.features = data.features.map(function(d) {
+      d.properties.year = new Date(d.properties);
+      return d;
   });
 
   map.addSource('resi', {
