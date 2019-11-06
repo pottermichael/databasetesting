@@ -5,11 +5,15 @@ Rails.application.routes.draw do
 
   get 'existing', to: 'home#existing'
 
+  get 'playbutton', to: 'home#playbutton'
+
   get 'planned', to: 'home#planned'
 
   get 'finished', to: 'home#finished'
 
   get 'bank', to: 'home#bank'
+
+  get 'isochrone', to: 'home#isochrone'
 
   get 'banksites', to: 'home#banksites'
 

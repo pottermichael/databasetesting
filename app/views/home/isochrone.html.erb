@@ -26,31 +26,33 @@
     </div>
   </div>
 </div>
+<!-- External JS libraries -->
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- JS Code -->
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
+  style: 'mapbox://styles/mpotter/cjzbo5zbg1f2n1doce85e6838',
   center: [-87.636127, 41.892699],
   zoom: 13.5,
   attributionControl: false
 });
 
-
-function filterBy(year) {
-  var filterYear = ['<=',['number',['get','Year']], year];
-  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    map.setFilter('residential-circles', filterYear);
-    map.setFilter('residential-labels', filterYear);
-}
-
 map.on('load', function() {
 var filterYear = ['<=',['number',['get','Year']], year];
 var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
 
-//load in geojson data via D3
+// Create a year Property value based on time used to filter against.
 d3.json("/data/supply_to_date.geojson").then(function(data) {
+  data.features = data.features.map(function(d) {
+    d.properties.year = new Date(d.properties);
+    return d;
+});
+
 
 map.addSource('resi', {
   'type': 'geojson',
@@ -73,8 +75,8 @@ map.addLayer({
         'interpolate',
         ['linear'],
           ['number',['get', 'GFA']],
-            50000, 5,
-            1500000, 30
+            50000, 10,
+            1500000, 40
         ]
     },
   });
@@ -89,8 +91,8 @@ map.addLayer({
         'interpolate',
         ['linear'],
         ['zoom'],
-        4,9,
-        6,12
+        4,12,
+        6,16
     ],
     'text-max-width': 5
     },
@@ -98,6 +100,9 @@ map.addLayer({
     'text-color': 'rgba(0,0,0,0.5)'
   },
   });
+
+//NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
+
 // Set filter to first year of the range
 // 0 = 1999
 filterBy(1999);
@@ -108,6 +113,7 @@ document.getElementById('slider').addEventListener('input', function(e) {
   filterYear = ['<=', ['number', ['get', 'Year']], year];
   map.setFilter('residential-circles', ['all', filterYear, filterType]);
   map.setFilter('residential-labels', ['all', filterYear, filterType]);
+
 // update text in the UI
 document.getElementById('year').innerText = year;
 });
@@ -124,38 +130,39 @@ document.getElementById('filters').addEventListener('change', function(e) {
   } else {
     console.log('error');
   };
+  map.setFilter('residential-circles', ['all', filterYear, filterType]);
+  map.setFilter('residential-labels', ['all', filterYear, filterType]);
 });
 
-//add layers for blip
-map.addSource('point', {
-    "type": "geojson",
-    "data": {
-        "type": "Point",
-        "coordinates": [
-            -87.646196, 41.895594
-        ]
-    }
+function update(data) {
+  updateHTML(data);
+  // Update slider position when play button is looping
+  $("#date-slider").slider("value", time);
+}
+
+let time = 1999;
+let interval;
+
+function step() {
+  update(data[time]);
+  time = (time == 2023) ? 0 : time + 1;
+}
+
+$("#date-slider").slider({
+  max: 2023,
+  min: 1999,
+  step: 1,
+  slide: (event, ui) => {
+    time = ui.value;
+    update(data[time]);
+  }
 });
-map.addLayer({
-    "id": "point",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-radius-transition": {duration: 0},
-        "circle-opacity-transition": {duration: 0},
-        "circle-color": "#ffffff"
-    }
-});
-map.addLayer({
-    "id": "point1",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-color": "#007cbf"
-    }
-});
+
+function updateHTML(data) {
+  // Update slider label
+  $("#year-label").text(data.name);
+  // Update table values
+}
 animateMarker(0);
 console.log(data);
 });
