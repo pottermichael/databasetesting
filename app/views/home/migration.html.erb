@@ -1,190 +1,285 @@
 <html>
-<body>
-<div id='map'></div>
-<div id='console'>
-  <h1>Urban Corporate Migration</h1>
-  <div class ='session'>
-    <h2>Relocations in Year: <label id='year'>TBD</label></h2>
-    <input id='slider' class='row' type='range' min='2006' max='2020' step='1' value='2006'/>
-  </div>
+  <body>
+    <div id='map'></div>
+    <div id='console'>
+      <h1>Urban Corporate Migration</h1>
+      <div class='session'>
+        <h2>Relocations in Year:
+          <label id='year'>TBD</label>
+        </h2>
+        <input id='slider' class='row' type='range' min='2006' max='2020' step='1' value='2006'/>
+      </div>
 
-  <div class='session'>
-    <h2>Property Type</h2>
-    <div class='row' id='filters'>
-      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
-      <label for='all'>All</label>
-      <input id="Relocation" type="radio" name="toggle" value="Relocation">
-      <label for='Relocation'>Relocation</label>
-      <input id="Satellite" type="radio" name="toggle" value="Satellite">
-      <label for='Satellite'>Satellite</label>
+      <div class='session'>
+        <h2>Property Type</h2>
+        <div class='row' id='filters'>
+          <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+          <label for='all'>All</label>
+          <input id="Relocation" type="radio" name="toggle" value="Relocation">
+          <label for='Relocation'>Relocation</label>
+          <input id="Satellite" type="radio" name="toggle" value="Satellite">
+          <label for='Satellite'>Satellite</label>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<script>
+    <script>
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mpotter/cjzbo5zbg1f2n1doce85e6838',
-  center: [-87.640793, 41.889533],
-  zoom: 13.5,
-  attributionControl: false
-});
-
-var framesPerSecond = 15;
-var initialOpacity = 1;
-var opacity = initialOpacity;
-var initialRadius = 10;
-var radius = initialRadius;
-var maxRadius = 50;
-
-map.on('load', function() {
-  var filterYear = ['<=',['number',['get','Year']], year];
-  var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-// Create a year property value based on time used to filter against.
-  d3.json("/data/suburban_migration.geojson", function(err, data) {
-  if (err) throw err;
-  data.features = data.features.map(function(d) {
-    d.properties.year = new Date(d.properties);
-    return d;
-  });
-
-// function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
-function filterBy(year) {
-var filterYear = ['<=',['number',['get','Year']], year];
-var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-map.setFilter('residential-circles', filterYear);
-map.setFilter('residential-labels', filterYear);
-}
-
-map.addSource('resi', {
-  'type': 'geojson',
-  data: data,
-});
-map.addLayer({
-  'id': 'residential-circles',
-  'type': 'circle',
-  'source': 'resi',
-  'paint': {
-    'circle-color': [
-        'match',
-        ['get', 'Type'],
-        'Satellite', '#fbb03b',
-        'Relocation', '#3bb2d0',
-        /*other*/ '#ccc'
+      mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mpotter/cjzbo5zbg1f2n1doce85e6838',
+        center: [
+          -87.640793, 41.889533
         ],
-  'circle-opacity': .75,
-    'circle-radius': [
-      'interpolate',
-      ['linear'],
-        ['number',['get', 'GFA']],
-          5000, 5,
-          400000, 40
-      ]
-    },
-  });
-map.addLayer({
-  'id': 'residential-labels',
-  'type': 'symbol',
-  'source': 'resi',
-  'layout': {
-    'text-field': ['to-string', ['get', 'Company']],
-    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    'text-size': 12,
-    'text-max-width': 5
-    },
-  'paint': {
-    'text-color': 'rgba(0,0,0,0.5)'
-    }
-  });
+        zoom: 13.5,
+        attributionControl: false
+      });
 
-//add layers for blip
+      var framesPerSecond = 15;
+      var initialOpacity = 1;
+      var opacity = initialOpacity;
+      var initialRadius = 10;
+      var radius = initialRadius;
+      var maxRadius = 50;
 
-map.addSource('point', {
-    "type": "geojson",
-    "data": {
-        "type": "Point",
-        "coordinates": [
-            -87.640355, 41.877198
-        ]
-    }
-});
+      map.on('load', function () {
+        var filterYear = [
+          '<=',
+          [
+            'number',
+            [
+              'get', 'Year'
+            ]
+          ],
+          year
+        ];
+        var filterType = [
+          '!=',
+          [
+            'string',
+            [
+              'get', 'Type'
+            ]
+          ],
+          'placeholder'
+        ];
+        // Create a year property value based on time used to filter against.
+        d3.json("/data/suburban_migration.geojson", function (err, data) {
+          if (err)
+            throw err;
+          data.features = data.features.map(function (d) {
+            d.properties.year = new Date(d.properties);
+            return d;
+          });
 
-map.addLayer({
-    "id": "point",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-radius-transition": {duration: 0},
-        "circle-opacity-transition": {duration: 0},
-        "circle-color": "#00bf3c"
-    }
-});
+          // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
+          function filterBy(year) {
+            var filterYear = [
+              '<=',
+              [
+                'number',
+                [
+                  'get', 'Year'
+                ]
+              ],
+              year
+            ];
+            var filterType = [
+              '!=',
+              [
+                'string',
+                [
+                  'get', 'Type'
+                ]
+              ],
+              'placeholder'
+            ];
+            map.setFilter('residential-circles', filterYear);
+            map.setFilter('residential-labels', filterYear);
+          }
 
-map.addLayer({
-    "id": "point1",
-    "source": "point",
-    "type": "circle",
-    "paint": {
-        "circle-radius": initialRadius,
-        "circle-color": "#007cbf"
-    }
-});
+          map.addSource('resi', {
+            'type': 'geojson',
+            data: data
+          });
+          map.addLayer({
+            'id': 'residential-circles',
+            'type': 'circle',
+            'source': 'resi',
+            'paint': {
+              'circle-color': [
+                'match',
+                [
+                  'get', 'Type'
+                ],
+                'Satellite',
+                '#fbb03b',
+                'Relocation',
+                '#3bb2d0',
+                /*other*/
+                '#ccc'
+              ],
+              'circle-opacity': .75,
+              'circle-radius': [
+                'interpolate',
+                ['linear'],
+                [
+                  'number',
+                  [
+                    'get', 'GFA'
+                  ]
+                ],
+                5000,
+                5,
+                400000,
+                40
+              ]
+            }
+          });
+          map.addLayer({
+            'id': 'residential-labels',
+            'type': 'symbol',
+            'source': 'resi',
+            'layout': {
+              'text-field': [
+                'to-string',
+                [
+                  'get', 'Company'
+                ]
+              ],
+              'text-font': [
+                'Open Sans Bold', 'Arial Unicode MS Bold'
+              ],
+              'text-size': 12,
+              'text-max-width': 5
+            },
+            'paint': {
+              'text-color': 'rgba(0,0,0,0.5)'
+            }
+          });
 
-//function to execute blip
+          //add layers for blip
 
-function animateMarker(timestamp) {
-    setTimeout(function(){
-        requestAnimationFrame(animateMarker);
+          map.addSource('point', {
+            "type": "geojson",
+            "data": {
+              "type": "Point",
+              "coordinates": [-87.640355, 41.877198]
+            }
+          });
 
-        radius += (maxRadius - radius) / framesPerSecond;
-        opacity -= ( .9 / framesPerSecond );
+          map.addLayer({
+            "id": "point",
+            "source": "point",
+            "type": "circle",
+            "paint": {
+              "circle-radius": initialRadius,
+              "circle-radius-transition": {
+                duration: 0
+              },
+              "circle-opacity-transition": {
+                duration: 0
+              },
+              "circle-color": "#00bf3c"
+            }
+          });
 
-        map.setPaintProperty('point', 'circle-radius', radius);
-        map.setPaintProperty('point', 'circle-opacity', opacity);
+          map.addLayer({
+            "id": "point1",
+            "source": "point",
+            "type": "circle",
+            "paint": {
+              "circle-radius": initialRadius,
+              "circle-color": "#007cbf"
+            }
+          });
 
-        if (opacity <= 0) {
-            radius = initialRadius;
-            opacity = initialOpacity;
-        }
-    }, 1000 / framesPerSecond);
-}
+          //function to execute blip
 
-// Set filter to first year of the range
-// 0 = 2006
-filterBy(2006);
-  document.getElementById('slider').addEventListener('input', function(e) {
-    var year = parseInt(e.target.value);
-    // update the map
-    filterYear = ['<=', ['number', ['get', 'Year']], year];
-    map.setFilter('residential-circles', ['all', filterYear, filterType]);
-    map.setFilter('residential-labels', ['all', filterYear, filterType]);
+          function animateMarker(timestamp) {
+            setTimeout(function () {
+              requestAnimationFrame(animateMarker);
 
-  document.getElementById('year').innerText = year;
+              radius += (maxRadius - radius) / framesPerSecond;
+              opacity -= (.9 / framesPerSecond);
 
-  });
-  // radio buttons for filtering
-  document.getElementById('filters').addEventListener('change', function(e) {
-    var type = e.target.value;
-    // update the map filter
-    if (type === 'all') {
-      filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    } else if (type === 'Relocation') {
-      filterType = ['match', ['get', 'Type'], 'Relocation', true, false];
-    } else if (type === 'Satellite') {
-      filterType = ['match', ['get', 'Type'], 'Satellite', true, false];
-    } else {
-      console.log('error');
-    };
-    map.setFilter('residential-circles', filterYear);
-    map.setFilter('residential-labels', filterYear);
-  });
-  animateMarker(0);
-  });
-});
-map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
-</script>
-</body>
+              map.setPaintProperty('point', 'circle-radius', radius);
+              map.setPaintProperty('point', 'circle-opacity', opacity);
+
+              if (opacity <= 0) {
+                radius = initialRadius;
+                opacity = initialOpacity;
+              }
+            }, 1000 / framesPerSecond);
+          }
+
+          // Set filter to first year of the range 0 = 2006
+          filterBy(2006);
+          document.getElementById('slider').addEventListener('input', function (e) {
+            var year = parseInt(e.target.value);
+            // update the map
+            filterYear = [
+              '<=',
+              [
+                'number',
+                [
+                  'get', 'Year'
+                ]
+              ],
+              year
+            ];
+            map.setFilter('residential-circles', ['all', filterYear, filterType]);
+            map.setFilter('residential-labels', ['all', filterYear, filterType]);
+
+            document.getElementById('year').innerText = year;
+
+          });
+          // radio buttons for filtering
+          document.getElementById('filters').addEventListener('change', function (e) {
+            var type = e.target.value;
+            // update the map filter
+            if (type === 'all') {
+              filterType = [
+                '!=',
+                [
+                  'string',
+                  [
+                    'get', 'Type'
+                  ]
+                ],
+                'placeholder'
+              ];
+            } else if (type === 'Relocation') {
+              filterType = [
+                'match',
+                [
+                  'get', 'Type'
+                ],
+                'Relocation',
+                true,
+                false
+              ];
+            } else if (type === 'Satellite') {
+              filterType = [
+                'match',
+                [
+                  'get', 'Type'
+                ],
+                'Satellite',
+                true,
+                false
+              ];
+            } else {
+              console.log('error');
+            };
+            map.setFilter('residential-circles', filterYear);
+            map.setFilter('residential-labels', filterYear);
+          });
+          animateMarker(0);
+        });
+      });
+      map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+    </script>
+  </body>
 </html>

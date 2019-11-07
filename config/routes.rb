@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'playbutton', to: 'home#playbutton'
 
+  get 'rivertour', to: 'home#rivertour'
+
   get 'planned', to: 'home#planned'
 
   get 'finished', to: 'home#finished'
