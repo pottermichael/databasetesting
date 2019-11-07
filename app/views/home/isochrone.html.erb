@@ -1,173 +1,156 @@
+<!DOCTYPE html>
 <html>
-<body>
-<meta charset="utf-8">
+
 <head>
-<style>
-</style>
+  <meta charset='utf-8' />
+  <!-- Import Mapbox GL JS  -->
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <!-- Import Assembly -->
+  <link href='https://api.mapbox.com/mapbox-assembly/v0.23.2/assembly.min.css' rel='stylesheet'>
+  <script src='https://api.mapbox.com/mapbox-assembly/v0.23.2/assembly.js'> </script>
+  <!-- Import jQuery -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
 </head>
-<div id='map'></div>
-<nav id="menu"></nav>
-<div id='console'>
-  <h1>New Construction Projects</h1>
-  <div class ='session'>
-    <h2>Deliveries Year 2000 thru:
-      <label id='year'></label></h2>
-      <input id='slider' class='row' type='range' min='1999' max='2024' step='1' value='1999'/>
+
+<body>
+  <!-- Create a container for the map -->
+  <div id='map'></div>
+
+  <!-- Create a sidebar with buttons for each option -->
+  <div class='absolute fl my24 mx24 py24 px24 bg-gray-faint round'>
+    <form id='params'>
+      <h4 class='txt-m txt-bold mb6'>Chose a travel mode:</h4>
+      <div class='mb12 mr12 toggle-group align-center'>
+        <label class='toggle-container'>
+          <input name='profile' type='radio' value='walking'>
+          <div class='toggle toggle--active-null toggle--null'>Walking</div>
+        </label>
+        <label class='toggle-container'>
+          <input name='profile' type='radio' value='cycling' checked>
+          <div class='toggle toggle--active-null toggle--null'>Cycling</div>
+        </label>
+        <label class='toggle-container'>
+          <input name='profile' type='radio' value='driving'>
+          <div class='toggle toggle--active-null toggle--null'>Driving</div>
+        </label>
+      </div>
+      <h4 class='txt-m txt-bold mb6'>Chose a maximum duration:</h4>
+      <div class='mb12 mr12 toggle-group align-center'>
+        <label class='toggle-container'>
+          <input name='duration' type='radio' value='10' checked>
+          <div class='toggle toggle--active-null toggle--null'>10 min</div>
+        </label>
+        <label class='toggle-container'>
+          <input name='duration' type='radio' value='20'>
+          <div class='toggle toggle--active-null toggle--null'>20 min</div>
+        </label>
+        <label class='toggle-container'>
+          <input name='duration' type='radio' value='30'>
+          <div class='toggle toggle--active-null toggle--null'>30 min</div>
+        </label>
+    </form>
   </div>
-  <div class='session'>
-    <h2>Property Type</h2>
-    <div class='row' id='filters'>
-      <input id='all' type='radio' name='toggle' value='all' checked='checked'>
-      <label for='all'>All</label>
-      <input id="Office" type="radio" name="toggle" value="Office">
-      <label for='Office'>Office</label>
-      <input id="Resi" type="radio" name="toggle" value="Resi">
-      <label for='Resi'>Multifamily</label>
-    </div>
-  </div>
-</div>
-<!-- External JS libraries -->
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    // Add your Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+    var map = new mapboxgl.Map({
+      container: 'map', // Specify the container ID
+      style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb', // Specify which map style to use
+      center: [-87.636127, 41.892699], // Specify the starting position
+      zoom: 13.5, // Specify the starting zoom
+    });
 
-<!-- JS Code -->
-<script>
-mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mpotter/cjzbo5zbg1f2n1doce85e6838',
-  center: [-87.636127, 41.892699],
-  zoom: 13.5,
-  attributionControl: false
-});
+    // Create variables to use in getIso()
+    var urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
+    var lon = -87.642730;
+    var lat = 41.891792;
+    var profile = 'walking';
+    var minutes = 20;
 
-map.on('load', function() {
-var filterYear = ['<=',['number',['get','Year']], year];
-var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
+    // Create a function that sets up the Isochrone API query then makes an Ajax call
+    function getIso() {
+      var query = urlBase + profile + '/' + lon + ',' + lat + '?contours_minutes=' + minutes + '&polygons=true&access_token=' + mapboxgl.accessToken;
 
-// Create a year Property value based on time used to filter against.
-d3.json("/data/supply_to_date.geojson").then(function(data) {
-  data.features = data.features.map(function(d) {
-    d.properties.year = new Date(d.properties);
-    return d;
-});
+      $.ajax({
+        method: 'GET',
+        url: query
+      }).done(function(data) {
+        // Set the 'iso' source's data to what's returned by the API query
+        map.getSource('iso').setData(data);
+      })
+    };
 
+    var marker = new mapboxgl.Marker({
+      'color': '#314ccd',
+    });
 
-map.addSource('resi', {
-  'type': 'geojson',
-  data: data,
-});
-map.addLayer({
-  'id': 'residential-circles',
-  'type': 'circle',
-  'source': 'resi',
-  'paint': {
-    'circle-color': [
-        'match',
-        ['get', 'Type'],
-        'Resi', '#fbb03b',
-        'Office', '#0E9447',
-        /*other*/ '#ccc'
-        ],
-    'circle-opacity': .75,
-      'circle-radius': [
-        'interpolate',
-        ['linear'],
-          ['number',['get', 'GFA']],
-            50000, 10,
-            1500000, 40
-        ]
-    },
-  });
-map.addLayer({
-  'id': 'residential-labels',
-  'type': 'symbol',
-  'source': 'resi',
-  'layout': {
-    'text-field': ['to-string', ['get', 'Project']],
-    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    'text-size': [
-        'interpolate',
-        ['linear'],
-        ['zoom'],
-        4,12,
-        6,16
-    ],
-    'text-max-width': 5
-    },
-  'paint': {
-    'text-color': 'rgba(0,0,0,0.5)'
-  },
-  });
+    // Create a LngLat object to use in the marker initialization
+    var lngLat = {
+      lon: lon,
+      lat: lat
+    };
 
-//NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference
+    map.on('load', function() {
+      // When the map loads, add the source and layer
+      map.addSource('iso', {
+        type: 'geojson',
+        data: {
+          "type": 'FeatureCollection',
+          "features": []
+        }
+      });
 
-// Set filter to first year of the range
-// 0 = 1999
-filterBy(1999);
-document.getElementById('slider').addEventListener('input', function(e) {
-  var year = parseInt(e.target.value);
+      map.addLayer({
+        'id': 'isoLayer',
+        'type': 'fill',
+        // Use "iso" as the data source for this layer
+        'source': 'iso',
+        'layout': {},
+        'paint': {
+          // The fill color for the layer is set to a light purple
+          'fill-color': '#5a3fc0',
+          'fill-opacity': 0.25,
+          'fill-outline-color': 'red'
+        }
+      }, "poi-label");
 
-  // update the map
-  filterYear = ['<=', ['number', ['get', 'Year']], year];
-  map.setFilter('residential-circles', ['all', filterYear, filterType]);
-  map.setFilter('residential-labels', ['all', filterYear, filterType]);
+      // Initialize the marker at the query coordinates
+      marker.setLngLat(lngLat).addTo(map);
 
-// update text in the UI
-document.getElementById('year').innerText = year;
-});
-// radio buttons for filtering
-document.getElementById('filters').addEventListener('change', function(e) {
-  var type = e.target.value;
-  // update the map filter
-  if (type === 'all') {
-    filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-  } else if (type === 'Office') {
-    filterType = ['match', ['get', 'Type'], 'Office', true, false];
-  } else if (type === 'Resi') {
-    filterType = ['match', ['get', 'Type'], 'Resi', true, false];
-  } else {
-    console.log('error');
-  };
-  map.setFilter('residential-circles', ['all', filterYear, filterType]);
-  map.setFilter('residential-labels', ['all', filterYear, filterType]);
-});
+      // Make the API call
+      getIso();
+    });
 
-function update(data) {
-  updateHTML(data);
-  // Update slider position when play button is looping
-  $("#date-slider").slider("value", time);
-}
+    // Target the "params" form in the HTML portion of your code
+    var params = document.getElementById('params');
 
-let time = 1999;
-let interval;
-
-function step() {
-  update(data[time]);
-  time = (time == 2023) ? 0 : time + 1;
-}
-
-$("#date-slider").slider({
-  max: 2023,
-  min: 1999,
-  step: 1,
-  slide: (event, ui) => {
-    time = ui.value;
-    update(data[time]);
-  }
-});
-
-function updateHTML(data) {
-  // Update slider label
-  $("#year-label").text(data.name);
-  // Update table values
-}
-animateMarker(0);
-console.log(data);
-});
-});
-</script>
-
+    // When a user changes the value of profile or duration by clicking a button, change the parameter's value and make the API query again
+    params.addEventListener('change', function(e) {
+      if (e.target.name === 'profile') {
+        profile = e.target.value;
+        getIso();
+      } else if (e.target.name === 'duration') {
+        minutes = e.target.value;
+        getIso();
+      }
+    });
+  </script>
 </body>
+
 </html>
