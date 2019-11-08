@@ -171,17 +171,17 @@
         console.log(yearMin)
 
 function filterBy(year) {
-    var filterYear = ['<=', ['number', ['get','Year']], year];
+    var filterYear = ['<=', ['number', ['get','year']], year];
     map.setFilter('residential-circles', filterYear);
     map.setFilter('residential-labels', filterYear);
-    console.log(year)
+
     // Set the label to the month
     document.getElementById('year').innerText = years[year];
 }
 
         map.on('load', function () {
             // Create a year Property value based on time used to filter against.
-            d3.json("/data/supply_to_date.geojson", function (err,data) {
+            d3.json("/data/supply.geojson", function (err,data) {
               if (err) throw err;
 
             map.addSource('resi', {
@@ -195,7 +195,7 @@ function filterBy(year) {
               'paint': {
                 'circle-color': [
                     'match',
-                    ['get', 'Type'],
+                    ['get', 'use'],
                     'Resi', '#fbb03b',
                     'Office', '#0E9447',
                     /*other*/ '#ccc'
@@ -204,7 +204,7 @@ function filterBy(year) {
                   'circle-radius': [
                     'interpolate',
                     ['linear'],
-                      ['number',['get', 'GFA']],
+                      ['number',['get', 'gfa']],
                         50000, 7.5,
                         1500000, 35
                     ]
@@ -215,7 +215,7 @@ function filterBy(year) {
               'type': 'symbol',
               'source': 'resi',
               'layout': {
-                'text-field': ['to-string', ['get', 'Project']],
+                'text-field': ['to-string', ['get', 'project']],
                 'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
                 'text-size': [
                     'interpolate',
@@ -367,6 +367,7 @@ function filterBy(year) {
                 }
                 animateMarker(0);
                 console.log(data);
+                console.log(year);
             });
         });
     </script>
