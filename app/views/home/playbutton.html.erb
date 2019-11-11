@@ -118,7 +118,6 @@
         </div>
     </div>
 
-    <!-- <script src='//d3js.org/d3.v3.min.js' charset='utf-8'></script> -->
     <script src="//d3js.org/d3.v4.min.js" charset='utf-8'></script>
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
@@ -180,13 +179,13 @@ function filterBy(year) {
 }
 
         map.on('load', function () {
-            // Create a year Property value based on time used to filter against.
+            //import data
             d3.json("/data/supply.geojson", function (err,data) {
               if (err) throw err;
 
             map.addSource('resi', {
               'type': 'geojson',
-              data: data,
+              data: data
             });
             map.addLayer({
               'id': 'residential-circles',
@@ -366,8 +365,6 @@ function filterBy(year) {
                     filterBy(year);
                 }
                 animateMarker(0);
-                console.log(data);
-                console.log(year);
             });
         });
     </script>
