@@ -1,0 +1,66 @@
+<html>
+  <body>
+    <div id='map'></div>
+    <nav id="menu"></nav>
+    <div id='console'>
+      <h1>Protected Bike Lanes</h1>
+      <p>Data:
+        <a href='https://www.transitchicago.com/' target="_blank">CDOT</a>
+        - Neighborhood Network</p>
+    </div>
+
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mpotter/ck2pa7lgz1ghe1cnz5qvz9p3f',
+        center: [
+          -87.644475, 41.892173
+        ],
+        zoom: 13.75,
+        attributionControl: false
+      });
+
+      map.on('load', function () {
+
+
+        //add layers for blip
+        map.addSource('point', {
+          "type": "geojson",
+          "data": {
+            "type": "Point",
+            "coordinates": [-87.646196, 41.895594]
+          }
+        });
+
+        map.addLayer({
+          "id": "point",
+          "source": "point",
+          "type": "circle",
+          "paint": {
+            "circle-radius": initialRadius,
+            "circle-radius-transition": {
+              duration: 0
+            },
+            "circle-opacity-transition": {
+              duration: 0
+            },
+            "circle-color": "#ffffff"
+          }
+        });
+
+        map.addLayer({
+          "id": "point1",
+          "source": "point",
+          "type": "circle",
+          "paint": {
+            "circle-radius": initialRadius,
+            "circle-color": "#007cbf"
+          }
+        });
+
+        animateMarker(0);
+      });
+    </script>
+  </body>
+</html>

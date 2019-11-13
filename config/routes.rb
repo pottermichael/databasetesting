@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'amenity', to: 'home#amenity'
 
+  get 'bike', to: 'home#bike'
+
   get 'migration', to: 'home#migration'
 
   get 'isochrone', to: 'home#isochrone'
