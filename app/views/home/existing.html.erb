@@ -5,18 +5,6 @@
     <meta charset='utf-8' />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-        }
-
         #play-button {
             background: #F14E58;
             padding-right: 26px;
@@ -28,10 +16,12 @@
             width: 60px;
             cursor: pointer;
             height: 30px;
+            text-align: center;
         }
 
         #play-button:hover {
             background-color: #848480;
+            text-align: center;
         }
 
         .ticks {
@@ -76,8 +66,8 @@
         .map-overlay {
             font: 16px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
             position: absolute;
-            width: 25%;
-            top: 50px;
+            width: 30%;
+            top: 500px;
             left: 0;
             padding: 10px;
         }
@@ -110,9 +100,9 @@
 
     <div class='map-overlay top'>
         <div class='map-overlay-inner'>
-            <h2>Chicago CBD Development</h2>
+            <h1>Chicago CBD Development
             <label id='year'></label>
-            <!-- <input id='slider' type='range' min='0' max='11' step='1' value='0' /> -->
+            </h1>
             <div id="slider"></div>
           <button id="play-button">Play</button>
         </div>
@@ -169,14 +159,15 @@
         });
         console.log(yearMin)
 
-function filterBy(year) {
-    var filterYear = ['<=', ['number', ['get','year']], year];
-    map.setFilter('residential-circles', filterYear);
-    map.setFilter('residential-labels', filterYear);
+        function filterBy(year) {
+            var filterYear = ['<=', ['number', ['get','year']], year];
+            map.setFilter('residential-circles', filterYear);
+            map.setFilter('residential-labels', filterYear);
 
-    // Set the label to the month
-    document.getElementById('year').innerText = years[year];
-}
+            // Set the label to the month
+            document.getElementById('year').innerText = year;
+            console.log(year)
+        }
 
         map.on('load', function () {
             //import data

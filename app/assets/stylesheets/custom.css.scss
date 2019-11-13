@@ -10,7 +10,6 @@ html, body {
 }
 
 //bootstrap nav bar styling
-
 .navbar{
   border-bottom: 1px solid rgba(0,0,0,.0975);
   background-color: #0E2136;
@@ -63,13 +62,16 @@ html, body {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 26px;
+    margin-top: 5px;
+    margin-bottom: 0px;
     line-height: 30px;
     font-weight: bold;
 }
 
 h2 {
   font-size: 14px;
+  margin-top: 5px;
   line-height: 20px;
   margin-bottom: 10px;
 }

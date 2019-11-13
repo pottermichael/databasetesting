@@ -3,25 +3,28 @@
     <div id='map'></div>
     <nav id="menu"></nav>
     <div id='console'>
-      <h1>Protected Bike Lanes</h1>
+      <h1>Chicago Streets</h1>
+      <h2>Protected Cycling</h2>
       <p>Data:
         <a href='https://www.transitchicago.com/' target="_blank">CDOT</a>
         - Neighborhood Network</p>
     </div>
-
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
     <script>
       mapboxgl.accessToken = 'pk.eyJ1IjoibXBvdHRlciIsImEiOiJjajAxZGltM3UwNjF2MzJsczVnN3R2eTNnIn0._Sj0HRLt8VTQGTojMWYFfQ';
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mpotter/ck2pa7lgz1ghe1cnz5qvz9p3f',
-        center: [
-          -87.644475, 41.892173
-        ],
+        center: [-87.644475, 41.892173],
         zoom: 13.75,
         minZoom: 13.75,
         maxZoom: 15,
         attributionControl: false
       });
+
+//to add circle radius look at this https://gist.github.com/chriswhong/694779bc1f1e5d926e47bab7205fa559
+      var Draw = new MapboxDraw();
+      map.addControl(Draw,'bottom-left');
 
       map.on('load', function () {
 
