@@ -38,26 +38,8 @@
       });
 
       map.on('load', function () {
-        var filterYear = [
-          '<=',
-          [
-            'number',
-            [
-              'get', 'Year'
-            ]
-          ],
-          year
-        ];
-        var filterType = [
-          '!=',
-          [
-            'string',
-            [
-              'get', 'Type'
-            ]
-          ],
-          'placeholder'
-        ];
+        var filterYear = ['<=',['number',['get', 'Year']],year];
+        var filterType = ['!=',['string',['get', 'Type']],'placeholder'];
 
         // Create a year property value based on time used to filter against.
 
