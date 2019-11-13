@@ -23,9 +23,7 @@
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
-        center: [
-          -87.636127, 41.892699
-        ],
+        center: [-87.636127, 41.892699],
         zoom: 13.5,
         attributionControl: false
       });
@@ -68,10 +66,8 @@
                     'get', 'GFA'
                   ]
                 ],
-                50000,
-                5,
-                1500000,
-                30
+                50000,5,
+                1500000,30
               ]
             }
           });
@@ -93,10 +89,8 @@
                 'interpolate',
                 ['linear'],
                 ['zoom'],
-                4,
-                9,
-                6,
-                12
+                4,9,
+                6,12
               ],
               'text-max-width': 5
             },
@@ -105,43 +99,16 @@
             }
           });
 
-
-
           // radio buttons for filtering
           document.getElementById('filters').addEventListener('change', function (e) {
             var type = e.target.value;
             // update the map filter
             if (type === 'all') {
-              filterType = [
-                '!=',
-                [
-                  'string',
-                  [
-                    'get', 'Type'
-                  ]
-                ],
-                'placeholder'
-              ];
+              filterType = ['!=',['string',['get', 'Type']],'placeholder'];
             } else if (type === 'Office') {
-              filterType = [
-                'match',
-                [
-                  'get', 'Type'
-                ],
-                'Office',
-                true,
-                false
-              ];
+              filterType = ['match',['get', 'Type'],'Office',true,false];
             } else if (type === 'Resi') {
-              filterType = [
-                'match',
-                [
-                  'get', 'Type'
-                ],
-                'Resi',
-                true,
-                false
-              ];
+              filterType = ['match',['get', 'Type'],'Resi',true,false];
             } else {
               console.log('error');
             };
