@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get 'existing', to: 'home#existing'
 
+  get 'heat', to: 'home#heat'
+
   get 'playbutton', to: 'home#playbutton'
 
   get 'rivertour', to: 'home#rivertour'
