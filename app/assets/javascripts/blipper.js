@@ -1,7 +1,7 @@
 var framesPerSecond = 15;
 var initialOpacity = 1;
 var opacity = initialOpacity;
-var initialRadius = 10;
+var initialRadius = 8;
 var radius = initialRadius;
 var maxRadius = 50;
 
