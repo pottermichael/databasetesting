@@ -23,41 +23,6 @@
       });
 
       map.on('load', function () {
-        //add layers for blip
-        map.addSource('point', {
-          "type": "geojson",
-          "data": {
-            "type": "Point",
-            "coordinates": [-87.646196, 41.895594]
-          }
-        });
-
-        map.addLayer({
-          "id": "point",
-          "source": "point",
-          "type": "circle",
-          "paint": {
-            "circle-radius": initialRadius,
-            "circle-radius-transition": {
-              duration: 0
-            },
-            "circle-opacity-transition": {
-              duration: 0
-            },
-            "circle-color": "#ffffff"
-          }
-        });
-
-        map.addLayer({
-          "id": "point1",
-          "source": "point",
-          "type": "circle",
-          "paint": {
-            "circle-radius": initialRadius,
-            "circle-color": "#007cbf"
-          }
-        });
-
         //add layers for toggle buttons
         map.addSource('Commuter', {
           type: 'vector',
@@ -149,6 +114,41 @@
           'paint': {
             'fill-color': '#009b3a',
             'fill-opacity': .1
+          }
+        });
+        
+        //add layers for blip
+        map.addSource('point', {
+          "type": "geojson",
+          "data": {
+            "type": "Point",
+            "coordinates": [-87.646196, 41.895594]
+          }
+        });
+
+        map.addLayer({
+          "id": "point",
+          "source": "point",
+          "type": "circle",
+          "paint": {
+            "circle-radius": initialRadius,
+            "circle-radius-transition": {
+              duration: 0
+            },
+            "circle-opacity-transition": {
+              duration: 0
+            },
+            "circle-color": "#ffffff"
+          }
+        });
+
+        map.addLayer({
+          "id": "point1",
+          "source": "point",
+          "type": "circle",
+          "paint": {
+            "circle-radius": initialRadius,
+            "circle-color": "#007cbf"
           }
         });
 

@@ -5,13 +5,6 @@
     <div id='console'>
       <h1>Infill Growth - Future/Planned</h1>
       <div class='session'>
-        <h2>Class +A Deliveries: Today -
-          <label id='year'>2030</label>
-        </h2>
-        <input id='slider' class='row' type='range' min='2019' max='2030' step='1' value='2030'/>
-      </div>
-
-      <div class='session'>
         <h2>Property Type</h2>
         <div class='row' id='filters'>
           <input id='all' type='radio' name='toggle' value='all' checked='checked'>
@@ -38,7 +31,6 @@
       });
 
       map.on('load', function () {
-        var filterYear = ['<=',['number',['get', 'Year']],year];
         var filterType = ['!=',['string',['get', 'Type']],'placeholder'];
 
         // Create a year property value based on time used to filter against.
@@ -113,27 +105,8 @@
             }
           });
 
-          //NOTE: removed/refactored filterBy function to javascript, but kept ih 'existing' for reference Set filter to first year of the range 0 = 2030 to show all, timing of delivery is somewhat arbitrary for this set
-          filterBy(2030);
-          document.getElementById('slider').addEventListener('input', function (e) {
-            var year = parseInt(e.target.value);
-            // update the map
-            filterYear = [
-              '<=',
-              [
-                'number',
-                [
-                  'get', 'Year'
-                ]
-              ],
-              year
-            ];
-            map.setFilter('residential-circles', ['all', filterYear, filterType]);
-            map.setFilter('residential-labels', ['all', filterYear, filterType]);
 
-            document.getElementById('year').innerText = year;
 
-          });
           // radio buttons for filtering
           document.getElementById('filters').addEventListener('change', function (e) {
             var type = e.target.value;
@@ -172,158 +145,9 @@
             } else {
               console.log('error');
             };
-            map.setFilter('residential-circles', ['all', filterYear, filterType]);
-            map.setFilter('residential-labels', ['all', filterYear, filterType]);
+            map.setFilter('residential-circles', ['all', filterType]);
+            map.setFilter('residential-labels', ['all', filterType]);
           });
-
-          //add layers for toggle buttons
-          map.addSource('Commuter', {
-            type: 'vector',
-            url: 'mapbox://mpotter.cj1p6xhps000s31plezbq397w-3r4s5'
-          });
-          map.addLayer({
-            'id': 'Commuter',
-            'type': 'fill',
-            'source': 'Commuter',
-            'source-layer': 'Transit_-_Commuter',
-            'layout': {
-              'visibility': 'none'
-            },
-            'paint': {
-              'fill-color': '#FF7002',
-              'fill-opacity': .25
-            }
-          });
-
-          map.addSource('Transitway', {
-            type: 'vector',
-            url: 'mapbox://mpotter.cjs3qnclg3el72rlhp31cn745-2v5f7'
-          });
-          map.addLayer({
-            'id': 'Transitway',
-            'type': 'line',
-            'source': 'Transitway',
-            'source-layer': 'transitway',
-            'layout': {
-              'visibility': 'none',
-              'line-join': "round",
-              'line-cap': "round"
-            },
-            'paint': {
-              'line-color': '#888',
-              'line-width': 4,
-              'line-opacity': .5
-            }
-          });
-
-          map.addSource('CTA Blue', {
-            type: 'vector',
-            url: 'mapbox://mpotter.cjzbbjtkj00f12up81nwjme4f-9i2j6'
-          });
-          map.addLayer({
-            'id': 'CTA Blue',
-            'type': 'fill',
-            'source': 'CTA Blue',
-            'source-layer': 'Transit_-_Blue_Line',
-            'layout': {
-              'visibility': 'none'
-            },
-            'paint': {
-              'fill-color': '#00a5e0',
-              'fill-opacity': .1
-            }
-          });
-
-          map.addSource('CTA Brown', {
-            type: 'vector',
-            url: 'mapbox://mpotter.cj1p6orem012e2qmhe8wsjmad-621pz'
-          });
-          map.addLayer({
-            'id': 'CTA Brown',
-            'type': 'fill',
-            'source': 'CTA Brown',
-            'source-layer': 'Transit_-_Brown_Line',
-            'layout': {
-              'visibility': 'none'
-            },
-            'paint': {
-              'fill-color': '#64371b',
-              'fill-opacity': .1
-            }
-          });
-
-          map.addSource('CTA Green', {
-            type: 'vector',
-            url: 'mapbox://mpotter.cjzbbwhl405po2ipt1o5yjnxv-8pf1v'
-          });
-          map.addLayer({
-            'id': 'CTA Green',
-            'type': 'fill',
-            'source': 'CTA Green',
-            'source-layer': 'Transit_-_Green_Line',
-            'layout': {
-              'visibility': 'none'
-            },
-            'paint': {
-              'fill-color': '#009b3a',
-              'fill-opacity': .1
-            }
-          });
-
-          map.addSource('Large Parcels', {
-            type: 'vector',
-            url: 'mapbox://mpotter.cj1cozgzq00652wpm6xgtszcm-6okjx'
-          });
-          map.addLayer({
-            'id': 'Large Parcels',
-            'type': 'fill',
-            'source': 'Large Parcels',
-            'source-layer': 'greyhound',
-            'layout': {
-              'visibility': 'none'
-            },
-            'paint': {
-              'fill-color': '#ebac97',
-              'fill-opacity': 1
-            }
-          });
-
-          //code for layer button functionality
-          var toggleableLayerIds = [
-            'CTA Brown',
-            'CTA Green',
-            'CTA Blue',
-            'Commuter',
-            'Transitway',
-            'Large Parcels'
-          ];
-
-          for (var i = 0; i < toggleableLayerIds.length; i++) {
-            var id = toggleableLayerIds[i];
-
-            var link = document.createElement('a');
-            link.href = '#';
-            link.className = 'active';
-            link.textContent = id;
-
-            link.onclick = function (e) {
-              var clickedLayer = this.textContent;
-              e.preventDefault();
-              e.stopPropagation();
-
-              var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-              if (visibility === 'visible') {
-                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                this.className = '';
-              } else {
-                this.className = 'active';
-                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-              }
-            };
-            var layers = document.getElementById('menu');
-            layers.appendChild(link);
-          }
 
           //add layers for blip
           map.addSource('point', {
