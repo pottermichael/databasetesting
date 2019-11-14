@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   get 'demographic', to: 'home#demographic'
 
-  get 'rivertour', to: 'home#rivertour'
+  get 'tour', to: 'home#tour'
 
   get 'satellite', to: 'home#satellite'
 

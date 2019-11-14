@@ -24,7 +24,7 @@ function rotateCamera(timestamp) {
 
 map.on('load', function () {
   // Start the animation.
-  rotateCamera(0);
+  //rotateCamera(0);
   // Add 3d buildings and remove label layers to enhance the map
 
 //commented out below
@@ -45,21 +45,21 @@ map.on('load', function () {
       'source-layer': 'building',
       'filter': ['==', 'extrude', 'true'],
       'type': 'fill-extrusion',
-      'minzoom': 15,
+      'minzoom': 12,
       'paint': {
           'fill-extrusion-color': '#aaa',
           // use an 'interpolate' expression to add a smooth transition effect to the
           // buildings as the user zooms in
           'fill-extrusion-height': [
-          "interpolate", ["linear"], ["zoom"],
-          6, 0,
-          6.05, ["get", "height"]
-          ],
+              "interpolate", ["linear"], ["zoom"],
+              12, 0,
+              12.05, ["get", "height"]
+            ],
           'fill-extrusion-base': [
-          "interpolate", ["linear"], ["zoom"],
-          6, 0,
-          6.05, ["get", "min_height"]
-          ],
+            "interpolate", ["linear"], ["zoom"],
+              12, 0,
+              12.05, ["get", "min_height"]
+            ],
           'fill-extrusion-opacity': .6
           }
       });

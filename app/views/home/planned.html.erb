@@ -29,11 +29,11 @@
       });
 
       map.on('load', function () {
-        var filterType = ['!=',['string',['get', 'Type']],'placeholder'];
+        var filterType = ['!=',['string',['get', 'use']],'placeholder'];
 
         // Create a year property value based on time used to filter against.
 
-        d3.json("/data/supply_in_planning3.geojson").then(function (data) {
+        d3.json("/data/planned.geojson").then(function (data) {
 
           map.addSource('resi', {
             'type': 'geojson',
@@ -47,7 +47,7 @@
               'circle-color': [
                 'match',
                 [
-                  'get', 'Type'
+                  'get', 'use'
                 ],
                 'Resi',
                   '#fbb03b',
@@ -63,11 +63,11 @@
                 [
                   'number',
                   [
-                    'get', 'GFA'
+                    'get', 'gfa'
                   ]
                 ],
-                50000,5,
-                1500000,30
+                50000, 7.5,
+                1500000, 35
               ]
             }
           });
@@ -79,7 +79,7 @@
               'text-field': [
                 'to-string',
                 [
-                  'get', 'Project'
+                  'get', 'project'
                 ]
               ],
               'text-font': [
@@ -104,11 +104,11 @@
             var type = e.target.value;
             // update the map filter
             if (type === 'all') {
-              filterType = ['!=',['string',['get', 'Type']],'placeholder'];
+              filterType = ['!=',['string',['get', 'use']],'placeholder'];
             } else if (type === 'Office') {
-              filterType = ['match',['get', 'Type'],'Office',true,false];
+              filterType = ['match',['get', 'use'],'Office',true,false];
             } else if (type === 'Resi') {
-              filterType = ['match',['get', 'Type'],'Resi',true,false];
+              filterType = ['match',['get', 'use'],'Resi',true,false];
             } else {
               console.log('error');
             };

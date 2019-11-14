@@ -47,47 +47,49 @@
 
     <div id='map'></div>
     <div id='features'>
+      <section id='fultonriver' class='active'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/fultonriverdistrict.png", class: "img-responsive") %>
+        <h3>CHICAGO'S NEW RIVERFRONT CITY</h3>
+        <p>Situated on 37-acres and tying together Chicago's most desirable 24/7 submarkets; the West Loop, River North and Fulton Market. Rare opportunity to design and build a new state of the art city from the ground up. The new development, Fulton River District, is an expansion and creates tranforms a once. A natural continuation of the success and vibrancy at the River's confluence.</p>
+      </section>
       <section id='ebc' class='active'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/ebc_exterior_river.jpg", class: "img-responsive") %>
         <h3>EAST BANK CLUB</h3>
         <p>With more than 450,000 square feet to work out, chill out, and dine out, East Bank Club is Chicago’s premier health club. Covering over two full city blocks, the Club offers an astounding array of amenities, state-of-the-art exercise facilities
           and equipment, and dining options to cater to every want and need. And it’s all delivered with an unparalleled level of personalized service.</p>
       </section>
-      <section id='apple'>
-        <h3>APPLE FLAGSHIP</h3>
+      <section id='riverwalk'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/chicagoriverwalk-Season-Celebration.jpg", class: "img-responsive") %>
+        <h3>MAIN BRANCH RIVERWALK</h3>
         <p>Intended as a gathering place for the local community, the store will host year-round Today at Apple programming, building on Chicago’s city-wide initiative to enliven the Riverwalk. Chicago’s connection to its river runs deep and Apple Michigan
           Avenue adds new access to the riverfront from Pioneer Court. “Apple Michigan Avenue is about removing boundaries between inside and outside, reviving important urban connections within the city,” said Jony Ive, Apple’s chief design officer. “It
           unites a historic city plaza that had been cut off from the water, giving Chicago a dynamic new arena that flows effortlessly down to the river.”</p>
       </section>
-      <section id='wolf'>
-        <h3>WOLF POINT</h3>
-        <p>Holmes and Watson's investigations take them across London. Sherlock deduces that West was murdered elsewhere, then moved to Aldgate Station to create the illusion that he was crushed on the tracks by a train. On their way to Woolwich Sherlock
-          dispatches a telegram to Mycroft at London Bridge: "Send list of all foreign spies known to be in England, with full address."</p>
-      </section>
-      <section id='woolwich'>
-        <h3>3D MAP?</h3>
-        <p>While investigating at Woolwich Arsenal Sherlock learns that West did not have the three keys&mdash;door, office, and safe&mdash;necessary to steal the papers. The train station clerk mentions seeing an agitated West boarding the 8:15 train to
-          London Bridge. Sherlock suspects West of following someone who had access to the Woolwich chief's keyring with all three keys.</p>
-      </section>
-      <section id='gloucester'>
+      <section id='fultonmarket'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg", class: "img-responsive") %>
         <h3>FULTON MARKET DISTRICT</h3>
         <p>Mycroft responds to Sherlock's telegram and mentions several spies. Hugo Oberstein of 13 Caulfield Gardens catches Sherlock's eye. He heads to the nearby Gloucester Road station to investigate and learns that the windows of Caulfield Gardens open
           over rail tracks where trains stop frequently.</p>
       </section>
-      <section id='caulfield-gardens'>
-        <h3>NORTH MICHIGAN AVENUE</h3>
+      <section id='michigan'>
+        <h3>MICHIGAN AVENUE</h3>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/watertower.png", class: "img-responsive") %>
         <p>Holmes deduces that the murderer placed West atop a stopped train at Caulfield Gardens. The train traveled to Aldgate Station before West's body finally toppled off. Backtracking to the criminal's apartment, Holmes finds a series of classified ads
           from
           <em>The Daily Telegraph</em>
           stashed away. All are under the name Pierrot: "Monday night after nine. Two taps. Only ourselves. Do not be so suspicious. Payment in hard cash when goods delivered."</p>
       </section>
-      <section id='telegraph'>
+      <section id='lakefront'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/lakefront.jpg", class: "img-responsive") %>
         <h3>CHICAGO LAKEFRONT</h3>
         <p>Holmes and Watson head to The Daily Telegraph and place an ad to draw out the criminal. It reads: "To-night. Same hour. Same place. Two taps. Most vitally important. Your own safety at stake. Pierrot." The trap works and Holmes catches the
           criminal: Colonel Valentine Walter, the brother of Woolwich Arsenal's chief. He confesses to working for Hugo Oberstein to obtain the submarine plans in order to pay off his debts.</p>
       </section>
-      <section id='charing-cross'>
-        <h3>Charing Cross Hotel</h3>
-        <p>Walter writes to Oberstein and convinces him to meet in the smoking room of the Charing Cross Hotel where he promises additional plans for the submarine in exchange for money. The plan works and Holmes and Watson catch both criminals.</p>
+      <section id='confluence'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/confluence.jpg", class: "img-responsive") %>
+        <h3>RIVER CONFLUENCE</h3>
+        <p>Holmes and Watson head to The Daily Telegraph and place an ad to draw out the criminal. It reads: "To-night. Same hour. Same place. Two taps. Most vitally important. Your own safety at stake. Pierrot." The trap works and Holmes catches the
+          criminal: Colonel Valentine Walter, the brother of Woolwich Arsenal's chief. He confesses to working for Hugo Oberstein to obtain the submarine plans in order to pay off his debts.</p>
         <small id="citation">
           Adapted from
           <a href='http://www.gutenberg.org/files/2346/2346-h/2346-h.htm'>Project Gutenberg</a>
@@ -101,14 +103,82 @@
         container: 'map',
         style: 'mapbox://styles/mpotter/cjzbm9u951d6m1cp9dxfh7o2g',
         center: [
-          -87.637888, 41.886445
+          -87.632622, 41.887671
         ],
-        zoom: 13.5,
-        bearing: 27,
-        pitch: 45
+        zoom: 12.5
       });
 
+      map.on('load', function () {
+
+        map.addLayer({
+            'id': '3d-buildings',
+            'source': 'composite',
+            'source-layer': 'building',
+            'filter': ['==', 'extrude', 'true'],
+            'type': 'fill-extrusion',
+            'minzoom': 11,
+            'paint': {
+                'fill-extrusion-color': '#aaa',
+                // use an 'interpolate' expression to add a smooth transition effect to the
+                // buildings as the user zooms in
+                'fill-extrusion-height': [
+                    "interpolate", ["linear"], ["zoom"],
+                    15, 0,
+                    15.05, ["get", "height"]
+                  ],
+                'fill-extrusion-base': [
+                  "interpolate", ["linear"], ["zoom"],
+                    15, 0,
+                    15.05, ["get", "min_height"]
+                  ],
+                'fill-extrusion-opacity': .6
+                }
+            });
+            //add layers for blip
+            map.addSource('point', {
+                "type": "geojson",
+                "data": {
+                    "type": "Point",
+                    "coordinates": [
+                        -87.646196, 41.895594
+                    ]
+                }
+            });
+            map.addLayer({
+                "id": "point",
+                "source": "point",
+                "type": "circle",
+                "paint": {
+                    "circle-radius": initialRadius,
+                    "circle-radius-transition": {duration: 0},
+                    "circle-opacity-transition": {duration: 0},
+                    "circle-color": "#ffffff"
+                }
+            });
+            map.addLayer({
+                "id": "point1",
+                "source": "point",
+                "type": "circle",
+                "paint": {
+                    "circle-radius": initialRadius,
+                    "circle-color": "#007cbf"
+                }
+            });
+            animateMarker(0);
+
+
+
+        });
+
       var chapters = {
+        'fultonriver': {
+          bearing: 360,
+          center: [
+            -87.632622, 41.887671
+          ],
+          zoom: 12.50,
+          pitch: 0
+        },
         'ebc': {
           bearing: 40,
           center: [
@@ -117,7 +187,7 @@
           zoom: 12.5,
           pitch: 0
         },
-        'apple': {
+        'riverwalk': {
           duration: 6000,
           center: [
             -87.623519, 41.889404
@@ -188,7 +258,7 @@
         }
       };
 
-      var activeChapterName = 'baker';
+      var activeChapterName = 'fultonriver';
       function setActiveChapter(chapterName) {
         if (chapterName === activeChapterName)
           return;
