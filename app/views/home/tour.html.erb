@@ -65,11 +65,22 @@
           Avenue adds new access to the riverfront from Pioneer Court. “Apple Michigan Avenue is about removing boundaries between inside and outside, reviving important urban connections within the city,” said Jony Ive, Apple’s chief design officer. “It
           unites a historic city plaza that had been cut off from the water, giving Chicago a dynamic new arena that flows effortlessly down to the river.”</p>
       </section>
+      <section id='transitway'>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/transitway.png") %>
+        <h3>NORTH BRANCH TRANSITWAY</h3>
+        <p>Repurposing of 3-miles of abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail at the north end
+        </p>
+      </section>
       <section id='fultonmarket'>
         <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg", class: "img-responsive") %>
         <h3>WORLD CLASS DINING</h3>
         <p>Home to 7 Michelin Star and 14 Bib Gourmand rated retaurants, Chicago's Fulton Market and River North neighborhoods offer the City's highest concentrations of world-class dining and entertainment and are host to venues to cause Chicago to be voted "Restaurant City of the Year" (2017) by Bon Appetit
         </p>
+      </section>
+      <section id='tech'>
+        <h3>ANCHORED BY TECHNOLOGY</h3>
+        <%=image_tag("https://tourchicago.s3.us-east-2.amazonaws.com/600_aerial.jpg") %>
+        <p>Critical mass of companies at the foreront of innovation and technology. The Mart, home to 1871 and 600 W. Chicago Lightbank group.</p>
       </section>
       <section id='michigan'>
         <h3>1 MILE TO MAG MILE</h3>
@@ -201,13 +212,30 @@
           zoom: 16,
           pitch: 60
         },
+        'transitway': {
+          bearing: 0,
+          center: [
+            -87.644243, 41.888053
+          ],
+          zoom: 12.75,
+          pitch: 0
+        },
         'fultonmarket': {
           bearing: 0,
           center: [
             -87.641685, 41.891385
           ],
-          zoom: 14.25,
+          zoom: 14,
           pitch: 0
+        },
+        'tech': {
+          duration: 2000,
+          bearing: 125,
+          center: [
+            -87.643544, 41.897380
+          ],
+          zoom: 16.25,
+          pitch: 75
         },
         'michigan': {
           duration: 3000,
