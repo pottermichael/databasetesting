@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'planned', to: 'home#planned'
 
+  get 'indextwo', to: 'home#indextwo'
+
   get 'amenity', to: 'home#amenity'
 
   get 'bike', to: 'home#bike'
@@ -18,8 +20,6 @@ Rails.application.routes.draw do
   get 'transit', to: 'home#transit'
 
   get 'demographic', to: 'home#demographic'
-
-  get 'tour', to: 'home#tour'
 
   get 'satellite', to: 'home#satellite'
 
