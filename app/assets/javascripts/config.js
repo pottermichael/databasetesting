@@ -128,10 +128,29 @@ var config = {
               onChapterExit: [
                 {
                   layer: '3d-buildings',
-                  opacity: 0
+                  opacity: 1
                 },
               ]
           },
+          {
+              id: 'confluence',
+              title: 'Chicago River Confluence',
+              image: 'https://tourchicago.s3.us-east-2.amazonaws.com/confluence.jpg',
+              description: 'Most sought after corporate and residential destination. Notable tenants that relocated or have signed a lease include William Blair Co, Hyatt Corporation, Bank of America, Salesforce, McDermott Will & Emery, DLA Piper and Mead Johnson',
+              location: {
+                center: [-87.63837, 41.88675],
+                zoom: 16.15,
+                pitch: 53.50,
+                bearing: -28.80
+              },
+              onChapterEnter: [],
+              onChapterExit: [
+                {
+                  layer: '3d-buildings',
+                  opacity: 0
+                },
+              ]
+            },
         {
             id: 'commuter',
             title: 'Commuter Population of 5.5 Million',
@@ -374,22 +393,6 @@ var config = {
                           onChapterEnter: [],
                           onChapterExit: []
                         },
-
-                    {
-                        id: 'confluence',
-                        title: 'Chicago River Confluence',
-                        image: 'https://tourchicago.s3.us-east-2.amazonaws.com/confluence.jpg',
-                        description: 'Most sought after corporate and residential destination. Notable tenants that relocated or have signed a lease include William Blair Co, Hyatt Corporation, Bank of America, Salesforce, McDermott Will & Emery, DLA Piper and Mead Johnson',
-                        location: {
-                          center: [-87.63837, 41.88675],
-                          zoom: 16.15,
-                          pitch: 53.50,
-                          bearing: -28.80
-                        },
-                        onChapterEnter: [],
-                        onChapterExit: []
-                      },
-
                       {
                           id: 'eastbankclub',
                           title: 'East Bank Club',
