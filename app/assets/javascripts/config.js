@@ -287,7 +287,7 @@ var config = {
               {
                   id: 'transitwayline',
                   title: '3-Mile North Branch Transitway',
-                  image: 'https://tourchicago.s3.us-east-2.amazonaws.com/transitway.png',
+                  image: 'https://tourchicago.s3.us-east-2.amazonaws.com/transitway.jpeg',
                   description: 'Repurposing of 3-miles of abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail at the north end',
                   location: {
                     center: [-87.64924, 41.89722],
@@ -319,10 +319,10 @@ var config = {
                     image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
                     description: 'Home to 7 Michelin Star and 14 Bib Gourmand rated retaurants, Fulton Market and River North neighborhoods offer the Citys highest concentrations of world-class dining and entertainment and are host to venues to cause Chicago to be voted "Restaurant City of the Year" (2017) by Bon Appetit',
                     location: {
-                      center: [-87.65905, 41.89214],
-                      zoom: 12.36,
+                      center: [-87.66198, 41.90537],
+                      zoom: 13.03,
                       pitch: 0.00,
-                      bearing: -0.15
+                      bearing: 0.00
                     },
                     onChapterEnter: [
                         {
