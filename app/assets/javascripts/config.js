@@ -27,7 +27,7 @@ var config = {
               },
               {
                 layer: 'cta-l-lines',
-                opacity: .65
+                opacity: .55
               },
               {
                 layer: 'riverdistrict-boundary',
@@ -37,7 +37,7 @@ var config = {
             onChapterExit: [
               {
                 layer: 'cta-l-lines',
-                opacity: .65
+                opacity: .55
               },
               {
                 layer: 'riverdistrict-boundary',
@@ -81,7 +81,7 @@ var config = {
               },
               {
                 layer: 'cta-l-lines',
-                opacity: 1
+                opacity: .55
               },
             ]
           },
@@ -190,7 +190,7 @@ var config = {
               },
               {
                 layer: 'cta-l-lines',
-                opacity: 1
+                opacity: .55
               },
               {
                 layer: 'riverdistrict-boundary',
@@ -211,7 +211,7 @@ var config = {
               onChapterEnter: [
                   {
                     layer: 'cta-l-lines',
-                    opacity: 1
+                    opacity: .55
                   },
                   {
                     layer: 'riverdistrict-boundary',
@@ -335,7 +335,7 @@ var config = {
                         },
                         {
                           layer: 'cta-l-lines',
-                          opacity: .65
+                          opacity: .55
                         },
                     ],
                     onChapterExit: [
