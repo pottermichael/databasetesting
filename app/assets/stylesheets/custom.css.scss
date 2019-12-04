@@ -1,58 +1,45 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
-@import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: roboto-medium;
-}
 
 //bootstrap nav bar styling
-.navbar{
+.navbar {
   border-bottom: 1px solid rgba(0,0,0,.0975);
   background-color: #0E2136;
   color: #ffffff;
   position: abosolute;
 }
 
-.user-section{
-  a{
+.user-section {
+  a {
     padding-left: 15px;
   }
-  i.fa{
+
+  i.fa {
     font-size: 22px;
     color: white;
   }
 }
 
-.dropdown-menu{
+.dropdown-menu {
   background-color: #FFC65A;
-  opacity: .6;
+  opacity: 0.6;
   color: #ffffff;
 }
 
-
-#logo-left {
-  float: left;
-  width: 100%;
-  height: auto;
+//Overall map and body styling
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
-#logo-right {
-  float: right;
-  font-size: 1.25em;
-  color: white;
-  letter-spacing: .50px;
-  font-weight: medium;
+a,
+a:hover,
+a:visited {
+  color: #0071bc;
 }
-
-#logo-right:hover {
-  color: green;
-}
-
-// mapbox container styling
 
 #map {
   position: absolute;
@@ -62,11 +49,11 @@ html, body {
 }
 
 h1 {
-    font-size: 26px;
-    margin-top: 5px;
-    margin-bottom: 0px;
-    line-height: 30px;
-    font-weight: bold;
+  font-size: 26px;
+  margin-top: 5px;
+  margin-bottom: 0;
+  line-height: 30px;
+  font-weight: bold;
 }
 
 h2 {
@@ -80,26 +67,50 @@ a {
   text-decoration: none;
   color: #2DC4B2;
 }
+//Console for existing view
+.map-overlay {
+  font: 16px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  position: absolute;
+  width: 30%;
+  top: 500px;
+  left: 0;
+  padding: 15px;
+}
 
+.map-overlay .map-overlay-inner {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.20);
+  border-radius: 3px;
+  padding: 15px 10px 15px 15px;
+  margin: 50px 0 10px;
+}
+
+.map-overlay h2 {
+  line-height: 24px;
+  display: block;
+  margin: 0 0 10px;
+}
+
+//Console for Planned view
 #console {
   position: absolute;
   margin: 10px;
   width: 240px;
   top: 50px;
   background-color: #FF6947;
-  opacity: .90;
+  opacity: 0.90;
   outline-style: solid;
   outline-width: thin;
   outline-color: #FCFC00;
-  font-family:"avenir next", Arial, sans-serif;
+  font-family: "avenir next", Arial, sans-serif;
   font-size: 12px;
   color: #696969;
   font-weight: bold;
-  padding: 0px 25px;
+  padding: 0 25px;
 }
 
 .session {
- margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .row {
@@ -120,7 +131,61 @@ a {
   text-align: center;
 }
 
-#year{
+#year {
   margin-top: 10px;
   font-size: 50px;
+}
+
+//D3 slider on existing view
+#play-button {
+  background: #F14E58;
+  padding-right: 26px;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  margin: 0;
+  padding: 0 12px;
+  width: 60px;
+  cursor: pointer;
+  height: 30px;
+  text-align: center;
+}
+
+#play-button:hover {
+  background-color: #848480;
+  text-align: center;
+}
+
+.ticks {
+  font-size: 10px;
+}
+
+.track,
+.track-inset,
+.track-overlay {
+  stroke-linecap: square;
+}
+
+.track {
+  stroke: #000;
+  stroke-opacity: 0.3;
+  stroke-width: 10px;
+}
+
+.track-inset {
+  stroke: #dcdcdc;
+  stroke-width: 8px;
+}
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  stroke: transparent;
+  cursor: crosshair;
+}
+
+.handle {
+  fill: red;
+  stroke: #000;
+  stroke-opacity: 0.5;
 }
