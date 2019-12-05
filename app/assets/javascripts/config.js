@@ -289,7 +289,7 @@ var config = {
       id: 'retail',
       title: 'World-class Dining Districts',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
-      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star and 14 Bib Gourmand rated restaurants, the Fulton Market and River North neighborhoods contain the citys highest concentrations and variety of fine dining options.',
+      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star and 14 Bib Gourmand rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of fine dining options.',
       location: {
         center: [-87.64238, 41.88896],
         zoom: 14.20,
@@ -384,7 +384,7 @@ var config = {
       id: 'grandavebridge',
       title: 'View from Grand Ave Bridge',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/kinzie-park.jpg',
-      description: 'Phase 1 of the master planned development will commence at Grand Avenue. The view from the Grand Avenue bridge, the formerly barren site will transform to pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and immediate proximity to some of downtown’s most desirable office and residential properties.',
+      description: 'Phase 1 of the master planned development will commence at Grand Avenue. The currently barren parking lot Site will transform from pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and visually connects the Site to some of downtown’s most desirable office and residential properties.',
       location: {
         center: [-87.64116, 41.89144],
         zoom: 16.58,
@@ -411,7 +411,7 @@ var config = {
     {
       id: 'growth',
       title: 'Two Decades of Urban Growth',
-      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, growing north to Chicago Avenue and far beyond.',
+      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
       location: {
         center: [-87.64827, 41.88600],
         zoom: 13.58,
