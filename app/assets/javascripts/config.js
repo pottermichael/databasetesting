@@ -324,7 +324,7 @@ var config = {
       id: 'magmile',
       title: 'One Mile to Mag Mile',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/watertower.png',
-      description: 'At the intersection of Chicago Avenue and Michigan Avenue is the heart of Chicagos Magnificent Mile. Home to iconic modern skyscrapers contrasted against historic landmark structures, the Mag Mile is a bustling stretch offering High Street flagship retail stores, restaurants and is one of the most visited areas of the city. With over 26,000 hotel rooms in the North Michigan Avenue district, the Mag Mile is Chicago’s original 24/7 entertainment destination.',
+      description: 'At the intersection of Chicago Avenue and Michigan Avenue is the heart of Chicagos Magnificent Mile. Home to iconic modern skyscrapers contrasted against historic landmark structures, the Mag Mile is a bustling stretch offering High Street flagship retail stores, restaurants and is one of the most visited areas of the city. With over 26,000 hotel rooms in the North Michigan Avenue district to accommodate year-round business and leisure tourism, the Mag Mile is Chicago’s original 24/7 entertainment destination.',
       location: {
         center: [-87.62405, 41.89671],
         zoom: 15.92,
@@ -342,7 +342,7 @@ var config = {
       id: 'techhubs',
       title: 'Proven Tech Location',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/600_aerial.jpg',
-      description: 'Anchored at the north by 600 W. Chicago in the old Montgomery Ward warehouse, serial start-up and venture capital group Lightbank et al. The south end of the site is proximate to The Mart, the Citys #1 tech hub, #1 suburban relocation recipient and home to 1871 incubator, ranked as the "#1 University affiliated incubator worldwide" in 2018 by X rating source',
+      description: 'The River District is anchored by Chicagos leading technology and innovation hubs. At the north is 600 W. Chicago, home to serial start-up, venture capital and entrepreneurship firm Lightbank. This old “Montgomery Ward” warehouse is fully leased to a variety of mature and high growth technology companies comprising over 7,500 employees, working within some of the most competitive fields for recruitment. South is The Mart, a four million square foot art-deco warehouse, that since 2015 has successfully repositioned from furniture showroom to a leading hub of corporate headquarters and is also home to the citys de-facto tech hub, 1871, which is ranked as the #1 University affiliated incubator in the world” in 2018.',
       location: {
         center: [-87.64409, 41.89739],
         zoom: 15.87,
@@ -356,7 +356,7 @@ var config = {
       id: 'montgomery',
       title: 'Montgomery Ward Park',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/montgomery_ward_skyline.jpg',
-      description: 'Future pedestrian bridge connection re-establishing the old Erie Street vehicluar improves accessibility to River North amenities and transit from the center of the site and connects to the 4-acre A Montgomery Ward public riverfront park',
+      description: 'Located directly across the river is River North’s largest and most vibrant public park. The A. Montgomery Ward Park contains over 4-acre of green space, playgrounds, a waterfront promenade with year-round programming such as “Movies in the Park”. A future pedestrian bridge will re-connect at Erie Street, improving access east from the site to River North neighborhood’s dense offering of amenities, transportation, offices and residences.',
       location: {
         center: [-87.64452, 41.89533],
         zoom: 16.12,
@@ -370,7 +370,7 @@ var config = {
       id: 'eastbankclub',
       title: 'East Bank Club',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/ebc_exterior_river.jpg',
-      description: 'With more than 450,000 square feet to work out, chill out, and dine out, East Bank Club is Chicago’s premier health club. Covering over two full city blocks, the Club offers an astounding array of amenities, state-of-the-art exercise facilities',
+      description: 'As one of the largest private fitness facilities in the U.S., with more than 450,000 square feet of fitness, dining, and resort style amenities, the East Bank Club is Chicago’s premier health club. Covering over two full city blocks, the Club offers an astounding array of amenities, state-of-the-art exercise facilities and serves as the unofficial Town Square for River North office workers and residents.',
       location: {
         center: [-87.64177, 41.89010],
         zoom: 16.30,
@@ -384,7 +384,7 @@ var config = {
       id: 'grandavebridge',
       title: 'View from Grand Ave Bridge',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/kinzie-park.jpg',
-      description: 'Curvature of the river creates stunning views back to the City, Chicago Landmark "Carrol Avenue Bridge" and iconic skyscrapers',
+      description: 'Phase 1 of the master planned development will commence at Grand Avenue. The view from the Grand Avenue bridge, the formerly barren site will transform to pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and immediate proximity to some of downtown’s most desirable office and residential properties.',
       location: {
         center: [-87.64116, 41.89144],
         zoom: 16.58,
@@ -411,7 +411,7 @@ var config = {
     {
       id: 'growth',
       title: 'Two Decades of Urban Growth',
-      description: 'Surrounded by the fastest growing office and residential submarket.',
+      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, growing north to Chicago Avenue and far beyond.',
       location: {
         center: [-87.64827, 41.88600],
         zoom: 13.58,
