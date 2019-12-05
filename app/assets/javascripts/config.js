@@ -12,7 +12,7 @@ var config = {
       id: 'fultonriver',
       title: '2018: Zoned for a Riverfront City',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonriverdistrict.png',
-      description: 'At 37-acres, the new Fulton River District is a unique blank slate development site infill to the Citys most desirable mixed-use submarkets: Fulton Market, River North and the West Loop. As of the end of 2018, zoning is now in place for 7 up to 11 million square feet of mixed-use development. Offering 2/3rd mile of continuous riverwalk and 50% open space, Fulton River District upon completion will effectively become a city in a park, with state of the art infrastructure and modern planning, serving as a natuaral continuation of recent neaby success experienced on Chicago River Confluence and Main Branch zones as the premier urban aesthetic',
+      description: 'At 37-acres, the River District is a unique blank slate development site infill to the Citys most desirable 24/7 submarkets: Fulton Market, River North and the West Loop. As of Q4 2018, zoning is in place for up to 11 million square feet of mixed-use development. Extending downtown from the nearby “Confluence”, this new master planned ‘city in a park’ will offer 2/3rd miles of riverwalk and 15 acres of open space upon completion.',
       location: {
         center: [-87.64249, 41.88865],
         zoom: 12.48,
@@ -46,7 +46,7 @@ var config = {
       id: 'northbranchzoning',
       title: '2017: Removed "PMD" Zoning',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/historical_chicago_ave_bridge.jpg',
-      description: 'Beginning in 2015, the City of Chicago commenced a comprehensive planning process covering 750-acres of land along the river, dubbed a moderinzation of the North Branch Industrial Corridor Framework. The outcome of the plan was to eliminate low density industrial zoning, known as "Planned Manufacturing District", in favor of higher density mixed-use developemnt. Controversy aside, as Chicagos "Second Great Waterfront" and quickly becoming the most pleasing and in-demand urban aesthetic.',
+      description: 'In 2017 the Department of Planning concluded a two-year long comprehensive re-zoning process spanning 750-acres of land on the North Branch. The “modernization” land use and transportation framework sought to eliminate restrictive industrial zoning along the river in order to transform large scale industrial sites from blighted areas prohibiting access to the river into high density mixed-use projects inviting the City in with public green space and vibrancy.',
       location: {
         center: [-87.65929, 41.90447],
         zoom: 13.43,
@@ -83,7 +83,7 @@ var config = {
     {
       id: 'dxzoning',
       title: '2016: Expanded "DX" Zoning',
-      description: 'In June of 2016 the City Council approved updates to the zoning code governing downtown "DX" floor area bonus system and downtown zoning district geography. Under the moniker "Neighborhood Opportunity Bonus" program, the changes were intended to promote increased density development, particulary in areas well served by existing transit, in order to accommodate the the intensifying demand growing outward from the conventional CBD core',
+      description: 'In June of 2016 the City Council approved updates to the zoning code governing downtown "DX" floor area bonus system and downtown zoning district geography. Under the moniker "Neighborhood Opportunity Bonus", the changes were intended to promote increased density development, particularly in areas well served by transit, in order to accommodate pent-up office and residential demand growing outward from the conventional CBD core.',
       location: {
         center: [-87.65801, 41.88436],
         zoom: 12.92,
@@ -103,7 +103,7 @@ var config = {
       id: 'riverwalk',
       title: '2015-2017: Main Branch Riverwalk',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/chicagoriverwalk-Season-Celebration.jpg',
-      description: 'With the final leg of the Main Branch of the riverwalk completed interest in connecting. Demand for riverfront access is broad based, witnessing interest across all CBD property categories including premiere +A corporate office users, top of market multi-family residential, luxury hospitality, leading retailers such as Apple, and an increasing of number of respected national and local food, beverage and entertainment purveyors. Evidencing the recent and dramatic increase in foot traffic and interest along the river, the City of Chicago has repored an increase in concession revenue from $1.2 million in 2014 to $14.4 million in 2018, representing a 12x increase in just four years',
+      description: 'Completed in 2017, the Main Branch Riverwalk has quickly become one of the City’s top attractions for residents and tourists alike. As the #3 urban linear park by visitors in the U.S., behind only NYC’s High Line and the San Antonio Riverwalk, Chicago’s “Second Great Waterfront” is witnessing broad based demand from premiere +A corporate office users, luxury residences, leading hospitality brands, and upscale retailers and restaurants, all serving to confirm the riverfront as the most pleasing urban aesthetic.',
       location: {
         center: [-87.62922, 41.88744],
         zoom: 16.38,
@@ -123,7 +123,7 @@ var config = {
       id: 'confluence',
       title: 'Chicago River Confluence',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/confluence.jpg',
-      description: 'Most sought after corporate and residential destination. Notable tenants that relocated or have signed a lease include William Blair Co, Hyatt Corporation, Bank of America, Salesforce, McDermott Will & Emery, DLA Piper and Mead Johnson',
+      description: 'Since 2016 over 3.5 million square feet of Class +A office has been delivered or is leased, replacing formerly blighted riverfront parking lots. As perhaps the most dramatic point along the River, offering unparalleled light, air and views, newly constructed offices at the Confluence are leased to some of the Citys leading companies including William Blair, Hyatt Corporation, Bank of America, Salesforce, McDermott Will & Emery, DLA Piper and Mead Johnson.',
       location: {
         center: [-87.63837, 41.88675],
         zoom: 16.15,
@@ -138,8 +138,8 @@ var config = {
     },
     {
       id: 'commuter',
-      title: 'Commuter Population of 5.5 Million',
-      description: 'Accessible via mass transit to the top recruitment populations for Suburban employees',
+      title: 'Access to a Commuter Population of 5.5 Million',
+      description: 'Chicagos downtown core is accessible via mass transit to the top recruitment populations for suburban employees in all directions. As the largest metro transit system in the U.S. outside of the east coast corridor, Amtrak and Metra trains provide efficient connections to Ogilvie Station and Union Station, that later of which is the #4 busiest rail station in the U.S. by ridership.',
       location: {
         center: [-87.74011, 42.02653],
         zoom: 8.25,
@@ -183,8 +183,8 @@ var config = {
     },
     {
       id: 'transit',
-      title: 'CTA L 2018 Weekday Ridership',
-      description: 'Fulton River District is serviced by Chicago most popular north and northwest neighborhood lines, the Brown/Purple and Blue. With access to four stations in under .5 miles the site is a proven tranit oriented location with over 26,000 average weekday ridership and growing. Chicago Avenue is the only major east-west street to connect to the CTA Red, Blue and Brown lines and the CTA Red at Chicago is the #2 station by ridership in the whole network. CTA #66 and #8, ...#2 and #3 ridership, reflective of most important streets north and west of the Loop',
+      title: 'Central to Four CTA L Stations',
+      description: 'The River District is serviced by a robust ‘L’ system providing convenient access to the Citys top neighborhoods for talent recruitment. Accessible to four stations in under .5 miles, the Site is an established transit-oriented location with existing average weekday ridership of over 26,000. At the north end of the site, three major CTA lines connect along Chicago Avenue: the Blue, Brown/Purple and Red (#2 station in CTA network). The southern end of the site is serviced by CTA Blue line station, 2 blocks west on Grand Avenue, and the Brown Lines Merchandise Mart station to the east.',
       location: {
         center: [-87.64451, 41.88737],
         zoom: 13.64,
@@ -221,7 +221,7 @@ var config = {
     {
       id: 'bikes',
       title: 'Extensive Bicycle Network',
-      description: 'Bicycling is an integral part of Chicagos transportation system. Every day, thousands of people bike on our streets, whether it is to ride to work, to the store, or for recreation. Milwaukee Ave #1 lane, Chicago 200m, Divvy, midpoint of 18 mile Lakefront recreational trail',
+      description: 'Chicago was voted “Bicycle City of the Year” in 2016 and is home to the #2 bike share system – Divvy - in the U.S, a reflection of the integral role bicycling plays within our transportation system. Every day, thousands of people bike along a growing network of protected streets for commuting and recreation. The River District is central to major commuter ‘spoke’ routes connecting to downtown, the lakefront and popular neighborhoods, including close proximity to the #1 route along Milwaukee Avenue’s ‘Hipster Highway',
       location: {
         center: [-87.65013, 41.88911],
         zoom: 13.39,
@@ -265,9 +265,9 @@ var config = {
     },
     {
       id: 'transitwayline',
-      title: '3-Mile North Branch Transitway',
+      title: '3-Mile "North Branch Transitway"',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/transitway.jpeg',
-      description: 'Repurposing of 3-miles of abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail at the north end',
+      description: 'Within the North Branch re-zoning framework, the City identified a number of transportation projects throughout the corridor to improve public transportation. Most prominent of the improvements is the “North Branch Transitway”, which calls for a repurposing of a 3-mile abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail to the north.',
       location: {
         center: [-87.64924, 41.89722],
         zoom: 12.99,
@@ -289,10 +289,10 @@ var config = {
       id: 'retail',
       title: 'World-class Dining Districts',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
-      description: 'Home to 7 Michelin Star and 14 Bib Gourmand rated retaurants, Fulton Market and River North neighborhoods offer the Citys highest concentrations of world-class dining and entertainment and are host to venues to cause Chicago to be voted "Restaurant City of the Year" (2017) by Bon Appetit',
+      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star and 14 Bib Gourmand rated restaurants, the Fulton Market and River North neighborhoods contain the citys highest concentrations and variety of fine dining options.',
       location: {
-        center: [-87.66198, 41.90537],
-        zoom: 13.03,
+        center: [-87.64238, 41.88896],
+        zoom: 14.20,
         pitch: 0.00,
         bearing: 0.00
       },
@@ -324,7 +324,7 @@ var config = {
       id: 'magmile',
       title: 'One Mile to Mag Mile',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/watertower.png',
-      description: '57.7 million visitors in 2018 makes Chicago the most visited City in the U.S. after NYC. One mile east of the site, the intersection of Chicago and Michigan Avenue sits at the heart of The Magnificient Mile. Offering a variety of....',
+      description: 'At the intersection of Chicago Avenue and Michigan Avenue is the heart of Chicagos Magnificent Mile. Home to iconic modern skyscrapers contrasted against historic landmark structures, the Mag Mile is a bustling stretch offering High Street flagship retail stores, restaurants and is one of the most visited areas of the city. With over 26,000 hotel rooms in the North Michigan Avenue district, the Mag Mile is Chicago’s original 24/7 entertainment destination.',
       location: {
         center: [-87.62405, 41.89671],
         zoom: 15.92,
