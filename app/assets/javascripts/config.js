@@ -4,9 +4,8 @@ var config = {
   showMarkers: false,
   theme: 'light',
   alignment: 'left',
-  title: 'Fulton River District - Chicagos Connected Campus',
+  title: 'The River District - Chicagos Connected Campus',
   subtitle: "Summary of infill development characteristics as shaped by mobility, amenities, demographics and zoning",
-  byline: 'By Riverside Investment & Development',
   footer: 'Sources: Riverside Investment & Development, City of Chicago Data Portal',
   chapters: [{
       id: 'fultonriver',
@@ -289,7 +288,7 @@ var config = {
       id: 'retail',
       title: 'World-class Dining Districts',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
-      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star and 14 Bib Gourmand rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of fine dining options.',
+      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star (Blue dots) and 14 Bib Gourmand (Green dots) rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of fine dining options.',
       location: {
         center: [-87.64995, 41.88915],
         zoom: 13.96,
