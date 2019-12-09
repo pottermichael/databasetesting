@@ -7,10 +7,8 @@
   <body>
 
     <div id='map'></div>
-
     <div class='map-overlay'>
-
-        <h1>CBD New Development
+        <h1>Year:
           <label id='year'></label>
         </h1>
         <div id="slider"></div>
@@ -23,9 +21,7 @@
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mpotter/cjsvs21w60gjk1fmovfg87xhb',
-        center: [
-          -87.636127, 41.892699
-        ],
+        center: [-87.636127, 41.892699],
         zoom: 13.5
       });
 
@@ -71,19 +67,9 @@
       console.log(yearMin)
 
       function filterBy(year) {
-        var filterYear = [
-          '<=',
-          [
-            'number',
-            [
-              'get', 'year'
-            ]
-          ],
-          year
-        ];
-        map.setFilter('residential-circles', filterYear);
-        map.setFilter('residential-labels', filterYear);
-
+        var filterYear = ['<=',['number',['get', 'year']],year];
+        map.setFilter('property-circles', filterYear);
+        map.setFilter('property-labels', filterYear);
         // Set the label to the month
         document.getElementById('year').innerText = year;
         console.log(year)
@@ -95,14 +81,11 @@
           if (err)
             throw err;
 
-          map.addSource('resi', {
-            'type': 'geojson',
-            data: data
-          });
+          map.addSource('delivered', {'type': 'geojson',data: data});
           map.addLayer({
-            'id': 'residential-circles',
+            'id': 'property-circles',
             'type': 'circle',
-            'source': 'resi',
+            'source': 'delivered',
             'paint': {
               'circle-color': [
                 'match',
@@ -134,9 +117,9 @@
             }
           });
           map.addLayer({
-            'id': 'residential-labels',
+            'id': 'property-labels',
             'type': 'symbol',
-            'source': 'resi',
+            'source': 'delivered',
             'layout': {
               'text-field': [
                 'to-string',
@@ -165,14 +148,16 @@
 
           // Set filter to first year of the array 0 = 1999
           filterBy(1999);
+          // D3 slider and play button
           var margin = {
               top: 50,
               right: 10,
               bottom: 0,
               left: 10
             },
-            width = document.getElementById('slider').clientWidth - margin.left - margin.right,
-            height = 50 - margin.top - margin.bottom;
+
+          width = document.getElementById('slider').clientWidth - margin.left - margin.right,
+          height = 50 - margin.top - margin.bottom;
 
           var moving = false;
           var currentValue = 0;
@@ -240,7 +225,6 @@
             labels.attr("x", x(year)).text(years[year]);
             filterBy(year);
           }
-
 
           //add layers for blip
           map.addSource('point', {

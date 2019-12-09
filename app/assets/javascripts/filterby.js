@@ -1,7 +1,8 @@
+// old code from year and type filter. Keeping for reference changed to "filterBye"
 // function to filter by year. Create variables to filter year and filtering by type, then apply variables to set the filter
-function filterBy(year) {
+function filterBye(year) {
   var filterYear = ['<=',['number',['get','Year']], year];
   var filterType = ['!=', ['string', ['get', 'Type']], 'placeholder'];
-    map.setFilter('residential-circles', filterYear);
-    map.setFilter('residential-labels', filterYear);
+    map.setFilter('property-circles', filterYear);
+    map.setFilter('property-labels', filterYear);
 }
