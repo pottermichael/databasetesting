@@ -266,7 +266,7 @@ var config = {
       id: 'transitwayline',
       title: '3-Mile "North Branch Transitway"',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/transitway.jpeg',
-      description: 'Within the North Branch re-zoning framework, the City identified a number of transportation projects throughout the corridor to improve public transportation. Most prominent of the improvements is the “North Branch Transitway”, which calls for a repurposing of a 3-mile abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail to the north.',
+      description: 'Within the North Branch re-zoning framework, the City identified a number of transportation projects throughout the corridor to improve public transportation. Most prominent of the improvements is the North Branch Transitway, which calls for a repurposing of a 3 mile abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail to the north.',
       location: {
         center: [-87.64924, 41.89722],
         zoom: 12.99,
@@ -279,7 +279,7 @@ var config = {
       }],
       onChapterExit: [{
           layer: 'transitway',
-          opacity: 0
+          opacity: .25
         }
       ]
     },

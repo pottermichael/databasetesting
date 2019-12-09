@@ -8,14 +8,13 @@
 
     <div id='map'></div>
 
-    <div class='map-overlay top'>
-      <div class='map-overlay-inner'>
+    <div class='map-overlay'>
+
         <h1>CBD New Development
           <label id='year'></label>
         </h1>
         <div id="slider"></div>
         <button id="play-button">Play</button>
-      </div>
     </div>
 
     <script src="//d3js.org/d3.v4.min.js" charset='utf-8'></script>
@@ -164,39 +163,6 @@
             }
           });
 
-          //add layers for blip
-          map.addSource('point', {
-            "type": "geojson",
-            "data": {
-              "type": "Point",
-              "coordinates": [-87.646196, 41.895594]
-            }
-          });
-          map.addLayer({
-            "id": "point",
-            "source": "point",
-            "type": "circle",
-            "paint": {
-              "circle-radius": initialRadius,
-              "circle-radius-transition": {
-                duration: 0
-              },
-              "circle-opacity-transition": {
-                duration: 0
-              },
-              "circle-color": "#ffffff"
-            }
-          });
-          map.addLayer({
-            "id": "point1",
-            "source": "point",
-            "type": "circle",
-            "paint": {
-              "circle-radius": initialRadius,
-              "circle-color": "#007cbf"
-            }
-          });
-
           // Set filter to first year of the array 0 = 1999
           filterBy(1999);
           var margin = {
@@ -274,6 +240,40 @@
             labels.attr("x", x(year)).text(years[year]);
             filterBy(year);
           }
+
+
+          //add layers for blip
+          map.addSource('point', {
+            "type": "geojson",
+            "data": {
+              "type": "Point",
+              "coordinates": [-87.646196, 41.895594]
+            }
+          });
+          map.addLayer({
+            "id": "point",
+            "source": "point",
+            "type": "circle",
+            "paint": {
+              "circle-radius": initialRadius,
+              "circle-radius-transition": {
+                duration: 0
+              },
+              "circle-opacity-transition": {
+                duration: 0
+              },
+              "circle-color": "#ffffff"
+            }
+          });
+          map.addLayer({
+            "id": "point1",
+            "source": "point",
+            "type": "circle",
+            "paint": {
+              "circle-radius": initialRadius,
+              "circle-color": "#007cbf"
+            }
+          });
           animateMarker(0);
         });
       });
