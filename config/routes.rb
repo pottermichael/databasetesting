@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'planned', to: 'home#planned'
 
+  get 'cbdtour', to: 'home#cbdtour'
+
   get 'indextwo', to: 'home#indextwo'
 
   get 'amenity', to: 'home#amenity'
