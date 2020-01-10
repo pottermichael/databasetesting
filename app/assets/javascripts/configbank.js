@@ -41,7 +41,7 @@ var config = {
     {
       id: 'past_growth',
       title: 'Two Decades of Urban Growth',
-      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migration trends influencing develpment include a suburbs to City urban influx and a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
+      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migration trends influencing develpment include an influx of corporations relocating from the suburbs to the City and a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
       location: {
         center: [-87.65041, 41.88537],
         zoom: 14.06,
