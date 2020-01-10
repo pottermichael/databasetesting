@@ -41,7 +41,7 @@ var config = {
     {
       id: 'past_growth',
       title: 'Two Decades of Urban Growth',
-      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
+      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migration trends influencing develpment include a suburbs to City urban influx and a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
       location: {
         center: [-87.65041, 41.88537],
         zoom: 14.06,
@@ -271,7 +271,7 @@ var config = {
     {
       id: 'cta_walksheds',
       title: '10 minute walk',
-      description: 'Large riverfront sites outside of conventionals CBD recently zoned for large scale mixed-use development',
+      description: 'Chicago CTA Blue and Brown lines currently service the most desirable neighborhoods for corporate talent recruitment. An evaluation of .5 mile walksheds from CTA stations illustrates comprehensive coverage for the Tribune property',
       location: {
         center: [-87.65980, 41.88548],
         zoom: 12.96,
@@ -325,7 +325,7 @@ var config = {
     {
       id: 'commuter_walksheds',
       title: 'Ogilvie and Union Station',
-      description: 'The River District is serviced by a robust ‘L’ system providing convenient access to the Citys top neighborhoods for talent recruitment. Accessible to four stations in under .5 miles, the Site is an established transit-oriented location with existing average weekday ridership of over 26,000. At the north end of the site, three major CTA lines connect along Chicago Avenue: the Blue, Brown/Purple and Red (#2 station in CTA network). The southern end of the site is serviced by CTA Blue line station, 2 blocks west on Grand Avenue, and the Brown Lines Merchandise Mart station to the east.',
+      description: 'Access to commuter rails stations remains critical for successful office development. The West Loop has been the leading submarket for corporate relocations from the suburbs to the city, largely owing to its ability to conveniently tap into the commuter rails',
       location: {
         center: [-87.64451, 41.88737],
         zoom: 13.64,
@@ -341,35 +341,6 @@ var config = {
           layer: 'walkshed-commuter',
           opacity: 0
         },
-      ]
-    },
-    {
-      id: 'sites_planned_all',
-      title: 'Currently Planned Sites',
-      description: 'The River District is serviced by a robust ‘L’ system providing convenient access to the Citys top neighborhoods for talent recruitment. Accessible to four stations in under .5 miles, the Site is an established transit-oriented location with existing average weekday ridership of over 26,000. At the north end of the site, three major CTA lines connect along Chicago Avenue: the Blue, Brown/Purple and Red (#2 station in CTA network). The southern end of the site is serviced by CTA Blue line station, 2 blocks west on Grand Avenue, and the Brown Lines Merchandise Mart station to the east.',
-      location: {
-        center: [-87.64451, 41.88737],
-        zoom: 13.64,
-        pitch: 0.50,
-        bearing: 0.20
-      },
-      onChapterEnter: [{
-          layer: 'planned',
-          opacity: 1
-        },
-        {
-          layer: 'planned_labels',
-          opacity: 1
-        }
-      ],
-      onChapterExit: [{
-          layer: 'planned',
-          opacity: 0
-        },
-        {
-          layer: 'planned_labels',
-          opacity: 0
-        }
       ]
     },
     {
@@ -432,6 +403,35 @@ var config = {
       },
       onChapterEnter: [],
       onChapterExit: []
+    },
+    {
+      id: 'sites_planned_all',
+      title: 'Planned Development Sites',
+      description: 'Development in River North ',
+      location: {
+        center: [-87.64451, 41.88737],
+        zoom: 13.64,
+        pitch: 0.50,
+        bearing: 0.20
+      },
+      onChapterEnter: [{
+          layer: 'planned',
+          opacity: 1
+        },
+        {
+          layer: 'planned_labels',
+          opacity: 1
+        }
+      ],
+      onChapterExit: [{
+          layer: 'planned',
+          opacity: 0
+        },
+        {
+          layer: 'planned_labels',
+          opacity: 0
+        }
+      ]
     },
     //final brackets for
   ]
