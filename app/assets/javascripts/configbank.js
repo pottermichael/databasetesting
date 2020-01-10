@@ -236,7 +236,7 @@ var config = {
     },
     {
       id: 'cta_walksheds',
-      title: '10 minute walk',
+      title: 'CTA Transit Access',
       description: 'Chicago CTA Blue and Brown lines currently service the most desirable neighborhoods for corporate talent recruitment. An evaluation of .5 mile walksheds from CTA stations illustrates that transit coverage for the River District is unmatched.',
       location: {
         center: [-87.65980, 41.88548],
