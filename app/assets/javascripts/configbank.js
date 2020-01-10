@@ -214,40 +214,6 @@ var config = {
       ]
     },
     {
-      id: 'retail',
-      title: 'World-class Dining Districts',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
-      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star (Blue dots) and 14 Bib Gourmand (Green dots) rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of fine dining options.',
-      location: {
-        center: [-87.68684, 41.89123],
-        zoom: 12.16,
-        pitch: 0.00,
-        bearing: 0.00
-      },
-      onChapterEnter: [{
-          layer: 'bib-and-michelin-combined',
-          opacity: 1
-        },
-        {
-          layer: 'bib-and-michelin-combined_labels',
-          opacity: 1
-        },
-        {
-          layer: 'cta-l-lines',
-          opacity: .55
-        },
-      ],
-      onChapterExit: [{
-          layer: 'bib-and-michelin-combined',
-          opacity: 0
-        },
-        {
-          layer: 'bib-and-michelin-combined_labels',
-          opacity: 0
-        },
-      ]
-    },
-    {
       id: 'transitwayline',
       title: '3-Mile "North Branch Transitway"',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/transitway.jpeg',
@@ -344,6 +310,36 @@ var config = {
       ]
     },
     {
+      id: 'retail',
+      title: 'World-class Dining Districts',
+      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
+      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star (Blue dots) and 14 Bib Gourmand (Green dots) rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of fine dining options.',
+      location: {
+        center: [-87.68684, 41.89123],
+        zoom: 12.16,
+        pitch: 0.00,
+        bearing: 0.00
+      },
+      onChapterEnter: [{
+          layer: 'bib-and-michelin-combined',
+          opacity: 1
+        },
+        {
+          layer: 'bib-and-michelin-combined_labels',
+          opacity: 1
+        },
+      ],
+      onChapterExit: [{
+          layer: 'bib-and-michelin-combined',
+          opacity: 0
+        },
+        {
+          layer: 'bib-and-michelin-combined_labels',
+          opacity: 0
+        },
+      ]
+    },
+    {
       id: 'techhubs',
       title: 'Proven Tech Location',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/600_aerial.jpg',
@@ -402,12 +398,16 @@ var config = {
         bearing: 149.29
       },
       onChapterEnter: [],
-      onChapterExit: []
+      onChapterExit: [
+        {
+          layer: '3d-buildings',
+          opacity: 0
+        },]
     },
     {
       id: 'sites_planned_all',
       title: 'Planned Development Sites',
-      description: 'Development in River North ',
+      description: 'Looking forward, the majority of significant office and residential projects planned are located in River North and Fulton Market. As the River North submarket has become largely built-out during the last development cycle, the majority of remaining planned developments are concentrated around Chicago Avenue including significant redevelopments planned at the Greyhound facility and Moody Bible Institute. Fulton Market is anticipated to continue to experience success as an alternative submarket to the conventional downtown, and has nearly 6 million square feet of office planned for ground up development at which point the submarket will be fully built out.',
       location: {
         center: [-87.64451, 41.88737],
         zoom: 13.64,
