@@ -382,7 +382,7 @@ var config = {
     {
       id: 'grandavebridge',
       title: 'View from Grand Ave Bridge',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/kinzie-park.jpg',
+      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/grandAVE.png',
       description: 'Phase 1 of the master planned development will commence at Grand Avenue. The currently barren parking lot Site will transform from pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and visually connects the Site to some of downtown’s most desirable office and residential properties.',
       location: {
         center: [-87.64116, 41.89144],

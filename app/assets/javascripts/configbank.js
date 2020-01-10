@@ -4,14 +4,15 @@ var config = {
   showMarkers: false,
   theme: 'light',
   alignment: 'left',
-  title: 'Chicago Central Business District',
-  subtitle: "Historical growth patterns within the CBD and site selection analysis",
+  title: 'TRIBUNE PROPERTY INFILL DEVELOPMENT',
+  subtitle: "Analysis of historical and future growth patterns of downtown Chicago",
   footer: 'Source: Riverside Investment & Development',
   chapters: [
     {
-      id: 'past_growth',
-      title: 'Two Decades of Urban Growth',
-      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
+      id: 'fultonriver_2',
+      title: 'Transformational Downtown Development',
+      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonriverdistrict.png',
+      description: 'At 37-acres, the River District is a unique blank slate development site infill to the Citys most desirable 24/7 submarkets: Fulton Market, River North and the West Loop. As of Q4 2018, zoning is in place for up to 11 million square feet of mixed-use development. Extending downtown from the nearby “Confluence”, this new master planned ‘city in a park’ will offer 2/3rd miles of riverwalk and 15 acres of open space upon completion.',
       location: {
         center: [-87.65041, 41.88537],
         zoom: 14.06,
@@ -22,6 +23,32 @@ var config = {
           layer: 'large-parcels-3',
           opacity: 1
         },
+        {
+          layer: 'cta-l-lines',
+          opacity: .55
+        },
+        {
+          layer: 'cta-l-lines',
+          opacity: .55
+        }
+      ],
+      onChapterExit: [{
+          layer: 'cta-l-lines',
+          opacity: .55
+        },
+      ]
+    },
+    {
+      id: 'past_growth',
+      title: 'Two Decades of Urban Growth',
+      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
+      location: {
+        center: [-87.65041, 41.88537],
+        zoom: 14.06,
+        pitch: 0.00,
+        bearing: 0.00
+      },
+      onChapterEnter: [
         {
           layer: 'cta-l-lines',
           opacity: .55
@@ -132,33 +159,6 @@ var config = {
       }, ]
     },
     {
-      id: 'fultonriver_2',
-      title: 'Sites Currently Underway',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonriverdistrict.png',
-      description: 'At 37-acres, the River District is a unique blank slate development site infill to the Citys most desirable 24/7 submarkets: Fulton Market, River North and the West Loop. As of Q4 2018, zoning is in place for up to 11 million square feet of mixed-use development. Extending downtown from the nearby “Confluence”, this new master planned ‘city in a park’ will offer 2/3rd miles of riverwalk and 15 acres of open space upon completion.',
-      location: {
-        center: [-87.65041, 41.88537],
-        zoom: 14.06,
-        pitch: 0.00,
-        bearing: 0.00
-      },
-      onChapterEnter: [
-        {
-          layer: 'cta-l-lines',
-          opacity: .55
-        },
-        {
-          layer: 'cta-l-lines',
-          opacity: .55
-        }
-      ],
-      onChapterExit: [{
-          layer: 'cta-l-lines',
-          opacity: .55
-        },
-      ]
-    },
-    {
       id: 'commuter_lines',
       title: 'Access to a Commuter Population of 5.5 Million',
       description: 'Chicagos downtown core is accessible via mass transit to the top recruitment populations for suburban employees in all directions. As the largest metro transit system in the U.S. outside of the east coast corridor, Amtrak and Metra trains provide efficient connections to Ogilvie Station and Union Station, that later of which is the #4 busiest rail station in the U.S. by ridership.',
@@ -198,7 +198,7 @@ var config = {
     {
       id: 'master_plans',
       title: '2018 Zoned Master Planned Sites',
-      description: 'Large riverfront sites outside of conventionals CBD recently zoned for large scale mixed-use development',
+      description: 'In 2018 the City rezoned three major riverfront sites for city-scale redevelopment.',
       location: {
         center: [-87.65980, 41.88548],
         zoom: 12.96,
@@ -373,44 +373,6 @@ var config = {
       ]
     },
     {
-      id: 'office_avail',
-      title: 'Office Sites Over 1msf',
-      description: 'The River District is serviced by a robust ‘L’ system providing convenient access to the Citys top neighborhoods for talent recruitment. Accessible to four stations in under .5 miles, the Site is an established transit-oriented location with existing average weekday ridership of over 26,000. At the north end of the site, three major CTA lines connect along Chicago Avenue: the Blue, Brown/Purple and Red (#2 station in CTA network). The southern end of the site is serviced by CTA Blue line station, 2 blocks west on Grand Avenue, and the Brown Lines Merchandise Mart station to the east.',
-      location: {
-        center: [-87.64451, 41.88737],
-        zoom: 13.64,
-        pitch: 0.50,
-        bearing: 0.20
-      },
-      onChapterEnter: [{
-          layer: 'planned-office-avail',
-          opacity: 1
-        },
-      ],
-      onChapterExit: [{
-        layer: 'planned-office-avail',
-        opacity: 0
-        }
-      ]
-    },
-    {
-      id: 'chase',
-      title: 'Chase Tower | Loop',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/chase.jpg',
-      description: 'Prominent central Loop tower constructed in 1969',
-      location: {
-        center: [-87.63026, 41.88134],
-        zoom: 16.27,
-        pitch: 46.50,
-        bearing: 88.81
-      },
-      onChapterEnter: [{
-        layer: '3d-buildings',
-        opacity: 1
-      },],
-      onChapterExit: []
-    },
-    {
       id: 'techhubs',
       title: 'Proven Tech Location',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/600_aerial.jpg',
@@ -421,7 +383,12 @@ var config = {
         pitch: 57.50,
         bearing: 115.97
       },
-      onChapterEnter: [],
+      onChapterEnter: [
+        {
+          layer: '3d-buildings',
+          opacity: 1
+        },
+      ],
       onChapterExit: []
     },
     {
@@ -465,62 +432,6 @@ var config = {
       },
       onChapterEnter: [],
       onChapterExit: []
-    },
-    {
-      id: 'tribune_west_rendering',
-      title: '37 Acre Riverfront Campus',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/renderingwest.png',
-      description: 'Rare opportunity to create an Urban oasis...',
-      location: {
-        center: [-87.64238, 41.89325],
-        zoom: 15.77,
-        pitch: 57.50,
-        bearing: -71.62
-      },
-      onChapterEnter: [],
-      onChapterExit: []
-    },
-    {
-      id: 'all_growth',
-      title: 'Two Decades of Urban Growth',
-      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migrations trends include a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is the #1 submarket for large-scale luxury residential deliveries, having grown north to Chicago Avenue and far beyond in recent years.',
-      location: {
-        center: [-87.65041, 41.88537],
-        zoom: 14.06,
-        pitch: 0.00,
-        bearing: 0.00
-      },
-      onChapterEnter: [
-        {
-          layer: 'cta-l-lines',
-          opacity: .55
-        },
-        {
-          layer: 'planned',
-          opacity: .55
-        },
-        {
-          layer: 'planned_labels',
-          opacity: .55
-        },
-        {
-          layer: '3d-buildings',
-          opacity: 0
-        },
-      ],
-      onChapterExit: [{
-          layer: 'cta-l-lines',
-          opacity: .55
-        },
-        {
-          layer: '3d-buildings',
-          opacity: 1
-        },
-        {
-          layer: 'planned',
-          opacity: 0
-        },
-      ]
     },
     //final brackets for
   ]
