@@ -30,7 +30,11 @@ var config = {
         {
           layer: 'cta-l-lines',
           opacity: .55
-        }
+        },
+        {
+          layer: '3d-buildings',
+          opacity: 0
+        },
       ],
       onChapterExit: [{
           layer: 'cta-l-lines',
@@ -52,10 +56,6 @@ var config = {
         {
           layer: 'cta-l-lines',
           opacity: .55
-        },
-        {
-          layer: '3d-buildings',
-          opacity: 0
         },
       ],
       onChapterExit: [{
