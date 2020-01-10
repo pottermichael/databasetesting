@@ -198,7 +198,7 @@ var config = {
     {
       id: 'master_plans',
       title: '2018 Zoned Master Planned Sites',
-      description: 'In 2018 the City rezoned three major riverfront sites for city-scale redevelopment.',
+      description: 'In 2018 the City approved rezoning of three major industrial sites to enable transformational redevelopments along the river. Ranging between 11 million and 15 million square feet of development potential, each project presents a blank canvass potential to develop at the city-scale.',
       location: {
         center: [-87.65980, 41.88548],
         zoom: 12.96,
