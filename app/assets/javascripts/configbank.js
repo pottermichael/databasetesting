@@ -4,7 +4,7 @@ var config = {
   showMarkers: false,
   theme: 'light',
   alignment: 'left',
-  title: 'TRIBUNE PROPERTY INFILL DEVELOPMENT',
+  title: 'TRIBUNE RIVER DISTRICT DEVELOPMENT',
   subtitle: "Analysis of historical and future growth patterns of downtown Chicago",
   footer: 'Source: Riverside Investment & Development',
   chapters: [
@@ -45,7 +45,7 @@ var config = {
     {
       id: 'past_growth',
       title: 'Two Decades of Urban Growth',
-      description: 'Since 1999, downtown Chicago has experienced a dramatic urban renaissance. Notable migration trends influencing develpment include an influx of corporations relocating from the suburbs to the City and a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is by far the #1 submarket for large-scale luxury residential deliveries. The Tribune property is ideally situated between these two submarkets and is now zoned for similar high density mixed use developments.',
+      description: 'Over the past two decades, downtown Chicago has experienced a dramatic urban renaissance. Notable migration trends influencing develpment include an influx of corporations relocating from the suburbs to the City and a newfound appreciation for the River’s edge. As the conventional CBD core has become completely built-out, the City has moved rapidly outward to the North and West. Owing to significant availability of large once-industrial sites, Fulton Market has become the largest new office submarket in the downtown. River North is by far the #1 submarket for large-scale luxury residential deliveries.',
       location: {
         center: [-87.65041, 41.88537],
         zoom: 14.06,
@@ -71,7 +71,7 @@ var config = {
     {
       id: 'dxzoning',
       title: '2016: Expanded "DX" Zoning',
-      description: 'In June of 2016 the City Council approved updates to the zoning code governing downtown "DX" floor area bonus system and downtown zoning district geography. Under the moniker "Neighborhood Opportunity Bonus", the changes were intended to promote increased density development, particularly in areas well served by transit, in order to accommodate pent-up office and residential demand growing outward from the conventional CBD core.',
+      description: 'In June of 2016 the City Council approved updates to the zoning code governing the downtown "DX" floor area bonus system and downtown zoning district geography. Under the moniker "Neighborhood Opportunity Bonus", the changes were intended to promote increased density, principally in areas well served by transit, in order to accommodate pent-up office and residential demand growing outward from the conventional CBD core.',
       location: {
         center: [-87.65801, 41.88436],
         zoom: 12.92,
@@ -198,7 +198,7 @@ var config = {
     {
       id: 'master_plans',
       title: '2018 Zoned Master Planned Sites',
-      description: 'In 2018 the City approved rezoning of three major industrial sites to enable transformational redevelopments along the river. Ranging between 11 million and 15 million square feet of development potential, each project presents a blank canvass potential to develop at the city-scale.',
+      description: 'In 2018 the City approved rezoning of three major industrial sites to enable transformational redevelopments along the river. Ranging between 11 million and 15 million square feet of development potential, each project presents a blank canvass potential to develop a new district at the city-scale.',
       location: {
         center: [-87.65980, 41.88548],
         zoom: 12.96,
@@ -237,7 +237,7 @@ var config = {
     {
       id: 'cta_walksheds',
       title: '10 minute walk',
-      description: 'Chicago CTA Blue and Brown lines currently service the most desirable neighborhoods for corporate talent recruitment. An evaluation of .5 mile walksheds from CTA stations illustrates that transit coverage for the Tribune property is unmatched.',
+      description: 'Chicago CTA Blue and Brown lines currently service the most desirable neighborhoods for corporate talent recruitment. An evaluation of .5 mile walksheds from CTA stations illustrates that transit coverage for the River District is unmatched.',
       location: {
         center: [-87.65980, 41.88548],
         zoom: 12.96,
@@ -258,7 +258,7 @@ var config = {
     {
       id: 'transit',
       title: 'Central to Four CTA L Stations',
-      description: 'The River District is serviced by a robust ‘L’ system providing convenient access to the Citys top neighborhoods for talent recruitment. Accessible to four stations in under .5 miles, the Site is an established transit-oriented location with existing average weekday ridership of over 26,000. At the north end of the site, three major CTA lines connect along Chicago Avenue: the Blue, Brown/Purple and Red (#2 station in CTA network). The southern end of the site is serviced by CTA Blue line station, 2 blocks west on Grand Avenue, and the Brown Lines Merchandise Mart station to the east.',
+      description: 'The River District is serviced by a robust ‘L’ system providing convenient access to the Citys top neighborhoods for talent recruitment. Accessible to four stations in under .5 miles, the Site is an established transit-oriented location with existing average weekday ridership of over 26,000. At the north end of the site, three major CTA lines connect along Chicago Avenue: the Blue, Brown/Purple and Red (#2 station in CTA network). The southern end of the site is serviced by CTA Blue line station, 2 blocks west on Grand Avenue, and the Brown Line Merchandise Mart station to the east.',
       location: {
         center: [-87.64451, 41.88737],
         zoom: 13.64,
@@ -313,7 +313,7 @@ var config = {
       id: 'retail',
       title: 'World-class Dining Districts',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
-      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star (Blue dots) and 14 Bib Gourmand (Green dots) rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of fine dining options.',
+      description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star (Blue dots) and 14 Bib Gourmand (Green dots) rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of exciting dining options.',
       location: {
         center: [-87.68684, 41.89123],
         zoom: 12.16,
@@ -390,7 +390,7 @@ var config = {
       id: 'tribune_grandavebridge',
       title: 'View from Grand Ave Bridge',
       image: 'https://tourchicago.s3.us-east-2.amazonaws.com/kinzie-park.jpg',
-      description: 'Phase 1 of the master planned development will commence at Grand Avenue. The currently barren parking lot Site will transform from pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and visually connects the Site to some of downtown’s most desirable office and residential properties.',
+      description: 'Phase 1 of the master planned development will commence at Grand Avenue. This currently barren parking lot site will transform from pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and visually connects the Site to some of downtown’s most desirable office and residential properties.',
       location: {
         center: [-87.64116, 41.89144],
         zoom: 16.58,
@@ -407,7 +407,7 @@ var config = {
     {
       id: 'sites_planned_all',
       title: 'Planned Development Sites',
-      description: 'Looking forward, the majority of significant office and residential projects planned are located in River North and Fulton Market. As the River North submarket has become largely built-out during the last development cycle, the majority of remaining planned developments are concentrated around Chicago Avenue including significant redevelopments planned at the Greyhound facility and Moody Bible Institute. Fulton Market is anticipated to continue to experience success as an alternative submarket to the conventional downtown, and has nearly 6 million square feet of office planned for ground up development at which point the submarket will be fully built out.',
+      description: 'Looking forward, the majority of Chicagos individual office and residential projects planned are located in River North and Fulton Market. As the River North submarket has become largely built-out during the last development cycle, the majority of remaining developments are concentrated around Chicago Avenue including multi-block redevelopments planned at the Greyhound facility and Moody Bible Institute. Fulton Market is anticipated to continue to experience success as an alternative submarket to the conventional downtown, and has nearly 6 million square feet of office planned for ground up development at which point the submarket will be fully built out.',
       location: {
         center: [-87.64451, 41.88737],
         zoom: 13.64,
