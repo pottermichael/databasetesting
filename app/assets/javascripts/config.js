@@ -10,7 +10,7 @@ var config = {
   chapters: [{
       id: 'fultonriver',
       title: '2018: Zoned for a Riverfront City',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonriverdistrict.png',
+      image: 'https://dk7h73956znl6.cloudfront.net/fultonriverdistrict.png',
       description: 'At 37-acres, the River District is a unique blank slate development site infill to the Citys most desirable 24/7 submarkets: Fulton Market, River North and the West Loop. As of Q4 2018, zoning is in place for up to 11 million square feet of mixed-use development. Extending downtown from the nearby “Confluence”, this new master planned ‘city in a park’ will offer 2/3rd miles of riverwalk and 15 acres of open space upon completion.',
       location: {
         center: [-87.64249, 41.88865],
@@ -44,7 +44,7 @@ var config = {
     {
       id: 'northbranchzoning',
       title: '2017: Removed "PMD" Zoning',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/historical_chicago_ave_bridge.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/historical_chicago_ave_bridge.jpg',
       description: 'In 2017 the Department of Planning concluded a two-year long comprehensive re-zoning process spanning 750-acres of land on the North Branch. The “modernization” land use and transportation framework sought to eliminate restrictive industrial zoning along the river in order to transform large scale industrial sites from blighted areas prohibiting access to the river into high density mixed-use projects inviting the City in with public green space and vibrancy.',
       location: {
         center: [-87.65929, 41.90447],
@@ -101,7 +101,7 @@ var config = {
     {
       id: 'riverwalk',
       title: '2015-2017: Main Branch Riverwalk',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/chicagoriverwalk-Season-Celebration.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/chicagoriverwalk-Season-Celebration.jpg',
       description: 'Completed in 2017, the Main Branch Riverwalk has quickly become one of the City’s top attractions for residents and tourists alike. As the #3 urban linear park by visitors in the U.S., behind only NYC’s High Line and the San Antonio Riverwalk, Chicago’s “Second Great Waterfront” is witnessing broad based demand from premiere +A corporate office users, luxury residences, leading hospitality brands, and upscale retailers and restaurants, all serving to confirm the riverfront as the most pleasing urban aesthetic.',
       location: {
         center: [-87.62922, 41.88744],
@@ -121,7 +121,7 @@ var config = {
     {
       id: 'confluence',
       title: 'Chicago River Confluence',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/confluence.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/confluence.jpg',
       description: 'Since 2016 over 3.5 million square feet of Class +A office has been delivered or is leased, replacing formerly blighted riverfront parking lots. As perhaps the most dramatic point along the River, offering unparalleled light, air and views, newly constructed offices at the Confluence are leased to some of the Citys leading companies including William Blair, Hyatt Corporation, Bank of America, Salesforce, McDermott Will & Emery, DLA Piper and Mead Johnson.',
       location: {
         center: [-87.63837, 41.88675],
@@ -265,7 +265,7 @@ var config = {
     {
       id: 'transitwayline',
       title: '3-Mile "North Branch Transitway"',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/transitway.jpeg',
+      image: 'https://dk7h73956znl6.cloudfront.net/transitway.jpeg',
       description: 'Within the North Branch re-zoning framework, the City identified a number of transportation projects throughout the corridor to improve public transportation. Most prominent of the improvements is the North Branch Transitway, which calls for a repurposing of a 3 mile abandoned freight rail corridor to create a dedicated pedestrian and Bus Rapid Transit (BRT) corridor anchored by Union Station, Ogilvie Station at the south end and the Metra Clybourn and 606 Trail to the north.',
       location: {
         center: [-87.64924, 41.89722],
@@ -287,7 +287,7 @@ var config = {
     {
       id: 'retail',
       title: 'World-class Dining',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/fultonmarketdistrict.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/fultonmarketdistrict.jpg',
       description: 'Voted "Restaurant City of the Year" (2017) by Bon Appetit, Chicago offers an acclaimed dining reputation and ranks #11 globally for cities with the most Michelin Star rated restaurants. Home to 7 Michelin Star (Blue dots) and 14 Bib Gourmand (Green dots) rated restaurants, the Fulton Market and River North neighborhoods that surround the Site contain the citys highest concentrations and variety of dynamic dining options.',
       location: {
         center: [-87.64995, 41.88915],
@@ -322,7 +322,7 @@ var config = {
     {
       id: 'magmile',
       title: 'One Mile to Mag Mile',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/watertower.png',
+      image: 'https://dk7h73956znl6.cloudfront.net/watertower.png',
       description: 'At the intersection of Chicago Avenue and Michigan Avenue is the heart of Chicagos Magnificent Mile. Home to iconic modern skyscrapers contrasted against historic landmark structures, the Mag Mile is a bustling stretch offering High Street flagship retail stores, restaurants and is one of the most visited areas of the city. With over 26,000 hotel rooms in the North Michigan Avenue district to accommodate year-round business and leisure tourism, the Mag Mile is Chicago’s original 24/7 entertainment destination.',
       location: {
         center: [-87.62405, 41.89671],
@@ -340,7 +340,7 @@ var config = {
     {
       id: 'techhubs',
       title: 'Proven Tech Location',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/600_aerial.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/600_aerial.jpg',
       description: 'The River District is anchored by Chicagos leading technology and innovation hubs. At the north is 600 W. Chicago, home to serial start-up, venture capital and entrepreneurship firm Lightbank. This old “Montgomery Ward” warehouse is fully leased to a variety of mature and high growth technology companies comprising over 7,500 employees, working within some of the most competitive fields for recruitment. South is The Mart, a four million square foot art-deco warehouse, that since 2015 has successfully repositioned from furniture showroom to a leading hub of corporate headquarters and is also home to the citys de-facto tech hub, 1871, which is ranked as the #1 University affiliated incubator in the world” in 2018.',
       location: {
         center: [-87.64409, 41.89739],
@@ -354,7 +354,7 @@ var config = {
     {
       id: 'montgomery',
       title: 'Montgomery Ward Park',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/montgomery_ward_skyline.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/montgomery_ward_skyline.jpg',
       description: 'Located directly across the river is River North’s largest and most vibrant public park. The A. Montgomery Ward Park contains over 4-acre of green space, playgrounds, a waterfront promenade with year-round programming such as “Movies in the Park”. A future pedestrian bridge will re-connect at Erie Street, improving access east from the site to River North neighborhood’s dense offering of amenities, transportation, offices and residences.',
       location: {
         center: [-87.64452, 41.89533],
@@ -368,7 +368,7 @@ var config = {
     {
       id: 'eastbankclub',
       title: 'East Bank Club',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/ebc_exterior_river.jpg',
+      image: 'https://dk7h73956znl6.cloudfront.net/ebc_exterior_river.jpg',
       description: 'As one of the largest private fitness facilities in the U.S., with more than 450,000 square feet of fitness, dining, and resort style amenities, the East Bank Club is Chicago’s premier health club. Covering over two full city blocks, the Club offers an astounding array of amenities, state-of-the-art exercise facilities and serves as the unofficial Town Square for River North office workers and residents.',
       location: {
         center: [-87.64177, 41.89010],
@@ -382,7 +382,7 @@ var config = {
     {
       id: 'grandavebridge',
       title: 'View from Grand Ave Bridge',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/grandAVE.png',
+      image: 'https://dk7h73956znl6.cloudfront.net/grandAVE.png',
       description: 'Phase 1 of the master planned development will commence at Grand Avenue. The currently barren parking lot Site will transform from pedestrian barrier to pedestrian magnet, stitching together the adjacent West Loop, Fulton Market and River North submarkets. A curvature in the river towards the confluence creates stunning waterfront views back to the iconic city skyline, Chicago Landmark bridges, and visually connects the Site to some of downtown’s most desirable office and residential properties.',
       location: {
         center: [-87.64116, 41.89144],
@@ -396,7 +396,7 @@ var config = {
     {
       id: 'fultonriverdistrictwest',
       title: '37 Acre Riverfront Campus',
-      image: 'https://tourchicago.s3.us-east-2.amazonaws.com/renderingwest.png',
+      image: 'https://dk7h73956znl6.cloudfront.net/renderingwest.png',
       description: 'Rare opportunity to create an Urban oasis...',
       location: {
         center: [-87.64238, 41.89325],
